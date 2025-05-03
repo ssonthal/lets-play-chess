@@ -1,9 +1,14 @@
 import { Piece, PieceType, TeamType } from "../components/Chessboard";
 export default class Referee {
 
-    tilesOccupied(x: number, y: number, pieces: Piece[]) : boolean{
-        const piece = pieces.find(p => p.x == x && p.y == y);
+    tilesOccupied(x: number, y: number, boardState: Piece[]) : boolean{
+        const piece = boardState.find(p => p.x == x && p.y == y);
         if(piece) return true;
+        return false;
+    }
+    tilesOccupiedByOpponent(x: number, y: number, boardState: Piece[], team: TeamType) : boolean {
+        const piece = boardState.find(p => p.x == x && p.y == y);
+        if(piece && piece.team != team) return true;
         return false;
     }
     isValidMove(px: number, py: number, x: number, y:number, type: PieceType, team: TeamType, boardState: Piece[]) : boolean {
@@ -24,8 +29,15 @@ export default class Referee {
             }
 
             // attacking logic
-            else if (Math.abs(x - px) == 1 && y - py == pawnDirection) {
-                
+            else if (x - px === 1 && y - py == pawnDirection) {
+                if(this.tilesOccupiedByOpponent(x, y, boardState, team)) {
+                    return true;
+                }
+            }
+            else if (x - px === -1 && y - py == pawnDirection) {
+                if(this.tilesOccupiedByOpponent(x, y, boardState, team)) {
+                    return true;
+                }
             }
         }
         return false;
