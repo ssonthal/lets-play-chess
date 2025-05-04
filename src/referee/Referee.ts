@@ -1,15 +1,31 @@
-import { Piece, PieceType, TeamType } from "../components/Chessboard";
+import { Piece, PieceType, TeamType } from "../Constants";
 export default class Referee {
 
     tilesOccupied(x: number, y: number, boardState: Piece[]) : boolean{
-        const piece = boardState.find(p => p.x == x && p.y == y);
+        const piece = boardState.find(p => p.position.x == x && p.position.y == y);
         if(piece) return true;
         return false;
     }
     tilesOccupiedByOpponent(x: number, y: number, boardState: Piece[], team: TeamType) : boolean {
-        const piece = boardState.find(p => p.x == x && p.y == y);
+        const piece = boardState.find(p => p.position.x == x && p.position.y == y);
         if(piece && piece.team != team) return true;
         return false;
+    }
+    isEnPassantMove(
+        px: number, 
+        py: number,
+        x: number, 
+        y: number, 
+        type: PieceType, 
+        team: TeamType, 
+        boardState: Piece[]) : boolean {
+            if(type != PieceType.PAWN) return false;
+            const pawnDirection = team == TeamType.WHITE ? 1 : -1;
+            if (Math.abs(x - px) === 1 && y - py === pawnDirection) {
+                const piece = boardState.find(p => p.position.x === x && p.position.y === y -   pawnDirection && p.team !== team && p.enPassant === true);
+                if(piece) return true; 
+            }
+            return false;
     }
     isValidMove(px: number, py: number, x: number, y:number, type: PieceType, team: TeamType, boardState: Piece[]) : boolean {
         if(type == PieceType.PAWN) {
@@ -18,7 +34,7 @@ export default class Referee {
 
             // movement logic
             if(px == x && py === spclRow && y - py == 2*pawnDirection) {
-                if(!this.tilesOccupied(x, y, boardState) && !this.tilesOccupied(x, y - 1, boardState)) {
+                if(!this.tilesOccupied(x, y, boardState) && !this.tilesOccupied(x, y - pawnDirection, boardState)) {
                         return true;
                 }
             }
