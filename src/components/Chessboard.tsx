@@ -66,7 +66,7 @@ export function Chessboard() {
             const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
             const currentPiece = pieces.find(p => samePosition(p.position, grabPosition));
             if(currentPiece) {
-                const validMove = referee.isValidMove(grabPosition.x, grabPosition.y, x, y, currentPiece.type, currentPiece.team, pieces);
+                const validMove = referee.isValidMove(grabPosition, {x: x, y: y}, currentPiece.type, currentPiece.team, pieces);
                 const isEnPassantMove = referee.isEnPassantMove(grabPosition.x, grabPosition.y,x, y, currentPiece.type, currentPiece.team, pieces);
                 const pawnDirection = currentPiece.team == TeamType.WHITE ? 1 : -1;
                 if(isEnPassantMove) {
