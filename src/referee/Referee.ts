@@ -33,4 +33,7 @@ export default class Referee {
         }
         return false;
     }
+    isPawnPromotion(finalPosition: Position, team: TeamType) : boolean {
+        return team == TeamType.WHITE && finalPosition.y == 0 || team == TeamType.BLACK && finalPosition.y == 7;
+    }
 }

@@ -20,6 +20,7 @@ export function Chessboard() {
     const [grabPosition, setGrabPosition] = useState<Position>({x : -1, y: -1});
     const [pieces, setPieces] = useState<Piece[]>(INITIAL_STATE);
     const chessboardRef = useRef<HTMLDivElement>(null);
+    const [promotionPawn, setPromotionPawn] = useState<Piece>()
     const [activePiece, setActivePiece]= useState<HTMLDivElement | null>(null);
     const referee = new Referee();
     const grabPiece = (e: React.MouseEvent) => {
@@ -90,6 +91,11 @@ export function Chessboard() {
                                 piece.enPassant = Math.abs(grabPosition.y - y) == 2 && piece.type == PieceType.PAWN;
                                 piece.position.x = x;
                                 piece.position.y = y;
+
+                                let promotion_row = piece.team == TeamType.WHITE ? 7: 0; 
+                                if(y == promotion_row) {
+                                    // promote the piece.
+                                }
                                 results.push(piece);
                             } else if(!(samePosition(piece.position, {x, y}))) {
                                 piece.enPassant = false;
@@ -109,14 +115,25 @@ export function Chessboard() {
         }
     }
     let board = useMemo(() => generateTiles(pieces), [pieces]);
+    const promotePawn = (pieceType:  PieceType) => {
+        console.log(`promote pawn into ${pieceType}`);
+    }
     return (
-        <div 
-        onMouseDown = {e => grabPiece(e)}
-        onMouseMove = {e => movePiece(e)}
-        onMouseUp = {e => dropPiece(e)}
-        ref = {chessboardRef}
-        className = "grid grid-cols-[repeat(8,_100px)] grid-rows-[repeat(8,_100px)] w-[800px] h-[800px]">
-            {board}
+        <>
+        <div className = "h-[_300px] w-[_800px] bg-[rgba(0,0,0,0.5)] absolute top-[calc(50%-150px)] left-[calc(50%-400px) flex items-center justify-around">
+            <img onClick = {() => promotePawn(PieceType.ROOK)}className = "hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)] active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src = "src/assets/pieces/rook_w.png"></img>
+            <img onClick = {() => promotePawn(PieceType.BISHOP)} className = "hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)]  active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src = "src/assets/pieces/bishop_w.png"></img>
+            <img onClick = {() => promotePawn(PieceType.QUEEN)} className = "hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)]  active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src = "src/assets/pieces/queen_w.png"></img>
+            <img onClick = {() => promotePawn(PieceType.KNIGHT)} className = "hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)]  active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src = "src/assets/pieces/knight_w.png"></img>
         </div>
+        <div 
+            onMouseDown = {e => grabPiece(e)}
+            onMouseMove = {e => movePiece(e)}
+            onMouseUp = {e => dropPiece(e)}
+            ref = {chessboardRef}
+            className = "grid grid-cols-[repeat(8,_100px)] grid-rows-[repeat(8,_100px)] w-[800px] h-[800px]">
+                {board}
+        </div>
+        </>
     )
 }
