@@ -36,4 +36,16 @@ export default class Referee {
     isPawnPromotion(finalPosition: Position, team: TeamType) : boolean {
         return team == TeamType.WHITE && finalPosition.y == 0 || team == TeamType.BLACK && finalPosition.y == 7;
     }
+    getValidMoves(initialPosition: Position, type: PieceType, team: TeamType, boardState: Piece[]) : Position[] {
+        const validMoves: Position[] = [];
+        for(let x = 0; x < 8; x++) {
+            for(let y = 0; y < 8; y++) {
+                const finalPosition = {x: x, y: y};
+                if(this.isValidMove(initialPosition, finalPosition, type, team, boardState)) {
+                    validMoves.push(finalPosition);
+                }
+            }
+        }
+        return validMoves;
+    }
 }
