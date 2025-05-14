@@ -1,10 +1,10 @@
 import './App.css';
-import {Chessboard} from './components/Chessboard';
+import Referee from './components/Referee/Referee';
 
 function App() {
   return (
     <div className = "grid place-items-center bg-[#202020] h-screen">
-      <Chessboard/>
+      <Referee></Referee>
     </div>
   );
 }
