@@ -5,4 +5,7 @@ export class Position {
         this.x = x;
         this.y = y;
     }
+    equals(pos: Position) : boolean {
+        return this.x == pos.x && this.y == pos.y;
+    }
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { INITIAL_STATE, PieceType, samePosition, TeamType } from "../../Constants";
+import { INITIAL_STATE, PieceType, TeamType } from "../../Constants";
 import { Piece, Position } from "../../models";
 import { Chessboard } from "../Chessboard";
 import { bishopMove, kingMove, knightMove, pawnMove, rookMove } from "../../referee/rules";
@@ -22,7 +22,7 @@ export default function Referee() {
         for (let x = 0; x < 8; x++) {
             for (let y = 0; y < 8; y++) {
                 if (x == initialPosition.x && y == initialPosition.y) continue
-                const finalPosition = { x: x, y: y };
+                const finalPosition = new Position(x, y);
                 if (isValidMove(initialPosition, finalPosition, type, team, currentBoardState) || (type == PieceType.PAWN && isEnPassantMove(initialPosition.x, initialPosition.y, x, y, type, team, currentBoardState))) {
                     validMoves.push(finalPosition);
                 }
@@ -66,14 +66,13 @@ export default function Referee() {
         const validMove = isValidMove(piece.position, destination, piece.type, piece.team, pieces);
         const isEnPassant = isEnPassantMove(piece.position.x, piece.position.y, destination.x, destination.y, piece.type, piece.team, pieces);
         const pawnDirection = piece.team == TeamType.WHITE ? 1 : -1;
-        console.log("isEnpassant", isEnPassant);
         if (isEnPassant) {
             const updatedPieces = pieces.map(p => {
-                const isSamePiece = samePosition(p.position, piece.position);
-                const isOneRowBack = samePosition({ x: destination.x, y: destination.y - pawnDirection }, p.position);
+                const isSamePiece = p.position.equals(piece.position);
+                const isOneRowBack = p.position.equals(new Position(destination.x, destination.y - pawnDirection));
 
                 if (isSamePiece) {
-                    const newPosition = { x: destination.x, y: destination.y };
+                    const newPosition = new Position(destination.x, destination.y);
                     const updatedPiece = {
                         ...p,
                         position: newPosition,
@@ -99,12 +98,12 @@ export default function Referee() {
         } else if (validMove) {
             const updatedPieces = pieces
                 .map(p => {
-                    const isSamePiece = samePosition(piece.position, p.position);
-                    const isDestination = samePosition(p.position, destination);
+                    const isSamePiece = p.position.equals(piece.position);
+                    const isDestination = p.position.equals(destination);
                     const isPawn = p.type === PieceType.PAWN;
 
                     if (isSamePiece) {
-                        const newPosition = { x: destination.x, y: destination.y };
+                        const newPosition = new Position(destination.x, destination.y);
                         const shouldEnPassant = Math.abs(destination.y - p.position.y) === 2 && isPawn;
 
                         const updatedPiece = {
@@ -119,7 +118,7 @@ export default function Referee() {
                         }
                         return updatedPiece;
                     }
-                    if (isDestination) {
+                    else if (isDestination) {
                         return null;
                     }
                     return {
@@ -144,7 +143,7 @@ export default function Referee() {
         if (promotionPawn === undefined) return;
         const teamType = promotionPawn.team == TeamType.WHITE ? "w" : "b";
         const updatedPieces = pieces.map(p => {
-            if (samePosition(p.position, promotionPawn.position)) {
+            if (p.position.equals(promotionPawn.position)) {
                 const updatedPiece = {
                     ...p,
                     type: pieceType,

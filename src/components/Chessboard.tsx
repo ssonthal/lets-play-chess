@@ -1,17 +1,18 @@
 import React, { useRef, useState } from "react";
 import Tile from "./Tile";
-import { VERTICAL_AXIS, HORIZONTAL_AXIS, GRID_SIZE, samePosition } from "../Constants";
+import { VERTICAL_AXIS, HORIZONTAL_AXIS, GRID_SIZE } from "../Constants";
 import { Piece, Position } from "../models";
 function generateTiles(pieces: Piece[], grabPosition: Position, activePiece: HTMLDivElement | null) {
     let cells = [];
     for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
         for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
             const number = j + i;
-            let piece = pieces.find(p => samePosition(p.position, { x: i, y: j }));
+            let piece = pieces.find(p => p.position.equals(new Position(i, j)));
             let image = piece ? piece.image : undefined;
 
-            let currentPiece = pieces.find(p => samePosition(p.position, grabPosition));
-            let highlight = activePiece && currentPiece?.possibleMoves ? currentPiece.possibleMoves.some(p => samePosition(p, { x: i, y: j })) : false;
+            let currentPiece = pieces.find(p =>
+                p.position.equals(grabPosition));
+            let highlight = activePiece && currentPiece?.possibleMoves ? currentPiece.possibleMoves.some(p => p.equals(new Position(i, j))) : false;
             cells.push(<Tile image={image} key={`${i},${j}`} number={number} highlight={highlight} />);
         }
     }
@@ -23,7 +24,7 @@ interface Props {
     pieces: Piece[]
 }
 export function Chessboard({ playMove, pieces }: Props) {
-    const [grabPosition, setGrabPosition] = useState<Position>({ x: -1, y: -1 });
+    const [grabPosition, setGrabPosition] = useState<Position>(new Position(-1, -1));
     const chessboardRef = useRef<HTMLDivElement>(null);
     const [activePiece, setActivePiece] = useState<HTMLDivElement | null>(null);
     const grabPiece = (e: React.MouseEvent) => {
@@ -32,7 +33,7 @@ export function Chessboard({ playMove, pieces }: Props) {
         if (chessboard && element.classList.contains("chess-piece")) {
             const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
             const grabY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
-            setGrabPosition({ x: grabX, y: grabY });
+            setGrabPosition(new Position(grabX, grabY));
             let x = e.clientX - GRID_SIZE / 2;
             let y = e.clientY - GRID_SIZE / 2;
             element.style.position = "absolute";
@@ -68,10 +69,9 @@ export function Chessboard({ playMove, pieces }: Props) {
         if (activePiece && chessboard) {
             const x = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
             const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
-            const currentPiece = pieces.find(p => samePosition(p.position, grabPosition));
+            const currentPiece = pieces.find(p => p.position.equals(grabPosition));
             if (currentPiece) {
-                var success = playMove(currentPiece, { x: x, y: y });
-                console.log("success", success);
+                var success = playMove(currentPiece, new Position(x, y));
                 if (!success) {
                     activePiece.style.position = "relative"
                     activePiece.style.removeProperty("left");

@@ -20,9 +20,6 @@ export enum TeamType {
     WHITE = "w"
 }
 
-export const samePosition = (pos1: Position, pos2: Position):boolean => {
-    return pos1.x === pos2.x && pos1.y === pos2.y;
-}
 export const INITIAL_STATE:Piece[] = [
     new Piece(new Position(0, 7), PieceType.ROOK, TeamType.BLACK),
     new Piece(new Position(1, 7), PieceType.KNIGHT, TeamType.BLACK),
