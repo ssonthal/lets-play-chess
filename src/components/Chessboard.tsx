@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Tile from "./Tile";
-import { VERTICAL_AXIS, HORIZONTAL_AXIS, GRID_SIZE, Piece, Position, samePosition } from "../Constants";
+import { VERTICAL_AXIS, HORIZONTAL_AXIS, GRID_SIZE, samePosition } from "../Constants";
+import { Piece, Position } from "../models";
 function generateTiles(pieces: Piece[], grabPosition: Position, activePiece: HTMLDivElement | null) {
     let cells = [];
     for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {

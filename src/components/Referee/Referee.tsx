@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { INITIAL_STATE, Piece, PieceType, Position, samePosition, TeamType } from "../../Constants";
+import { INITIAL_STATE, PieceType, samePosition, TeamType } from "../../Constants";
+import { Piece, Position } from "../../models";
 import { Chessboard } from "../Chessboard";
 import { bishopMove, kingMove, knightMove, pawnMove, rookMove } from "../../referee/rules";
 
