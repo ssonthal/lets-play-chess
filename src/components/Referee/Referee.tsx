@@ -65,10 +65,12 @@ export default function Referee() {
     function playMove(piece: Piece, destination: Position): boolean {
         const validMove = isValidMove(piece.position, destination, piece.type, piece.team, pieces);
         const isEnPassant = isEnPassantMove(piece.position.x, piece.position.y, destination.x, destination.y, piece.type, piece.team, pieces);
+        const pawnDirection = piece.team == TeamType.WHITE ? 1 : -1;
+        console.log("isEnpassant", isEnPassant);
         if (isEnPassant) {
             const updatedPieces = pieces.map(p => {
                 const isSamePiece = samePosition(p.position, piece.position);
-                const isDestination = samePosition(p.position, destination);
+                const isOneRowBack = samePosition({ x: destination.x, y: destination.y - pawnDirection }, p.position);
 
                 if (isSamePiece) {
                     const newPosition = { x: destination.x, y: destination.y };
@@ -78,7 +80,7 @@ export default function Referee() {
                         enPassant: false
                     };
                     return updatedPiece;
-                } else if (isDestination) {
+                } else if (isOneRowBack) {
                     return null;
                 }
                 return {
