@@ -1,5 +1,5 @@
-import {TeamType} from "../../Constants";
 import { Piece, Position } from "../../models";
+import { TeamType } from "../../Types";
 import {tileOccupied, tileEmptyOrOccupiedByOpponent} from "./GeneralRules";
 export const rookMove = (initialPosition: Position, finalPosition: Position, boardState: Piece[], team: TeamType): boolean => {
     if(finalPosition.x == initialPosition.x || finalPosition.y == initialPosition.y) {

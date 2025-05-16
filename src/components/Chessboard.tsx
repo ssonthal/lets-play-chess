@@ -7,11 +7,11 @@ function generateTiles(pieces: Piece[], grabPosition: Position, activePiece: HTM
     for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
         for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
             const number = j + i;
-            let piece = pieces.find(p => p.position.equals(new Position(i, j)));
+            let piece = pieces.find(p => p.samePosition(new Position(i, j)));
             let image = piece ? piece.image : undefined;
 
             let currentPiece = pieces.find(p =>
-                p.position.equals(grabPosition));
+                p.samePosition(grabPosition));
             let highlight = activePiece && currentPiece?.possibleMoves ? currentPiece.possibleMoves.some(p => p.equals(new Position(i, j))) : false;
             cells.push(<Tile image={image} key={`${i},${j}`} number={number} highlight={highlight} />);
         }
@@ -69,7 +69,7 @@ export function Chessboard({ playMove, pieces }: Props) {
         if (activePiece && chessboard) {
             const x = Math.floor((e.clientX - chessboard.offsetLeft) / GRID_SIZE);
             const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / GRID_SIZE));
-            const currentPiece = pieces.find(p => p.position.equals(grabPosition));
+            const currentPiece = pieces.find(p => p.samePosition(grabPosition));
             if (currentPiece) {
                 var success = playMove(currentPiece, new Position(x, y));
                 if (!success) {

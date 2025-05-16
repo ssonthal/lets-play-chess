@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { INITIAL_STATE, PieceType, TeamType } from "../../Constants";
+import { INITIAL_STATE } from "../../Constants";
 import { Piece, Position } from "../../models";
 import { Chessboard } from "../Chessboard";
 import { bishopMove, kingMove, knightMove, pawnMove, rookMove } from "../../referee/rules";
+import { PieceType, TeamType } from "../../Types";
 
 export default function Referee() {
     const [pieces, setPieces] = useState<Piece[]>(INITIAL_STATE);
@@ -10,10 +11,13 @@ export default function Referee() {
     const [promotionPawn, setPromotionPawn] = useState<Piece>()
 
     useEffect(() => {
-        const updatedPieces = pieces.map(p => ({
-            ...p,
-            possibleMoves: getValidMoves(p.position, p.type, p.team, pieces)
-        }));
+        const updatedPieces = pieces.map(p =>
+            p.clone
+                (
+                    {
+                        possibleMoves: getValidMoves(p.position, p.type, p.team, pieces)
+                    }
+                ));
         setPieces(updatedPieces);
     }, []);
 
@@ -62,55 +66,51 @@ export default function Referee() {
         }
         return false;
     }
-    function playMove(piece: Piece, destination: Position): boolean {
-        const validMove = isValidMove(piece.position, destination, piece.type, piece.team, pieces);
-        const isEnPassant = isEnPassantMove(piece.position.x, piece.position.y, destination.x, destination.y, piece.type, piece.team, pieces);
-        const pawnDirection = piece.team == TeamType.WHITE ? 1 : -1;
+    function playMove(playedPiece: Piece, destination: Position): boolean {
+        const validMove = isValidMove(playedPiece.position, destination, playedPiece.type, playedPiece.team, pieces);
+        const isEnPassant = isEnPassantMove(playedPiece.position.x, playedPiece.position.y, destination.x, destination.y, playedPiece.type, playedPiece.team, pieces);
+        const pawnDirection = playedPiece.team == TeamType.WHITE ? 1 : -1;
         if (isEnPassant) {
             const updatedPieces = pieces.map(p => {
-                const isSamePiece = p.position.equals(piece.position);
-                const isOneRowBack = p.position.equals(new Position(destination.x, destination.y - pawnDirection));
+                const isSamePiece = p.samePiecePosition(playedPiece);
+                const isOneRowBack = p.samePosition(new Position(destination.x, destination.y - pawnDirection));
 
                 if (isSamePiece) {
                     const newPosition = new Position(destination.x, destination.y);
-                    const updatedPiece = {
-                        ...p,
+                    const updatedPiece = p.clone({
                         position: newPosition,
                         enPassant: false
-                    };
+                    });
                     return updatedPiece;
                 } else if (isOneRowBack) {
                     return null;
                 }
-                return {
-                    ...p,
+                return p.clone({
                     enPassant: false
-                };
+                });
             }).filter(p => p !== null)
 
             const finalUpdatedPieces = updatedPieces.map(p => {
-                return {
-                    ...p,
+                return p.clone({
                     possibleMoves: getValidMoves(p.position, p.type, p.team, updatedPieces)
-                }
+                });
             })
             setPieces(finalUpdatedPieces);
         } else if (validMove) {
             const updatedPieces = pieces
                 .map(p => {
-                    const isSamePiece = p.position.equals(piece.position);
-                    const isDestination = p.position.equals(destination);
+                    const isSamePiece = p.samePiecePosition(playedPiece);
+                    const isDestination = p.samePosition(destination);
                     const isPawn = p.type === PieceType.PAWN;
 
                     if (isSamePiece) {
                         const newPosition = new Position(destination.x, destination.y);
                         const shouldEnPassant = Math.abs(destination.y - p.position.y) === 2 && isPawn;
 
-                        const updatedPiece = {
-                            ...p,
+                        const updatedPiece = p.clone({
                             position: newPosition,
                             enPassant: shouldEnPassant
-                        };
+                        });
                         const promotionRow = p.team === TeamType.WHITE ? 7 : 0;
                         if (isPawn && destination.y === promotionRow) {
                             modalRef.current?.classList.remove("hidden");
@@ -121,17 +121,15 @@ export default function Referee() {
                     else if (isDestination) {
                         return null;
                     }
-                    return {
-                        ...p,
+                    return p.clone({
                         enPassant: false
-                    };
+                    });
                 }).filter(p => p !== null);
 
             const finalUpdatedPieces = updatedPieces.map(p => {
-                return {
-                    ...p,
+                return p.clone({
                     possibleMoves: getValidMoves(p.position, p.type, p.team, updatedPieces)
-                }
+                })
             });
             setPieces(finalUpdatedPieces);
         } else {
@@ -141,23 +139,20 @@ export default function Referee() {
     }
     function promotePawn(pieceType: PieceType) {
         if (promotionPawn === undefined) return;
-        const teamType = promotionPawn.team == TeamType.WHITE ? "w" : "b";
         const updatedPieces = pieces.map(p => {
-            if (p.position.equals(promotionPawn.position)) {
-                const updatedPiece = {
-                    ...p,
+            if (p.samePiecePosition(promotionPawn)) {
+                const updatedPiece = p.clone({
                     type: pieceType,
-                    image: `src/assets/pieces/${pieceType}_${teamType}.png`
-                };
+                    team: promotionPawn.team
+                });
                 return updatedPiece;
             }
             return p;
         });
         const finalUpdatedPieces = updatedPieces.map(p => {
-            return {
-                ...p,
+            return p.clone({
                 possibleMoves: getValidMoves(p.position, p.type, p.team, updatedPieces)
-            }
+            })
         })
         setPieces(finalUpdatedPieces);
         modalRef.current?.classList.add("hidden");
