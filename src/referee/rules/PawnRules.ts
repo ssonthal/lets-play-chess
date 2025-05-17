@@ -1,4 +1,5 @@
 import { Piece, Position } from "../../models";
+import { Pawn } from "../../models/Pawn";
 import { TeamType } from "../../Types";
 import { tileOccupied, tileOccupiedByOpponent } from "./GeneralRules";
 
@@ -28,6 +29,21 @@ export const pawnMove = (initialPosition: Position, finalPosition: Position, boa
         if(tileOccupiedByOpponent(finalPosition.x, finalPosition.y, boardState, team)) {
             return true;
         }
+    }
+    return false;
+}
+
+export const isEnPassantMove = (
+    px: number,
+    py: number,
+    x: number,
+    y: number,
+    team: TeamType,
+    currentBoardState: Piece[]): boolean => {
+    const pawnDirection = team == TeamType.WHITE ? 1 : -1;
+    if (Math.abs(x - px) === 1 && y - py === pawnDirection) {
+        const piece = currentBoardState.find(p => p.position.x === x && p.position.y === y - pawnDirection && p.team !== team && (p as Pawn).enPassant === true);
+        if (piece) return true;
     }
     return false;
 }

@@ -1,3 +1,4 @@
+import { Board } from "./models/Board";
 import {Pawn} from "./models/Pawn";
 import { Piece } from "./models/Piece";
 import { Position } from "./models/Position";
@@ -10,7 +11,7 @@ export const GRID_SIZE = 100;
 
 
 
-export const INITIAL_STATE:Piece[] = [
+export const initialBoard: Board = new Board([
     new Piece(new Position(0, 7), PieceType.ROOK, TeamType.BLACK),
     new Piece(new Position(1, 7), PieceType.KNIGHT, TeamType.BLACK),
     new Piece(new Position(2, 7), PieceType.BISHOP, TeamType.BLACK),
@@ -43,4 +44,4 @@ export const INITIAL_STATE:Piece[] = [
     new Piece(new Position(5, 0), PieceType.BISHOP, TeamType.WHITE),            
     new Piece(new Position(6, 0), PieceType.KNIGHT, TeamType.WHITE),            
     new Piece(new Position(7, 0), PieceType.ROOK, TeamType.WHITE)
-];
+]);

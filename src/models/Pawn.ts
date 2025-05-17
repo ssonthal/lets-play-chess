@@ -14,7 +14,7 @@ export class Pawn extends Piece {
     override clone(overrides: Partial<PawnData> = {}): Pawn {
     const data = this.getData() as PawnData;
     return new Pawn(
-      overrides.position ?? data.position,
+      overrides.position ?? data.position.clone(),
       overrides.team ?? data.team,
       overrides.enPassant ?? this.enPassant,
       overrides.possibleMoves ?? data.possibleMoves
