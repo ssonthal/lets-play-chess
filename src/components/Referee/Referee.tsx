@@ -1,12 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { initialBoard } from "../../Constants";
-import { Piece, Position } from "../../models";
+import { Piece, Position, Board } from "../../models";
 import { Chessboard } from "../Chessboard";
-import { bishopMove, isEnPassantMove, kingMove, knightMove, pawnMove, rookMove } from "../../referee/rules";
+import { isEnPassantMove, isValidMove } from "../../referee/rules";
 import { PieceType, TeamType } from "../../Types";
-import { Board } from "../../models/Board";
-import { Pawn } from "../../models/Pawn";
-import { isValidMove } from "../../referee/rules/GeneralRules";
 
 export default function Referee() {
     const [board, setBoard] = useState<Board>(initialBoard);
