@@ -1,31 +1,29 @@
 import { PieceType, TeamType } from "../Types";
+import { Pawn } from "./Pawn";
 import { Position } from "./Position";
 
-interface PieceData {
+export interface PieceData {
   position: Position;
   type: PieceType;
   team: TeamType;
   possibleMoves?: Position[];
-  enPassant?: boolean;
 }
 export class Piece {
     image: string;
     position: Position;
     type: PieceType;
     team: TeamType;
-    enPassant? : boolean;
     possibleMoves? : Position[];
-    constructor(position: Position, type: PieceType, team: TeamType, possibleMoves? : Position[], enPassant? : boolean) {
+    constructor(position: Position, type: PieceType, team: TeamType, possibleMoves? : Position[]) {
         this.image = `src/assets/pieces/${type}_${team}.png`;
         this.position = position;
         this.type = type;
         this.team = team;
         this.possibleMoves = possibleMoves;
-        this.enPassant = enPassant;
     }
 
-    isPawn() : boolean{
-        return this.type === PieceType.PAWN;
+    isPawn() : this is Pawn{
+        return this instanceof Pawn;
     }
     isBishop() : boolean{
         return this.type === PieceType.BISHOP;
@@ -54,17 +52,15 @@ export class Piece {
             overrides.position ?? data.position,
             overrides.type ?? data.type,
             overrides.team ?? data.team,
-            overrides.possibleMoves ?? data.possibleMoves,
-            overrides.enPassant ?? data.enPassant
+            overrides.possibleMoves ?? data.possibleMoves
         );
     }
-    private getData(): PieceData {
+    getData(): PieceData {
         return {
             position: this.position,
             type: this.type,
             team: this.team,
-            possibleMoves: this.possibleMoves,
-            enPassant: this.enPassant,
+            possibleMoves: this.possibleMoves
         };
     }
 }

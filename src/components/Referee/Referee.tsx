@@ -58,10 +58,9 @@ export default function Referee() {
         type: PieceType,
         team: TeamType,
         currentBoardState: Piece[]): boolean {
-        if (type != PieceType.PAWN) return false;
         const pawnDirection = team == TeamType.WHITE ? 1 : -1;
         if (Math.abs(x - px) === 1 && y - py === pawnDirection) {
-            const piece = currentBoardState.find(p => p.position.x === x && p.position.y === y - pawnDirection && p.team !== team && p.enPassant === true);
+            const piece = currentBoardState.find(p => p.position.x === x && p.position.y === y - pawnDirection && p.team !== team && p.isPawn() && p.enPassant === true);
             if (piece) return true;
         }
         return false;
@@ -75,7 +74,7 @@ export default function Referee() {
                 const isSamePiece = p.samePiecePosition(playedPiece);
                 const isOneRowBack = p.samePosition(new Position(destination.x, destination.y - pawnDirection));
 
-                if (isSamePiece) {
+                if (isSamePiece && p.isPawn()) {
                     const newPosition = new Position(destination.x, destination.y);
                     const updatedPiece = p.clone({
                         position: newPosition,
@@ -85,9 +84,10 @@ export default function Referee() {
                 } else if (isOneRowBack) {
                     return null;
                 }
-                return p.clone({
-                    enPassant: false
-                });
+                if (p.isPawn()) {
+                    return p.clone({ enPassant: false });
+                }
+                return p.clone();
             }).filter(p => p !== null)
 
             const finalUpdatedPieces = updatedPieces.map(p => {
@@ -101,29 +101,32 @@ export default function Referee() {
                 .map(p => {
                     const isSamePiece = p.samePiecePosition(playedPiece);
                     const isDestination = p.samePosition(destination);
-                    const isPawn = p.type === PieceType.PAWN;
-
                     if (isSamePiece) {
                         const newPosition = new Position(destination.x, destination.y);
-                        const shouldEnPassant = Math.abs(destination.y - p.position.y) === 2 && isPawn;
-
-                        const updatedPiece = p.clone({
-                            position: newPosition,
-                            enPassant: shouldEnPassant
-                        });
-                        const promotionRow = p.team === TeamType.WHITE ? 7 : 0;
-                        if (isPawn && destination.y === promotionRow) {
-                            modalRef.current?.classList.remove("hidden");
-                            setPromotionPawn(updatedPiece);
+                        const shouldEnPassant = Math.abs(destination.y - p.position.y) === 2;
+                        let updatedPiece = p.clone({ position: newPosition });
+                        if (p.isPawn()) {
+                            updatedPiece = p.clone({
+                                position: newPosition,
+                                enPassant: shouldEnPassant
+                            });
+                            const promotionRow = p.team === TeamType.WHITE ? 7 : 0;
+                            if (destination.y === promotionRow) {
+                                modalRef.current?.classList.remove("hidden");
+                                setPromotionPawn(updatedPiece);
+                            }
                         }
                         return updatedPiece;
                     }
                     else if (isDestination) {
                         return null;
                     }
-                    return p.clone({
-                        enPassant: false
-                    });
+                    if (p.isPawn()) {
+                        return p.clone({
+                            enPassant: false
+                        })
+                    }
+                    return p.clone();
                 }).filter(p => p !== null);
 
             const finalUpdatedPieces = updatedPieces.map(p => {
@@ -141,10 +144,7 @@ export default function Referee() {
         if (promotionPawn === undefined) return;
         const updatedPieces = pieces.map(p => {
             if (p.samePiecePosition(promotionPawn)) {
-                const updatedPiece = p.clone({
-                    type: pieceType,
-                    team: promotionPawn.team
-                });
+                const updatedPiece = new Piece(promotionPawn.position, pieceType, promotionPawn.team);
                 return updatedPiece;
             }
             return p;
