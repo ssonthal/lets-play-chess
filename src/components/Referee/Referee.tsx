@@ -18,12 +18,25 @@ export default function Referee() {
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
         if (playedPiece.possibleMoves === undefined) return false;
+
+        // prevent inactive side from playing
+        if (board.currentTeam !== playedPiece.team) return false;
+
+        // check if move is valid
         const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
         if (!validMove) return false;
+
+        // check if move is en passant
         const isEnPassant = isEnPassantMove(playedPiece.position.x, playedPiece.position.y, destination.x, destination.y, playedPiece.team, board.pieces);
+
+        // play move
         if (validMove || isEnPassant) {
+
             const newBoard = board.playMove(isEnPassant, playedPiece, destination);
+
             setBoard(newBoard);
+
+            // check if promotion
             const promotionRow = playedPiece.team === TeamType.WHITE ? 7 : 0;
             if (destination.y === promotionRow && playedPiece.type === PieceType.PAWN) {
                 modalRef.current?.classList.remove("hidden");
@@ -41,7 +54,7 @@ export default function Referee() {
             }
             return p;
         });
-        const updatedBoard = board.clone({ pieces: updatedPieces });
+        const updatedBoard = board.clone(updatedPieces);
         updatedBoard.calculateAllMoves();
         setBoard(updatedBoard);
         modalRef.current?.classList.add("hidden");
@@ -53,6 +66,7 @@ export default function Referee() {
     }
     return (
         <>
+            <p className="text-white text-xl">Turn: {board.totalTurns}</p>
             <div className="absolute inset-0 hidden" ref={modalRef}>
                 <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
                     <img onClick={() => promotePawn(PieceType.ROOK)} className="hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)] active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src={`src/assets/pieces/rook_${setPromotionTeam()}.png`}></img>
