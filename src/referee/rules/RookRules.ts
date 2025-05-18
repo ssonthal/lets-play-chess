@@ -23,3 +23,42 @@ export const rookMove = (initialPosition: Position, finalPosition: Position, boa
     }
     return false;
 }
+
+export const getValidRookMoves = (
+  initialPosition: Position,
+  boardState: Piece[],
+  team: TeamType
+): Position[] => {
+  const validMoves: Position[] = [];
+
+  const directions = [ 
+        [-1, 0], // left 
+        [1, 0], // right
+        [0, 1], // uop
+        [0, -1] // down
+    ];
+
+  for (const dir of directions) {
+    let x = initialPosition.x + dir[0];
+    let y = initialPosition.y + dir[1];
+
+    while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+      const targetPiece = boardState.find(
+        p => p.position.x === x && p.position.y === y
+      );
+
+      if (!targetPiece) {
+        validMoves.push(new Position(x,y));
+      } else {
+        if (targetPiece.team !== team) {
+          validMoves.push(new Position(x,y));
+        }
+        break; // Stop — rook cannot move past this
+      }
+      x += dir[0];
+      y += dir[1];
+    }
+  }
+
+  return validMoves;
+};

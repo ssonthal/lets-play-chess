@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { initialBoard } from "../../Constants";
 import { Piece, Position, Board } from "../../models";
 import { Chessboard } from "../Chessboard";
-import { isEnPassantMove, isValidMove } from "../../referee/rules";
+import { isEnPassantMove } from "../../referee/rules";
 import { PieceType, TeamType } from "../../Types";
 
 export default function Referee() {
@@ -17,7 +17,9 @@ export default function Referee() {
 
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
-        const validMove = isValidMove(playedPiece.position, destination, playedPiece.type, playedPiece.team, board.pieces);
+        if (playedPiece.possibleMoves === undefined) return false;
+        const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
+        if (!validMove) return false;
         const isEnPassant = isEnPassantMove(playedPiece.position.x, playedPiece.position.y, destination.x, destination.y, playedPiece.team, board.pieces);
         if (validMove || isEnPassant) {
             const newBoard = board.playMove(isEnPassant, playedPiece, destination);
@@ -35,8 +37,7 @@ export default function Referee() {
         if (promotionPawn === undefined) return;
         const updatedPieces = board.pieces.map(p => {
             if (p.samePiecePosition(promotionPawn)) {
-                const updatedPiece = new Piece(promotionPawn.position, pieceType, promotionPawn.team);
-                return updatedPiece;
+                return new Piece(promotionPawn.position.clone(), pieceType, promotionPawn.team);
             }
             return p;
         });

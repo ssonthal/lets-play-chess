@@ -1,4 +1,4 @@
-import { pawnMove, rookMove, bishopMove, kingMove, knightMove, isEnPassantMove} from "../referee/rules";
+import { pawnMove, rookMove, bishopMove, kingMove, isEnPassantMove, getValidKnightMoves, getValidRookMoves, getValidBishopMoves, getValidPawnMoves, getValidKingMoves} from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
 import { Pawn } from "./Pawn";
 import { Piece } from "./Piece";
@@ -11,38 +11,64 @@ export class Board {
     }
     calculateAllMoves() {
         for(const piece of this.pieces) {
-            piece.possibleMoves = this.getValidMoves(piece.position, piece.type, piece.team, this.pieces);
+            piece.possibleMoves = this.getValidMoves(piece);
         }
+        this.checkKingMoves();   
     }
-    getValidMoves(initialPosition: Position, type: PieceType, team: TeamType, currentBoardState: Piece[]): Position[] {
-        const validMoves: Position[] = [];
-        for (let x = 0; x < 8; x++) {
-            for (let y = 0; y < 8; y++) {
-                if (x == initialPosition.x && y == initialPosition.y) continue
-                const finalPosition = new Position(x, y);
-                switch(type) {
-                    case PieceType.PAWN:
-                        if(pawnMove(initialPosition, finalPosition, currentBoardState, team) || isEnPassantMove(initialPosition.x, initialPosition.y, finalPosition.x, finalPosition.y, team, currentBoardState)) {validMoves.push(finalPosition)}
+    checkKingMoves() {
+        const kings = this.pieces.filter(p => p.isKing);
+        for(const kingPiece of kings) {
+            for(const move of kingPiece.possibleMoves) {
+                const simulatedBoard = this.clone();
+                const pieceAtDestination = simulatedBoard.pieces.find(p => p.samePosition(move));
+                if(pieceAtDestination !== undefined) {
+                    simulatedBoard.pieces = simulatedBoard.pieces.filter(p => !p.samePiecePosition(pieceAtDestination));
+                }
+                const simulatedKing = simulatedBoard.pieces.find(p => p.isKing && p.team === kingPiece.team);
+                
+                simulatedKing!.position = move;
+                
+                let safe = true;
+                for(const enemy of simulatedBoard.pieces.filter(p => p.team !== kingPiece.team)) {
+                    enemy.possibleMoves = simulatedBoard.getValidMoves(enemy);
+                    if(enemy.isPawn) {
+                        if(enemy.possibleMoves.some(m => m.x !== simulatedKing!.position.x && m.equals(simulatedKing!.position))) {
+                            safe = false;
+                            break;
+                        }
+                    }
+                    if(enemy.possibleMoves.some(m => m.equals(simulatedKing!.position))) {
+                        safe = false;
                         break;
-                    case PieceType.ROOK:
-                        if(rookMove(initialPosition, finalPosition, currentBoardState, team)) {validMoves.push(finalPosition)}
-                        break;
-                    case PieceType.KNIGHT:
-                        if(knightMove(initialPosition, finalPosition, currentBoardState, team)) {validMoves.push(finalPosition)}
-                        break;
-                    case PieceType.BISHOP:
-                        if(bishopMove(initialPosition, finalPosition, currentBoardState, team)) {validMoves.push(finalPosition)}
-                        break;
-                    case PieceType.QUEEN:
-                        if(rookMove(initialPosition, finalPosition, currentBoardState, team) || bishopMove(initialPosition, finalPosition, currentBoardState, team)) {validMoves.push(finalPosition)}
-                        break;
-                    case PieceType.KING:
-                        if(kingMove(initialPosition, finalPosition, currentBoardState, team)) {validMoves.push(finalPosition)}
-                        break;
+                    }
+                }
+                if(!safe) {
+                    // remove the move from possible moves
+                    kingPiece.possibleMoves = kingPiece.possibleMoves.filter(m => !m.equals(move));
                 }
             }
         }
-        return validMoves;
+    }
+    getValidMoves(piece: Piece): Position[] {
+        switch(piece.type) {
+            case PieceType.PAWN:
+                return getValidPawnMoves(piece.position, this.pieces, piece.team);
+            case PieceType.ROOK:
+                return getValidRookMoves(piece.position, this.pieces, piece.team);
+            case PieceType.KNIGHT:
+                return getValidKnightMoves(piece.position, this.pieces, piece.team);
+            case PieceType.BISHOP:
+                return getValidBishopMoves(piece.position, this.pieces, piece.team);
+            case PieceType.QUEEN:
+                return [
+                    ...getValidRookMoves(piece.position, this.pieces, piece.team),
+                    ...getValidBishopMoves(piece.position, this.pieces, piece.team)
+                ];
+            case PieceType.KING:
+                return getValidKingMoves(piece.position, this.pieces, piece.team);
+            default:
+                return [];
+        }
     }
     playMove(isEnPassant: boolean, playedPiece: Piece, destination: Position) : Board {
         const clonedBoard = this.clone();
