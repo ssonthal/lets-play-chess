@@ -45,3 +45,5 @@ export const initialBoard: Board = new Board([
     new Piece(new Position(6, 0), PieceType.KNIGHT, TeamType.WHITE),            
     new Piece(new Position(7, 0), PieceType.ROOK, TeamType.WHITE)
 ], 1);
+
+initialBoard.calculateAllMoves();

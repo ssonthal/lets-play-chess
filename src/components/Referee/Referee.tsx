@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { initialBoard } from "../../Constants";
 import { Piece, Position, Board } from "../../models";
 import { Chessboard } from "../Chessboard";
@@ -6,15 +6,10 @@ import { isEnPassantMove } from "../../referee/rules";
 import { PieceType, TeamType } from "../../Types";
 
 export default function Referee() {
-    const [board, setBoard] = useState<Board>(initialBoard);
+    const [board, setBoard] = useState<Board>(initialBoard.clone());
     const modalRef = useRef<HTMLDivElement>(null);
-    const [promotionPawn, setPromotionPawn] = useState<Piece>()
-
-    useEffect(() => {
-        board.calculateAllMoves();
-        setBoard(board);
-    }, []);
-
+    const checkmateModalRef = useRef<HTMLDivElement>(null);
+    const [promotionPawn, setPromotionPawn] = useState<Piece>();
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
         if (playedPiece.possibleMoves === undefined) return false;
@@ -35,7 +30,10 @@ export default function Referee() {
             const newBoard = board.playMove(isEnPassant, playedPiece, destination);
 
             setBoard(newBoard);
-
+            if (newBoard.winningTeam !== undefined) {
+                checkmateModalRef.current?.classList.remove("hidden");
+                return true;
+            }
             // check if promotion
             const promotionRow = playedPiece.team === TeamType.WHITE ? 7 : 0;
             if (destination.y === promotionRow && playedPiece.type === PieceType.PAWN) {
@@ -64,6 +62,11 @@ export default function Referee() {
         if (promotionPawn === undefined) return "";
         return promotionPawn.team === TeamType.WHITE ? "w" : "b";
     }
+
+    function restartGame() {
+        checkmateModalRef.current?.classList.add("hidden");
+        setBoard(initialBoard.clone());
+    }
     return (
         <>
             <p className="text-white text-xl">Turn: {board.totalTurns}</p>
@@ -74,6 +77,14 @@ export default function Referee() {
                     <img onClick={() => promotePawn(PieceType.QUEEN)} className="hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)]  active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src={`src/assets/pieces/queen_${setPromotionTeam()}.png`}></img>
                     <img onClick={() => promotePawn(PieceType.KNIGHT)} className="hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)]  active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src={`src/assets/pieces/knight_${setPromotionTeam()}.png`}></img>
 
+                </div>
+            </div>
+            <div className="absolute inset-0 hidden" ref={checkmateModalRef}>
+                <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
+                    <div className="flex flex-col gap-8">
+                        <span className="text-2xl text-white">The winner team is {board.winningTeam === TeamType.WHITE ? "White" : "Black"} ! </span>
+                        <button onClick={restartGame} className="px-2 py-4 bg-[#b58962] text-2xl text-white rounded transition rounded-lg cursor-pointer"> Play Again </button>
+                    </div>
                 </div>
             </div>
             <Chessboard
