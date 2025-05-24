@@ -5,6 +5,7 @@ export interface PieceData {
   position: Position;
   type: PieceType;
   team: TeamType;
+  hasMoved: boolean;
   possibleMoves: Position[];
 }
 export class Piece {
@@ -13,12 +14,14 @@ export class Piece {
     type: PieceType;
     team: TeamType;
     possibleMoves : Position[];
-    constructor(position: Position, type: PieceType, team: TeamType, possibleMoves : Position[] = []) {
+    hasMoved: boolean;
+    constructor(position: Position, type: PieceType, team: TeamType, hasMoved: boolean = false, possibleMoves : Position[] = [], ) {
         this.image = `src/assets/pieces/${type}_${team}.png`;
         this.position = position;
         this.type = type;
         this.team = team;
         this.possibleMoves = possibleMoves;
+        this.hasMoved = hasMoved;
     }
 
     get isPawn() : boolean{
@@ -52,7 +55,9 @@ export class Piece {
             overrides.position ?? data.position.clone(),
             overrides.type ?? data.type,
             overrides.team ?? data.team,
-            overrides.possibleMoves ?? data.possibleMoves.map(p => p.clone())
+            overrides.hasMoved ?? data.hasMoved,
+            overrides.possibleMoves ?? data.possibleMoves.map(p => p.clone()),
+            
         );
     }
     getData(): PieceData {
@@ -60,6 +65,7 @@ export class Piece {
             position: this.position,
             type: this.type,
             team: this.team,
+            hasMoved: this.hasMoved,
             possibleMoves: this.possibleMoves
         };
     }

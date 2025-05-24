@@ -7,8 +7,8 @@ interface PawnData extends PieceData {
 }
 export class Pawn extends Piece {
     enPassant: boolean;
-    constructor(position: Position, team: TeamType, enPassant: boolean = false, possibleMoves? : Position[]) {
-        super(position, PieceType.PAWN, team, possibleMoves);
+    constructor(position: Position, team: TeamType, enPassant: boolean = false, hasMoved: boolean = false, possibleMoves? : Position[]) {
+        super(position, PieceType.PAWN, team, hasMoved, possibleMoves);
         this.enPassant = enPassant;
     }
     override clone(overrides: Partial<PawnData> = {}): Pawn {
@@ -17,6 +17,7 @@ export class Pawn extends Piece {
       overrides.position ?? data.position.clone(),
       overrides.team ?? data.team,
       overrides.enPassant ?? this.enPassant,
+      overrides.hasMoved ?? data.hasMoved,
       overrides.possibleMoves ?? data.possibleMoves
     );
   }

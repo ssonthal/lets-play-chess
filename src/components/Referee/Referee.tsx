@@ -50,7 +50,7 @@ export default function Referee() {
         if (promotionPawn === undefined) return;
         const updatedPieces = board.pieces.map(p => {
             if (p.samePiecePosition(promotionPawn)) {
-                return new Piece(promotionPawn.position.clone(), pieceType, promotionPawn.team);
+                return new Piece(promotionPawn.position.clone(), pieceType, promotionPawn.team, true);
             }
             return p;
         });

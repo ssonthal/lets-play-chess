@@ -40,3 +40,50 @@ export const getValidKingMoves = (
     }
     return validMoves
 }
+
+export const getCastlingMoves = (king: Piece, boardState: Piece[]) : Position[] => {
+    const validMoves: Position[] = [];
+
+    if(king.hasMoved) return validMoves;
+
+    // get the rooks from the king's team which haven't moved...
+    const rooks = boardState.filter(p => p.isRook && p.team === king.team && !p.hasMoved);
+
+    // loop through the rooks
+    for(const rook of rooks) {
+
+        const dx = (king.position.x - rook.position.x > 0) ? 1 : -1;
+        const adjacentPosition = king.position.clone();
+        adjacentPosition.x -= dx;
+
+        if(!rook.possibleMoves?.some(m => m.equals(adjacentPosition))) continue;
+
+        // getting valid moves for rook at the same row level
+        const concerningTiles = rook.possibleMoves.filter(m => m.y === king.position.y);
+
+        let valid = true;
+        
+        // iterating over all the enemy moves and checking if they are on the concerned tiles
+        for(const enemy of boardState.filter(p => p.team !== king.team)) {
+            for(const possibleMove of enemy.possibleMoves) {
+                if(king.position.equals(possibleMove)) {
+                    valid = false;
+                }
+                else if(rook.position.equals(possibleMove)) {
+                    valid = false;
+                }
+                for(const tile of concerningTiles) {
+                    if(possibleMove.equals(tile)) {
+                        valid = false;
+                    }
+                }
+            }
+        }
+        console.log("reaching here 5");
+        if(!valid) continue;
+        // pushing castling position (2 moves to the side) as valid moves for the king.
+        validMoves.push(new Position(king.position.x - 2 * dx, king.position.y));
+        console.log("reaching here 6");
+    }
+    return validMoves;
+}

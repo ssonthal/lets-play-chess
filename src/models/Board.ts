@@ -1,4 +1,4 @@
-import {getValidKnightMoves, getValidRookMoves, getValidBishopMoves, getValidPawnMoves, getValidKingMoves} from "../referee/rules";
+import {getValidKnightMoves, getValidRookMoves, getValidBishopMoves, getValidPawnMoves, getValidKingMoves, getCastlingMoves} from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
 import { Pawn } from "./Pawn";
 import { Piece } from "./Piece";
@@ -16,7 +16,15 @@ export class Board {
         for(const piece of this.pieces) {
             piece.possibleMoves = this.getValidMoves(piece);
         }
-
+        
+        // calculate castling moves
+        for(const king of this.pieces.filter(p => p.isKing)) {
+            if(king.possibleMoves === undefined)continue;
+            king.possibleMoves = [
+                ...king.possibleMoves, 
+                ...getCastlingMoves(king, this.pieces)
+            ];
+        }
         // check if the current team moves are valid
         this.checkCurrentTeamMoves();  
 
@@ -91,7 +99,19 @@ export class Board {
         const clonedBoard = this.clone();
         clonedBoard.totalTurns++;
         // special case for an en passant move
-        if (isEnPassant) {
+        if(playedPiece.isKing && (destination.x === playedPiece.position.x + 2 || destination.x === playedPiece.position.x - 2)) {
+            const castlingRookPosition = destination.x > playedPiece.position.x ? new Position(7, playedPiece.position.y) : new Position(0, playedPiece.position.y);
+            clonedBoard.pieces = clonedBoard.pieces.map(p => {
+                if (p.samePiecePosition(playedPiece)) {
+                    p.position = new Position(destination.x, destination.y);
+                }
+                else if (p.samePosition(castlingRookPosition)) {
+                    p.position = destination.x > playedPiece.position.x ? new Position(destination.x - 1, destination.y) : new Position(destination.x + 1, destination.y);
+                }
+                return p.clone();
+            });
+        }
+        else if (isEnPassant) {
             const pawnDirection = playedPiece.team == TeamType.WHITE ? 1 : -1;
             clonedBoard.pieces  = clonedBoard.pieces.map(p => {
                 const isSamePiece = p.samePiecePosition(playedPiece);
@@ -102,7 +122,8 @@ export class Board {
                     const newPosition = new Position(destination.x, destination.y);
                     const updatedPiece = (p as Pawn).clone({
                         position: newPosition,
-                        enPassant: false
+                        enPassant: false,
+                        hasMoved: true
                     });
                     return updatedPiece;
                 // removing the piece that was captured
@@ -127,7 +148,8 @@ export class Board {
                     if (p.isPawn) {
                         updatedPiece = (p as Pawn).clone({
                             position: newPosition,
-                            enPassant: shouldEnPassant
+                            enPassant: shouldEnPassant,
+                            hasMoved: true
                         });
                     }
                     return updatedPiece;
