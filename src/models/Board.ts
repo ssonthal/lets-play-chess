@@ -1,5 +1,6 @@
 import {getValidKnightMoves, getValidRookMoves, getValidBishopMoves, getValidPawnMoves, getValidKingMoves, getCastlingMoves} from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
+import { Move } from "./Move";
 import { Pawn } from "./Pawn";
 import { Piece } from "./Piece";
 import { Position } from "./Position";
@@ -9,9 +10,11 @@ export class Board {
     totalTurns : number;
     winningTeam?: TeamType;
     statemate? : boolean;
-    constructor(pieces: Piece[], totalTurns: number) {
+    moves: Move[];
+    constructor(pieces: Piece[], totalTurns: number, moves: Move[]) {
         this.pieces = pieces;
         this.totalTurns = totalTurns;
+        this.moves = moves;
     }
     calculateAllMoves() {
         // calculate the moves of all pieces
@@ -115,7 +118,8 @@ export class Board {
     playMove(isEnPassant: boolean, playedPiece: Piece, destination: Position) : Board {
         const clonedBoard = this.clone();
         clonedBoard.totalTurns++;
-        // special case for an en passant move
+        
+        // castling
         if(playedPiece.isKing && (destination.x === playedPiece.position.x + 2 || destination.x === playedPiece.position.x - 2)) {
             const castlingRookPosition = destination.x > playedPiece.position.x ? new Position(7, playedPiece.position.y) : new Position(0, playedPiece.position.y);
             clonedBoard.pieces = clonedBoard.pieces.map(p => {
@@ -128,6 +132,7 @@ export class Board {
                 return p.clone();
             });
         }
+        // en-passant move
         else if (isEnPassant) {
             const pawnDirection = playedPiece.team == TeamType.WHITE ? 1 : -1;
             clonedBoard.pieces  = clonedBoard.pieces.map(p => {
@@ -184,10 +189,14 @@ export class Board {
             }).filter(p => p !== null);
         }
         clonedBoard.calculateAllMoves();
+        clonedBoard.moves.push(new Move(
+            playedPiece.team,
+            playedPiece.type,
+            playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
         return clonedBoard;
     }
     clone(overrides?: Piece[]): Board {
         const clonedPieces = (overrides ?? this.pieces).map(p => p.clone());
-        return new Board(clonedPieces, this.totalTurns);
+        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()));
     }
 }

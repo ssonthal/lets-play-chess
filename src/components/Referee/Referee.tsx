@@ -73,7 +73,6 @@ export default function Referee() {
     }
     return (
         <>
-            <p className="text-white text-xl">Turn: {board.totalTurns}</p>
             <div className="absolute inset-0 hidden" ref={modalRef}>
                 <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
                     <img onClick={() => promotePawn(PieceType.ROOK)} className="hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)] active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]" src={`src/assets/pieces/rook_${setPromotionTeam()}.png`}></img>
@@ -91,10 +90,23 @@ export default function Referee() {
                     </div>
                 </div>
             </div>
-            <Chessboard
-                playMove={playMove}
-                pieces={board.pieces}
-            />
+            <main className="flex gap-4">
+                <Chessboard
+                    playMove={playMove}
+                    pieces={board.pieces}
+                />
+                <div className="w-[240px] max-h-[800px] p-4  bg-[rgba(255,255,255,0.1)] rounded-md text-white">
+                    <div className="text-xl text-center">
+                        <p>Total Turns: {board.totalTurns}</p>
+                        <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
+                    </div>
+                    <div className="flex flex-col h-[calc(100% - 56px)] overflow-y-auto p-2  gap-[0.75rem] text-sm mt-4">
+                        <p>Move History:</p>
+                        {board.moves.map((move, index) => <p key={index}>{index + 1}. {move.toMessage()}</p>)}
+                    </div>
+                </div>
+            </main>
+
         </>
     )
 }
