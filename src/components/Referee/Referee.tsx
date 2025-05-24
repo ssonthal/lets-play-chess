@@ -8,7 +8,7 @@ import { PieceType, TeamType } from "../../Types";
 export default function Referee() {
     const [board, setBoard] = useState<Board>(initialBoard.clone());
     const modalRef = useRef<HTMLDivElement>(null);
-    const checkmateModalRef = useRef<HTMLDivElement>(null);
+    const endgameModalRef = useRef<HTMLDivElement>(null);
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
@@ -31,7 +31,11 @@ export default function Referee() {
 
             setBoard(newBoard);
             if (newBoard.winningTeam !== undefined) {
-                checkmateModalRef.current?.classList.remove("hidden");
+                endgameModalRef.current?.classList.remove("hidden");
+                return true;
+            }
+            else if (newBoard.winningTeam === undefined && newBoard.statemate) {
+                endgameModalRef.current?.classList.remove("hidden");
                 return true;
             }
             // check if promotion
@@ -64,7 +68,7 @@ export default function Referee() {
     }
 
     function restartGame() {
-        checkmateModalRef.current?.classList.add("hidden");
+        endgameModalRef.current?.classList.add("hidden");
         setBoard(initialBoard.clone());
     }
     return (
@@ -79,10 +83,10 @@ export default function Referee() {
 
                 </div>
             </div>
-            <div className="absolute inset-0 hidden" ref={checkmateModalRef}>
+            <div className="absolute inset-0 hidden" ref={endgameModalRef}>
                 <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
                     <div className="flex flex-col gap-8">
-                        <span className="text-2xl text-white">The winner team is {board.winningTeam === TeamType.WHITE ? "White" : "Black"} ! </span>
+                        <span className="text-2xl text-white">{board.winningTeam === undefined ? "Oops... It's a stalemate" : `The winner team is ${board.winningTeam === TeamType.WHITE ? "White" : "Black"}`}!! </span>
                         <button onClick={restartGame} className="px-2 py-4 bg-[#b58962] text-2xl text-white rounded transition rounded-lg cursor-pointer"> Play Again </button>
                     </div>
                 </div>

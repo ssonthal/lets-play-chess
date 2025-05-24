@@ -8,6 +8,7 @@ export class Board {
     pieces: Piece[];
     totalTurns : number;
     winningTeam?: TeamType;
+    statemate? : boolean;
     constructor(pieces: Piece[], totalTurns: number) {
         this.pieces = pieces;
         this.totalTurns = totalTurns;
@@ -29,6 +30,7 @@ export class Board {
         // check if the current team moves are valid
         this.checkCurrentTeamMoves();  
 
+        const enemyMoves = this.pieces.filter(p => p.team !== this.currentTeam).flatMap(p => p.possibleMoves);
         // remove the possilbe moves for the team that is not playing
         for(const piece of this.pieces) {
             if(piece.team !== this.currentTeam) {
@@ -40,8 +42,16 @@ export class Board {
         // otherwise, checkmate!!
         if(this.pieces.filter(p => p.team === this.currentTeam).some(p => p.possibleMoves.length > 0)) return;
 
-        this.winningTeam = this.currentTeam === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
-        
+        // check if the other team still has moves left
+        // otherwise, stalemate!!
+        const kingPosition = this.pieces.find(p => p.isKing && p.team === this.currentTeam)!.position;
+        if(!enemyMoves.some(p => p.equals(kingPosition))) {
+            // stalemate !!
+            this.statemate = true;
+        } else {
+            // checkmate !!
+            this.winningTeam = this.currentTeam === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
+        }
     }
     get currentTeam() : TeamType{
         return this.totalTurns % 2 == 0 ? TeamType.BLACK : TeamType.WHITE;
