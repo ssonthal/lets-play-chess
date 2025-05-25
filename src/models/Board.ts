@@ -9,12 +9,15 @@ export class Board {
     pieces: Piece[];
     totalTurns : number;
     winningTeam?: TeamType;
-    statemate? : boolean;
+    statemate : boolean;
     moves: Move[];
+    draw: boolean;
     constructor(pieces: Piece[], totalTurns: number, moves: Move[]) {
         this.pieces = pieces;
         this.totalTurns = totalTurns;
         this.moves = moves;
+        this.statemate = false;
+        this.draw = false;
     }
     calculateAllMoves() {
         // calculate the moves of all pieces

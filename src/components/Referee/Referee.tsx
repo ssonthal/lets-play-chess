@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { initialBoard } from "../../Constants";
 import { Piece, Position, Board } from "../../models";
 import { Chessboard } from "../Chessboard";
@@ -9,7 +9,12 @@ export default function Referee() {
     const [board, setBoard] = useState<Board>(initialBoard.clone());
     const modalRef = useRef<HTMLDivElement>(null);
     const endgameModalRef = useRef<HTMLDivElement>(null);
+    const bottomRef = useRef<HTMLDivElement>(null);
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
+
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [board.moves.length]);
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
         if (playedPiece.possibleMoves === undefined) return false;
@@ -95,14 +100,20 @@ export default function Referee() {
                     playMove={playMove}
                     pieces={board.pieces}
                 />
-                <div className="w-[240px] max-h-[800px] p-4  bg-[rgba(255,255,255,0.1)] rounded-md text-white">
-                    <div className="text-xl text-center">
+                <div className="w-[240px] max-h-[800px] p-4  bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col">
+                    <div className="text-xl text-center mb-2">
                         <p>Total Turns: {board.totalTurns}</p>
                         <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
                     </div>
-                    <div className="flex flex-col h-[calc(100% - 56px)] overflow-y-auto p-2  gap-[0.75rem] text-sm mt-4">
-                        <p>Move History:</p>
-                        {board.moves.map((move, index) => <p key={index}>{index + 1}. {move.toMessage()}</p>)}
+                    {/*  Moves list */}
+                    <div className="flex flex-col h-[calc(100%-58px)] overflow-y-auto scrollable p-2 gap-3 text-sm">
+                        {board.moves.map((move, index) => (
+                            <p className="mt-auto" key={index}>
+                                {index + 1}. {move.toMessage()}
+                            </p>
+                        ))}
+                        {/* Scroll anchor */}
+                        <div ref={bottomRef} />
                     </div>
                 </div>
             </main>
