@@ -196,7 +196,26 @@ export class Board {
             playedPiece.team,
             playedPiece.type,
             playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
+        clonedBoard.checkForDraw();
         return clonedBoard;
+    }
+    checkForDraw() : void {
+        // Check for draw
+        const whiteEligibleForDraw = 
+        this.pieces.filter(p => p.team == TeamType.WHITE).length == 1 || (this.pieces.filter(p => p.team === TeamType.WHITE).length == 2 && this.pieces.filter(p => p.team === TeamType.WHITE && (p.isKing || p.isKnight || p.isBishop)).length === 2);
+        
+        const blackEligibleForDraw = 
+        this.pieces.filter(p => p.team == TeamType.BLACK).length == 1 || (this.pieces.filter(p => p.team === TeamType.BLACK).length == 2 && this.pieces.filter(p => p.team === TeamType.BLACK && (p.isKing || p.isKnight || p.isBishop)).length === 2);
+        
+        if (whiteEligibleForDraw && blackEligibleForDraw){
+            this.draw = true;
+        } else if (this.pieces.filter(p => p.team === TeamType.WHITE).length == 3 && this.pieces.filter(p => p.team === TeamType.WHITE && p.isKnight).length == 2 && this.pieces.filter(p => p.team === TeamType.BLACK).length == 1){
+            // One lone king and one king with 2 knights is draw (white team)
+            this.draw = true;
+        } else if (this.pieces.filter(p => p.team === TeamType.BLACK).length == 3 && this.pieces.filter(p => p.team === TeamType.BLACK && p.isKnight).length == 2 && this.pieces.filter(p => p.team === TeamType.WHITE).length == 1){
+            // One lone king and one king with 2 knights is draw (black team)
+            this.draw = true;
+        }
     }
     clone(overrides?: Piece[]): Board {
         const clonedPieces = (overrides ?? this.pieces).map(p => p.clone());
