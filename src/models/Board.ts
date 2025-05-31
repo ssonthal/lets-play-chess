@@ -15,15 +15,16 @@ export class Board {
     moves: Move[];
     draw: boolean;
     boardHistory: {[key: string]: number};
+    turnsWithNoCaptureOrPawnMove : number;
     
-    
-    constructor(pieces: Piece[], totalTurns: number, moves: Move[], boardHistory: {[key: string]: number} = {}) {
+    constructor(pieces: Piece[], totalTurns: number, moves: Move[], boardHistory: {[key: string]: number} = {}, turnsWithNoCaptureOrPawnMove = 0) {
         this.pieces = pieces;
         this.totalTurns = totalTurns;
         this.moves = moves;
         this.statemate = false;
         this.draw = false;
         this.boardHistory = boardHistory;
+        this.turnsWithNoCaptureOrPawnMove = turnsWithNoCaptureOrPawnMove;
     }
     
     calculateAllMoves() {
@@ -52,6 +53,7 @@ export class Board {
         }
         this.checkForDraw();
         this.checkforThreeFoldRepitition();
+        this.checkForFiftyMoveRule();
         // check if the playing team still has moves left
         // otherwise, checkmate!!
         if(this.pieces.filter(p => p.team === this.currentTeam).some(p => p.possibleMoves.length > 0)) return;
@@ -119,7 +121,7 @@ export class Board {
     playMove(isEnPassant: boolean, playedPiece: Piece, destination: Position) : Board {
         const clonedBoard = this.clone();
         clonedBoard.totalTurns++;
-        
+        let piecesBeforeMove = clonedBoard.pieces.length;
         // castling
         if(playedPiece.isKing && (destination.x === playedPiece.position.x + 2 || destination.x === playedPiece.position.x - 2)) {
             const castlingRookPosition = destination.x > playedPiece.position.x ? new Position(7, playedPiece.position.y) : new Position(0, playedPiece.position.y);
@@ -189,12 +191,25 @@ export class Board {
                 return p.clone();
             }).filter(p => p !== null);
         }
+
+        if(playedPiece.type === PieceType.PAWN || clonedBoard.pieces.length < piecesBeforeMove) {
+            clonedBoard.turnsWithNoCaptureOrPawnMove = 0;
+        } else {
+            clonedBoard.turnsWithNoCaptureOrPawnMove++;
+        }
+
         clonedBoard.calculateAllMoves();
         this.moves.push(new Move(
             playedPiece.team,
             playedPiece.type,
-            playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
+            playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination)))); 
+        
         return clonedBoard;
+    }
+    checkForFiftyMoveRule(): void {
+        if(this.turnsWithNoCaptureOrPawnMove >= 50) {
+            this.draw = true;
+        }
     }
     checkStaleMate(enemyMoves: (Position | undefined)[]): void {
         // check if the other team still has moves left
@@ -241,6 +256,6 @@ export class Board {
     }
     clone(overrides?: Piece[]): Board {
         const clonedPieces = (overrides ?? this.pieces).map(p => p.clone());
-        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()), this.boardHistory);
+        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()), this.boardHistory, this.turnsWithNoCaptureOrPawnMove);
     }
 }
