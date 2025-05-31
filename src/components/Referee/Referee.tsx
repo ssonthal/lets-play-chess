@@ -36,21 +36,7 @@ export default function Referee() {
             const newBoard = board.playMove(isEnPassant, playedPiece, destination);
 
             setBoard(newBoard);
-            if (newBoard.draw) {
-                endgameModalRef.current?.classList.remove("hidden");
-                setEndgameMsg("Draw!");
-                return true;
-            }
-            else if (newBoard.winningTeam !== undefined) {
-                endgameModalRef.current?.classList.remove("hidden");
-                setEndgameMsg(newBoard.winningTeam === TeamType.WHITE ? "White wins" : "Black wins");
-                return true;
-            }
-            else if (newBoard.winningTeam === undefined && newBoard.statemate) {
-                endgameModalRef.current?.classList.remove("hidden");
-                setEndgameMsg("Statemate");
-                return true;
-            }
+            checkForEndGame(newBoard);
             // check if promotion
             const promotionRow = playedPiece.team === TeamType.WHITE ? 7 : 0;
             if (destination.y === promotionRow && playedPiece.type === PieceType.PAWN) {
@@ -72,6 +58,7 @@ export default function Referee() {
         const updatedBoard = board.clone(updatedPieces);
         updatedBoard.calculateAllMoves();
         setBoard(updatedBoard);
+        checkForEndGame(updatedBoard)
         modalRef.current?.classList.add("hidden");
     }
 
@@ -83,6 +70,24 @@ export default function Referee() {
     function restartGame() {
         endgameModalRef.current?.classList.add("hidden");
         setBoard(initialBoard.clone());
+    }
+
+    function checkForEndGame(newBoard: Board) {
+        if (newBoard.draw) {
+            endgameModalRef.current?.classList.remove("hidden");
+            setEndgameMsg("Draw!");
+            return true;
+        }
+        else if (newBoard.winningTeam !== undefined) {
+            endgameModalRef.current?.classList.remove("hidden");
+            setEndgameMsg(newBoard.winningTeam === TeamType.WHITE ? "White wins" : "Black wins");
+            return true;
+        }
+        else if (newBoard.winningTeam === undefined && newBoard.statemate) {
+            endgameModalRef.current?.classList.remove("hidden");
+            setEndgameMsg("Statemate");
+            return true;
+        }
     }
     return (
         <>

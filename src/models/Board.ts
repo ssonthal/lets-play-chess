@@ -4,21 +4,28 @@ import { Move } from "./Move";
 import { Pawn } from "./Pawn";
 import { Piece } from "./Piece";
 import { Position } from "./Position";
+import { SimplifiedPiece } from "./SimplifiedPiece";
 
 export class Board {
+    
     pieces: Piece[];
     totalTurns : number;
     winningTeam?: TeamType;
     statemate : boolean;
     moves: Move[];
     draw: boolean;
-    constructor(pieces: Piece[], totalTurns: number, moves: Move[]) {
+    boardHistory: {[key: string]: number};
+    
+    
+    constructor(pieces: Piece[], totalTurns: number, moves: Move[], boardHistory: {[key: string]: number} = {}) {
         this.pieces = pieces;
         this.totalTurns = totalTurns;
         this.moves = moves;
         this.statemate = false;
         this.draw = false;
+        this.boardHistory = boardHistory;
     }
+    
     calculateAllMoves() {
         // calculate the moves of all pieces
         for(const piece of this.pieces) {
@@ -43,21 +50,12 @@ export class Board {
                 piece.possibleMoves = [];
             }
         }
-
+        this.checkForDraw();
+        this.checkforThreeFoldRepitition();
         // check if the playing team still has moves left
         // otherwise, checkmate!!
         if(this.pieces.filter(p => p.team === this.currentTeam).some(p => p.possibleMoves.length > 0)) return;
-
-        // check if the other team still has moves left
-        // otherwise, stalemate!!
-        const kingPosition = this.pieces.find(p => p.isKing && p.team === this.currentTeam)!.position;
-        if(!enemyMoves.some(p => p.equals(kingPosition))) {
-            // stalemate !!
-            this.statemate = true;
-        } else {
-            // checkmate !!
-            this.winningTeam = this.currentTeam === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
-        }
+        this.checkStaleMate(enemyMoves);
     }
     get currentTeam() : TeamType{
         return this.totalTurns % 2 == 0 ? TeamType.BLACK : TeamType.WHITE;
@@ -192,12 +190,36 @@ export class Board {
             }).filter(p => p !== null);
         }
         clonedBoard.calculateAllMoves();
-        clonedBoard.moves.push(new Move(
+        this.moves.push(new Move(
             playedPiece.team,
             playedPiece.type,
             playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
-        clonedBoard.checkForDraw();
         return clonedBoard;
+    }
+    checkStaleMate(enemyMoves: (Position | undefined)[]): void {
+        // check if the other team still has moves left
+        // otherwise, stalemate!!
+        const kingPosition = this.pieces.find(p => p.isKing && p.team === this.currentTeam)!.position;
+        if(!enemyMoves.some(p => p?.equals(kingPosition))) {
+            // stalemate !!
+            this.statemate = true;
+        } else {
+            // checkmate !!
+            this.winningTeam = this.currentTeam === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
+        }
+    }
+    checkforThreeFoldRepitition() : void {
+        const simplifiedPieces = this.pieces.map(p => new SimplifiedPiece(p));
+        const simplifiedPiecesStringified = JSON.stringify(simplifiedPieces);
+        const valFromArray = this.boardHistory[simplifiedPiecesStringified];
+        if (valFromArray === undefined) {
+            this.boardHistory[simplifiedPiecesStringified] = 1;
+        } else {
+            this.boardHistory[simplifiedPiecesStringified] += 1;
+        }
+        if(this.boardHistory[simplifiedPiecesStringified] === 3) {
+            this.draw = true;
+        }
     }
     checkForDraw() : void {
         // Check for draw
@@ -219,6 +241,6 @@ export class Board {
     }
     clone(overrides?: Piece[]): Board {
         const clonedPieces = (overrides ?? this.pieces).map(p => p.clone());
-        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()));
+        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()), this.boardHistory);
     }
 }
