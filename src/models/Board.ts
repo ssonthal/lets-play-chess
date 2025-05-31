@@ -199,7 +199,7 @@ export class Board {
         }
 
         clonedBoard.calculateAllMoves();
-        this.moves.push(new Move(
+        clonedBoard.moves.push(new Move(
             playedPiece.team,
             playedPiece.type,
             playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination)))); 

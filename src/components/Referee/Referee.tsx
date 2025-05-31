@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { initialBoard } from "../../Constants";
+import { initialBoard, TILE_SIZE } from "../../Constants";
 import { Piece, Position, Board } from "../../models";
 import { Chessboard } from "../Chessboard";
 import { isEnPassantMove } from "../../referee/rules";
@@ -100,7 +100,7 @@ export default function Referee() {
 
                 </div>
             </div>
-            <div className="absolute inset-0 hidden" ref={endgameModalRef}>
+            <div className="absolute inset-0 hidden z-50" ref={endgameModalRef}>
                 <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
                     <div className="flex flex-col gap-8">
                         <span className="text-2xl text-white">{endgameMsg}</span>
@@ -113,7 +113,7 @@ export default function Referee() {
                     playMove={playMove}
                     pieces={board.pieces}
                 />
-                <div className="w-[240px] max-h-[800px] p-4  bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col">
+                <div className="w-[240px] p-4  bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col" style={{ maxHeight: `${8 * TILE_SIZE}px` }}>
                     <div className="text-xl text-center mb-2">
                         <p>Total Turns: {board.totalTurns}</p>
                         <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
