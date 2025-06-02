@@ -15,7 +15,7 @@ export default function GameRoom() {
     });
   };
 
-  const joinGame = (id: string | null) => {
+  const joinGame = (id: string) => {
     socket.emit('join-game', id, ({ success, color }: { success: boolean, color: string }) => {
       if (success) {
         setGameId(id);
@@ -48,13 +48,18 @@ export default function GameRoom() {
       socket.off('start-game');
     };
   }, []);
-
+  const handleJoinRoom = () => {
+    const gameId = prompt("Enter Game ID");
+    if (gameId) {
+      joinGame(gameId);
+    }
+  }
   return (
     <div>
       {!gameId && (
         <>
           <button onClick={createGame}>Create Game</button>
-          <button onClick={() => joinGame(prompt("Enter Game ID"))}>Join Game</button>
+          <button onClick={handleJoinRoom}>Join Game</button>
         </>
       )}
 
