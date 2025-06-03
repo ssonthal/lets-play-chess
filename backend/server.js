@@ -1,51 +1,82 @@
-const express = require('express');
-const http = require('http');
-const { Server } = require('socket.io');
+// server.js
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // Your React frontend
-    methods: ["GET", "POST"]
-  }
+    origin: "*", // Allow all clients for dev
+  },
 });
 
-const games = {};
+const PORT = 3000;
 
-io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
+// In-memory game store
+const games = {}; // gameId => { white: socket.id, black: socket.id }
 
-  socket.on('create-game', (callback) => {
-    const gameId = Math.random().toString(36).substr(2, 6);
+io.on("connection", (socket) => {
+  console.log(`⚡ New connection: ${socket.id}`);
+
+  socket.on("create-game", () => {
+    const gameId = uuidv4();
+    games[gameId] = { white: socket.id, black: null };
     socket.join(gameId);
-    games[gameId] = { players: [socket.id] };
-    callback({ gameId, color: 'white' });
+    console.log(`🎯 Game created: ${gameId}`);
+    socket.emit("game-start", { gameId, color: "w" });
   });
 
-  socket.on('join-game', (gameId, callback) => {
+  socket.on("join-game", (gameId) => {
     const game = games[gameId];
-    if (game && game.players.length === 1) {
-      socket.join(gameId);
-      game.players.push(socket.id);
-      callback({ success: true, color: 'black' });
-      io.to(gameId).emit('start-game');
-    } else {
-      callback({ success: false, message: 'Invalid or full game' });
+
+    if (!game) {
+      socket.emit("error", "Game ID not found.");
+      return;
+    }
+
+    if (game.black) {
+      socket.emit("error", "Game already has two players.");
+      return;
+    }
+
+    game.black = socket.id;
+    socket.join(gameId);
+    console.log(`🎯 Player joined game: ${gameId}`);
+
+    // Notify joining player
+    socket.emit("game-start", { gameId, color: "b" });
+
+    // Notify creator that black joined (optional)
+    io.to(game.white).emit("player-joined", { message: "Black joined" });
+  });
+
+  socket.on("move", ({ gameId, move }) => {
+    const game = games[gameId];
+    if (!game) return;
+
+    const opponentId = socket.id === game.white ? game.black : game.white;
+    if (opponentId) {
+      io.to(opponentId).emit("opponent-move", move);
     }
   });
 
-  socket.on('move', ({ gameId, move }) => {
-    socket.to(gameId).emit('opponent-move', move);
-  });
+  socket.on("disconnect", () => {
+    console.log(`🔥 Disconnected: ${socket.id}`);
 
-  socket.on('disconnect', () => {
-    console.log(`User disconnected: ${socket.id}`);
+    // Clean up
+    for (const gameId in games) {
+      const game = games[gameId];
+      if (game.white === socket.id || game.black === socket.id) {
+        io.to(gameId).emit("opponent-disconnected");
+        delete games[gameId];
+        break;
+      }
+    }
   });
 });
 
-server.listen(4000, () => {
-  console.log('Socket.IO server running on port 4000');
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
-

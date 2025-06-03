@@ -5,6 +5,7 @@ import { Chessboard } from "./Chessboard";
 import { isEnPassantMove } from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
 import { Socket } from "socket.io-client";
+import { Move } from "../models/Move";
 
 // 👇 Pass these props from parent
 interface GameRoomProps {
@@ -30,7 +31,10 @@ export default function GameRoom({ socket, gameId, playerColor }: GameRoomProps)
     // 📡 Listen for opponent's move
     useEffect(() => {
         socket.on("opponent-move", (move: { from: Position; to: Position }) => {
+            
             const piece = board.pieces.find(p => p.samePosition(move.from));
+            const newMove = new Move(piece!.team, piece!.type, move.from, move.to);
+            console.log("opponent-move", move);
             if (piece) {
                 playMove(piece, move.to, false); // Don't emit again
             }
@@ -44,12 +48,13 @@ export default function GameRoom({ socket, gameId, playerColor }: GameRoomProps)
     function playMove(playedPiece: Piece, destination: Position, shouldEmit = true): boolean {
         if (playedPiece.possibleMoves === undefined) return false;
 
-        // prevent move if not your turn
-        if (board.currentTeam !== playerColor) return false;
+        console.log(playerColor, "playerColor");
+        console.log(board.currentTeam, "board.currentTeam");
+        console.log(board.totalTurns, "totalTurns");
 
         const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
         if (!validMove) return false;
-
+        console.log(validMove, "validMove");
         const isEnPassant = isEnPassantMove(
             playedPiece.position.x,
             playedPiece.position.y,

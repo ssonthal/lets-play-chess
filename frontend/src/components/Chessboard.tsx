@@ -83,12 +83,14 @@ export function Chessboard({ playMove, pieces }: Props) {
             const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 8 * TILE_SIZE) / TILE_SIZE));
             const currentPiece = pieces.find(p => p.samePosition(grabPosition));
             if (currentPiece) {
+                console.log("Playing move", currentPiece, new Position(x, y));
                 const success = playMove(currentPiece, new Position(x, y));
                 if (!success) {
                     activePiece.style.position = "relative";
                     activePiece.style.removeProperty("left");
                     activePiece.style.removeProperty("top");
                 }
+
             }
             setActivePiece(null);
         }
