@@ -79,11 +79,9 @@ export const getCastlingMoves = (king: Piece, boardState: Piece[]) : Position[] 
                 }
             }
         }
-        console.log("reaching here 5");
         if(!valid) continue;
         // pushing castling position (2 moves to the side) as valid moves for the king.
         validMoves.push(new Position(king.position.x - 2 * dx, king.position.y));
-        console.log("reaching here 6");
     }
     return validMoves;
 }

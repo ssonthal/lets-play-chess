@@ -9,7 +9,6 @@ function App() {
   const [gameId, setGameId] = useState<string | null>(null);
   const [playerColor, setPlayerColor] = useState<TeamType | null>(null);
   const [isGameStarted, setIsGameStarted] = useState(false);
-
   useEffect(() => {
     // When server assigns player color
     socket.on("game-start", ({ gameId, color }: { gameId: string; color: TeamType }) => {

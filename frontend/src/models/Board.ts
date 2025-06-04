@@ -46,11 +46,11 @@ export class Board {
 
         const enemyMoves = this.pieces.filter(p => p.team !== this.currentTeam).flatMap(p => p.possibleMoves);
         // remove the possilbe moves for the team that is not playing
-        // for(const piece of this.pieces) {
-        //     if(piece.team !== this.currentTeam) {
-        //         piece.possibleMoves = [];
-        //     }
-        // }
+        for(const piece of this.pieces) {
+            if(piece.team !== this.currentTeam) {
+                piece.possibleMoves = [];
+            }
+        }
         this.checkForDraw();
         this.checkforThreeFoldRepitition();
         this.checkForFiftyMoveRule();
