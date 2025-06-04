@@ -5,7 +5,6 @@ import { Chessboard } from "./Chessboard";
 import { isEnPassantMove } from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
 import { Socket } from "socket.io-client";
-import { Move } from "../models/Move";
 
 // 👇 Pass these props from parent
 interface GameRoomProps {
@@ -28,25 +27,35 @@ export default function GameRoom({ socket, gameId, playerColor }: GameRoomProps)
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [board.moves.length]);
 
-    // 📡 Listen for opponent's move
     useEffect(() => {
-        socket.on("opponent-move", (move: { from: Position; to: Position }) => {
+        console.log(board.pieces, "board.pieces");
+    }, []);
 
-            const piece = board.pieces.find(p => p.samePosition(move.from));
-            if (piece) {
-                playMove(piece, new Position(move.to.x, move.to.y), false); // Don't emit again
+    useEffect(() => {
+        socket.on('opponent-move', ({ from, to }: { from: Position, to: Position }) => {
+            const fromPos = new Position(from.x, from.y);
+            const toPos = new Position(to.x, to.y);
+            console.log("Opponent moved", fromPos, toPos);
+
+            const movingPiece = board.pieces.find(p => p.samePosition(fromPos));
+            if (movingPiece) {
+                console.log("moving piece found", movingPiece);
+                playMove(movingPiece, toPos, false);
+            } else {
+                console.warn("No piece found at opponent's from position", fromPos);
             }
-        });
-
-        return () => {
-            socket.off("opponent-move");
-        };
+            return () => socket.off("opponent-move");
+        })
     }, [board]);
+
+
+
 
     function playMove(playedPiece: Piece, destination: Position, shouldEmit = true): boolean {
         if (playedPiece.possibleMoves === undefined) return false;
 
         const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
+        console.log("validMove", validMove);
         if (!validMove) return false;
         const isEnPassant = isEnPassantMove(
             playedPiece.position.x,
@@ -153,7 +162,7 @@ export default function GameRoom({ socket, gameId, playerColor }: GameRoomProps)
 
             {/* Main UI */}
             <main className="flex gap-4">
-                <Chessboard playMove={playMove} pieces={board.pieces} />
+                <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} />
 
                 {/* Sidebar */}
                 <div

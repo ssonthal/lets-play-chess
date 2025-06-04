@@ -1,34 +1,60 @@
 import React, { useEffect, useRef, useState } from "react";
 import Tile from "./Tile";
-import { VERTICAL_AXIS, HORIZONTAL_AXIS, TILE_SIZE } from "../Constants";
+import { TILE_SIZE } from "../Constants";
 import { Piece, Position } from "../models";
+import { TeamType } from "../Types";
 
-function generateTiles(pieces: Piece[], grabPosition: Position, activePiece: HTMLDivElement | null) {
-    let cells = [];
-    for (let j = VERTICAL_AXIS.length - 1; j >= 0; j--) {
-        for (let i = 0; i < HORIZONTAL_AXIS.length; i++) {
-            const number = j + i;
-            let piece = pieces.find(p => p.samePosition(new Position(i, j)));
-            let image = piece ? piece.image : undefined;
 
-            let currentPiece = pieces.find(p =>
-                p.samePosition(grabPosition));
-            let highlight = activePiece && currentPiece?.possibleMoves
-                ? currentPiece.possibleMoves.some(p => p.equals(new Position(i, j)))
+function generateTiles(
+    pieces: Piece[],
+    grabPosition: Position,
+    activePiece: HTMLDivElement | null,
+    playerColor: TeamType
+) {
+    const isWhite = playerColor === TeamType.WHITE;
+    const tiles = [];
+
+    // Loop over rows and columns in *display* order
+    const rows = isWhite ? [...Array(8).keys()].reverse() : [...Array(8).keys()];
+    const cols = isWhite ? [...Array(8).keys()] : [...Array(8).keys()].reverse();
+
+    for (let y of rows) {
+        for (let x of cols) {
+            const pos = new Position(x, y);
+            const piece = pieces.find(p => p.samePosition(pos));
+            const image = piece ? piece.image : undefined;
+
+            const currentPiece = pieces.find(p => p.samePosition(grabPosition));
+            const highlight = activePiece && currentPiece?.possibleMoves
+                ? currentPiece.possibleMoves.some(p => p.equals(pos))
                 : false;
 
-            cells.push(<Tile image={image} key={`${i},${j}`} number={number} highlight={highlight} />);
+            // Number can be used for alternating tile color (optional)
+            const number = x + y;
+
+            tiles.push(
+                <Tile
+                    key={`${x},${y}`}
+                    image={image}
+                    number={number}
+                    highlight={highlight}
+                />
+            );
         }
     }
-    return cells;
+
+    return tiles;
 }
+
+
 
 interface Props {
     playMove: (piece: Piece, destination: Position) => boolean
+    pieceColor: TeamType
     pieces: Piece[]
 }
 
-export function Chessboard({ playMove, pieces }: Props) {
+export function Chessboard({ playMove, pieces, pieceColor }: Props) {
     const [grabPosition, setGrabPosition] = useState<Position>(new Position(-1, -1));
     const [activePiece, setActivePiece] = useState<HTMLDivElement | null>(null);
     const chessboardRef = useRef<HTMLDivElement>(null);
@@ -37,8 +63,12 @@ export function Chessboard({ playMove, pieces }: Props) {
         const chessboard = chessboardRef.current;
         const element = e.target as HTMLDivElement;
         if (chessboard && element.classList.contains("chess-piece")) {
-            const grabX = Math.floor((e.clientX - chessboard.offsetLeft) / TILE_SIZE);
-            const grabY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - TILE_SIZE * 8) / TILE_SIZE));
+            let rawX = Math.floor((e.clientX - chessboard.offsetLeft) / TILE_SIZE);
+            let rawY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - TILE_SIZE * 8) / TILE_SIZE));
+
+            const grabX = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
+            const grabY = pieceColor === TeamType.WHITE ? rawY : 7 - rawY;
+
             setGrabPosition(new Position(grabX, grabY));
             let x = e.clientX - TILE_SIZE / 2;
             let y = e.clientY - TILE_SIZE / 2;
@@ -76,11 +106,16 @@ export function Chessboard({ playMove, pieces }: Props) {
     };
 
 
+
     const dropPiece = (e: MouseEvent) => {
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
-            const x = Math.floor((e.clientX - chessboard.offsetLeft) / TILE_SIZE);
-            const y = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 8 * TILE_SIZE) / TILE_SIZE));
+            let rawX = Math.floor((e.clientX - chessboard.offsetLeft) / TILE_SIZE);
+            let rawY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 8 * TILE_SIZE) / TILE_SIZE));
+
+            const x = pieceColor === 'w' ? rawX : 7 - rawX;
+            const y = pieceColor === 'w' ? rawY : 7 - rawY;
+
             const currentPiece = pieces.find(p => p.samePosition(grabPosition));
             if (currentPiece) {
                 const success = playMove(currentPiece, new Position(x, y));
@@ -110,8 +145,7 @@ export function Chessboard({ playMove, pieces }: Props) {
         };
     }, [activePiece]);
 
-    const board = generateTiles(pieces, grabPosition, activePiece);
-
+    const board = generateTiles(pieces, grabPosition, activePiece, pieceColor);
     return (
         <div
             onMouseDown={grabPiece}

@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 import GameRoom from "./components/GameRoom";
 import { TeamType } from "./Types";
 
-const socket: Socket = io("http://localhost:3000"); // your backend URL
+const socket: Socket = io("http://localhost:3000");
 
 function App() {
   const [gameId, setGameId] = useState<string | null>(null);
