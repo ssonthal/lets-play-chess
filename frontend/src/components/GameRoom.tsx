@@ -35,14 +35,9 @@ export default function GameRoom({ socket, gameId, playerColor }: GameRoomProps)
         socket.on('opponent-move', ({ from, to }: { from: Position, to: Position }) => {
             const fromPos = new Position(from.x, from.y);
             const toPos = new Position(to.x, to.y);
-            console.log("Opponent moved", fromPos, toPos);
-
             const movingPiece = board.pieces.find(p => p.samePosition(fromPos));
             if (movingPiece) {
-                console.log("moving piece found", movingPiece);
                 playMove(movingPiece, toPos, false);
-            } else {
-                console.warn("No piece found at opponent's from position", fromPos);
             }
             return () => socket.off("opponent-move");
         })
@@ -164,19 +159,14 @@ export default function GameRoom({ socket, gameId, playerColor }: GameRoomProps)
             <main className="flex gap-4">
                 <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} />
 
-                {/* Sidebar */}
-                <div
-                    className="w-[240px] p-4 bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col"
-                    style={{ maxHeight: `${8 * TILE_SIZE}px` }}
-                >
+                <div className="w-[240px] p-4 bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col" style={{ maxHeight: `${8 * TILE_SIZE}px` }}>
                     <div className="text-xl text-center mb-2">
                         <p>Total Turns: {board.totalTurns}</p>
                         <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
                     </div>
-
-                    <div className="flex flex-col h-[calc(100%-58px)] overflow-y-auto scrollable p-2 gap-3 text-sm">
+                    <div className="flex flex-col h-[calc(100%-58px)] overflow-y-auto p-2 space-y-2 text-sm leading-snug">
                         {board.moves.map((move, index) => (
-                            <p className="mt-auto" key={index}>
+                            <p key={index}>
                                 {index + 1}. {move.toMessage()}
                             </p>
                         ))}

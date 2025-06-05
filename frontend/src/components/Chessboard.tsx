@@ -69,6 +69,10 @@ export function Chessboard({ playMove, pieces, pieceColor }: Props) {
             const grabX = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
             const grabY = pieceColor === TeamType.WHITE ? rawY : 7 - rawY;
 
+            // not allowing the player to grab opponent's pieces
+            const grabPiece = pieces.find(p => p.samePosition(new Position(grabX, grabY)));
+            if (!grabPiece || grabPiece.team !== pieceColor) return;
+
             setGrabPosition(new Position(grabX, grabY));
             let x = e.clientX - TILE_SIZE / 2;
             let y = e.clientY - TILE_SIZE / 2;

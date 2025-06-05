@@ -32,12 +32,12 @@ function App() {
 
   if (!isGameStarted) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen gap-4 text-white">
+      <div className="flex flex-col items-center justify-center h-screen gap-4 text-white bg-[#202020]">
         <button onClick={handleCreateGame} className="bg-blue-500 px-4 py-2 rounded">Create Game</button>
         <input
           type="text"
           placeholder="Enter Game ID to Join"
-          className="text-black px-2"
+          className="border border-gray-300 px-4 py-2 rounded"
           onKeyDown={(e) => {
             if (e.key === "Enter") handleJoinGame((e.target as HTMLInputElement).value);
           }}
@@ -49,7 +49,9 @@ function App() {
   return (
     <>
       {gameId && playerColor !== null && (
-        <GameRoom socket={socket} gameId={gameId} playerColor={playerColor} />
+        <div className="grid place-items-center bg-[#202020] h-screen">
+          <GameRoom socket={socket} gameId={gameId} playerColor={playerColor} />
+        </div>
       )}
     </>
   );
