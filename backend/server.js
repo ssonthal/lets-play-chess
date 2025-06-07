@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
     games[gameId] = { white: socket.id, black: null };
     socket.join(gameId);
     console.log(`🎯 Game created: ${gameId}`);
-    socket.emit("game-start", { gameId, color: "w" });
+    socket.emit("game-created", { gameId, color: "w" });
   });
 
   socket.on("join-game", (gameId) => {
@@ -44,14 +44,12 @@ io.on("connection", (socket) => {
     game.black = socket.id;
     socket.join(gameId);
     console.log(`🎯 Player joined game: ${gameId}`);
-
-    // Notify joining player
-    socket.emit("game-start", { gameId, color: "b" });
-
-    // Notify creator that black joined (optional)
-    io.to(game.white).emit("player-joined", { message: "Black joined" });
+    io.to(game.black).emit("game-created", { gameId, color: "b" });
+    io.to(game.white).emit("game-started");
+    io.to(game.black).emit("game-started");
   });
 
+  
   socket.on("move", ({ gameId, move }) => {
     const game = games[gameId];
     if (!game) return;

@@ -11,7 +11,7 @@ export class Board {
     pieces: Piece[];
     totalTurns : number;
     winningTeam?: TeamType;
-    statemate : boolean;
+    statemate : boolean;    
     moves: Move[];
     draw: boolean;
     boardHistory: {[key: string]: number};
