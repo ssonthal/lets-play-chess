@@ -12,10 +12,11 @@ export function ClockDisplay({
 }) {
     return (
         <div
-            className={`text-white px-6 py-2 rounded shadow text-xl font-mono ${isActive ? "bg-green-700" : "bg-gray-700"
-                }`}
+            className={`w-[200px] h-[60px] flex items-center justify-between px-6 py-2 rounded shadow text-xl font-mono text-white 
+            ${isActive ? "bg-green-700" : "bg-gray-700"}`}
         >
-            {label}: {formatTime(time)}
+            <span>{label}:</span>
+            <span>{formatTime(time)}</span>
         </div>
     );
 }

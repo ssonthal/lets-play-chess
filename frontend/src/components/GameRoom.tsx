@@ -168,43 +168,44 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
 
     return (
         <div className="flex flex-col items-center gap-4">
-            {/* 📌 Opponent Clock (Top) */}
-            <ClockDisplay
-                time={playerColor === TeamType.WHITE ? blackTime : whiteTime}
-                label={playerColor === TeamType.WHITE ? "Black" : "White"}
-                isActive={board.currentTeam !== playerColor}
-            />
+            <div className="flex flex-col h-full">
+                {/* 📌 Opponent Clock (Top) */}
+                <ClockDisplay
+                    time={playerColor === TeamType.WHITE ? blackTime : whiteTime}
+                    label={playerColor === TeamType.WHITE ? "Black" : "White"}
+                    isActive={board.currentTeam !== playerColor}
+                />
 
-            {/* ♟️ Game UI (Board + Moves) */}
-            <main className="flex gap-4">
-                <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} />
+                {/* ♟️ Game UI (Board + Moves) */}
+                <main className="flex gap-4">
+                    <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} />
 
-                <div
-                    className="w-[240px] p-4 bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col"
-                    style={{ maxHeight: `${8 * TILE_SIZE}px` }}
-                >
-                    <div className="text-xl text-center mb-2">
-                        <p>Total Turns: {board.totalTurns}</p>
-                        <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
+                    <div
+                        className="w-[240px] p-4 bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col"
+                        style={{ maxHeight: `${8 * TILE_SIZE}px` }}
+                    >
+                        <div className="text-xl text-center mb-2">
+                            <p>Total Turns: {board.totalTurns}</p>
+                            <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
+                        </div>
+                        <div className="flex flex-col h-[calc(100%-58px)] overflow-y-auto p-2 space-y-2 text-sm leading-snug">
+                            {board.moves.map((move, index) => (
+                                <p key={index}>
+                                    {index + 1}. {move.toMessage()}
+                                </p>
+                            ))}
+                            <div ref={bottomRef} />
+                        </div>
                     </div>
-                    <div className="flex flex-col h-[calc(100%-58px)] overflow-y-auto p-2 space-y-2 text-sm leading-snug">
-                        {board.moves.map((move, index) => (
-                            <p key={index}>
-                                {index + 1}. {move.toMessage()}
-                            </p>
-                        ))}
-                        <div ref={bottomRef} />
-                    </div>
-                </div>
-            </main>
+                </main>
 
-            {/* ⌛ Player Clock (Bottom) */}
-            <ClockDisplay
-                time={playerColor === TeamType.WHITE ? whiteTime : blackTime}
-                label={playerColor === TeamType.WHITE ? "White" : "Black"}
-                isActive={board.currentTeam === playerColor}
-            />
-
+                {/* ⌛ Player Clock (Bottom) */}
+                <ClockDisplay
+                    time={playerColor === TeamType.WHITE ? whiteTime : blackTime}
+                    label={playerColor === TeamType.WHITE ? "White" : "Black"}
+                    isActive={board.currentTeam === playerColor}
+                />
+            </div>
             {/* Promotion Modal */}
             <div className="absolute inset-0 hidden" ref={modalRef}>
                 <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
