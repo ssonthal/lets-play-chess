@@ -6,6 +6,7 @@ import { isEnPassantMove } from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
 import { Socket } from "socket.io-client";
 import { ClockDisplay } from "./ClockDisplay";
+import Moves from "./Moves";
 
 // 👇 Pass these props from parent
 interface GameRoomProps {
@@ -62,6 +63,7 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
             const updatedBoard = board.clone();
             updatedBoard.winningTeam = whiteTime === 0 ? TeamType.BLACK : TeamType.WHITE;
             setBoard(updatedBoard);
+            checkForEndGame(updatedBoard);
         }
     }, [whiteTime, blackTime]);
     // Auto-scroll on move
@@ -178,25 +180,8 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
 
                 {/* ♟️ Game UI (Board + Moves) */}
                 <main className="flex gap-4">
-                    <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} />
-
-                    <div
-                        className="w-[240px] p-4 bg-[rgba(255,255,255,0.1)] rounded-md text-white flex flex-col"
-                        style={{ maxHeight: `${8 * TILE_SIZE}px` }}
-                    >
-                        <div className="text-xl text-center mb-2">
-                            <p>Total Turns: {board.totalTurns}</p>
-                            <p>Current team: {board.currentTeam === TeamType.WHITE ? "White" : "Black"}</p>
-                        </div>
-                        <div className="flex flex-col h-[calc(100%-58px)] overflow-y-auto p-2 space-y-2 text-sm leading-snug">
-                            {board.moves.map((move, index) => (
-                                <p key={index}>
-                                    {index + 1}. {move.toMessage()}
-                                </p>
-                            ))}
-                            <div ref={bottomRef} />
-                        </div>
-                    </div>
+                    <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} />
+                    <Moves movesFromBoard={board.moves} />
                 </main>
 
                 {/* ⌛ Player Clock (Bottom) */}

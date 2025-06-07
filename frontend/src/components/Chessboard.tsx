@@ -51,15 +51,17 @@ function generateTiles(
 interface Props {
     playMove: (piece: Piece, destination: Position) => boolean
     pieceColor: TeamType
-    pieces: Piece[]
+    pieces: Piece[],
+    isGameStarted: boolean
 }
 
-export function Chessboard({ playMove, pieces, pieceColor }: Props) {
+export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Props) {
     const [grabPosition, setGrabPosition] = useState<Position>(new Position(-1, -1));
     const [activePiece, setActivePiece] = useState<HTMLDivElement | null>(null);
     const chessboardRef = useRef<HTMLDivElement>(null);
 
     const grabPiece = (e: React.MouseEvent) => {
+        if (!isGameStarted) return;
         const chessboard = chessboardRef.current;
         const element = e.target as HTMLDivElement;
         if (chessboard && element.classList.contains("chess-piece")) {
