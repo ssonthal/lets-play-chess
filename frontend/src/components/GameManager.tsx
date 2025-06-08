@@ -5,14 +5,12 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function GameManager({ socket }: { socket: Socket }) {
-
+    const navigate = useNavigate();
     const { gameId } = useParams<{ gameId: string }>();
     const location = useLocation();
     const [playerColor, setPlayerColor] = useState<TeamType | null>(null);
-    const [currentGameId, setGameId] = useState<string | null>(null);
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     useEffect(() => {
-        setGameId(gameId ?? null);
         const color: TeamType =
             location?.state?.playerColor === "w"
                 ? TeamType.WHITE
@@ -22,8 +20,10 @@ export default function GameManager({ socket }: { socket: Socket }) {
     }, [gameId, location]);
 
     useEffect(() => {
-        socket.onAny((event, ...args) => {
-            console.log("Received event:", event, args);
+        socket.on("game-ended", () => {
+            setGameStarted(false);
+            setPlayerColor(null);
+            navigate("/");
         });
         socket.on("game-started", () => {
             setGameStarted(true);
@@ -31,17 +31,18 @@ export default function GameManager({ socket }: { socket: Socket }) {
         socket.emit("black-ready", gameId);
         return () => {
             socket.off("game-started");
+            socket.off("game-ended");
         };
     }, []);
 
-    if (!currentGameId || !playerColor) {
+    if (!gameId || !playerColor) {
         // Could show a loading spinner here
         return <div>Connecting to server...</div>;
     }
     return (
         <>
             <div className="grid place-items-center bg-[#202020] h-screen">
-                <GameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={currentGameId} />
+                <GameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={gameId} />
             </div>
         </>
     );

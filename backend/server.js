@@ -53,6 +53,7 @@ io.on("connection", (socket) => {
     if (!game || game.black !== socket.id) return;
     io.to(gameId).emit("game-started");
   })
+  
   socket.on("move", ({ gameId, move }) => {
     const game = games[gameId];
     if (!game) return;
@@ -67,9 +68,17 @@ io.on("connection", (socket) => {
     console.log("received game over event");
     const game = games[gameId];
     if (!game) return;
-    io.to(game.white).emit("game-ended");
-    io.to(game.black).emit("game-ended");
-    games.remove(gameId);
+
+    if(game.white) {
+      console.log("emitting game ended to white");
+      io.to(game.white).emit("game-ended");
+    }
+    if(game.black) {
+      console.log("emitting game ended to black");
+      io.to(game.black).emit("game-ended");
+    }
+    
+    delete games[gameId];
   });
   socket.on("disconnect", () => {
     console.log(`🔥 Disconnected: ${socket.id}`);

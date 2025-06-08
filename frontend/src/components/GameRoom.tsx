@@ -74,19 +74,6 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
     }, [board.moves.length]);
 
     useEffect(() => {
-        const handler = () => {
-            console.log("game-ended received");
-            navigate("/");
-        };
-        console.log("reaching here");
-        console.log("socket", socket);
-        socket.on("game-ended", handler);
-        return () => {
-            socket.off("game-ended", handler);
-        };
-    }, []);
-
-    useEffect(() => {
         const handler = ({ from, to }: { from: Position, to: Position }) => {
             const fromPos = new Position(from.x, from.y);
             const toPos = new Position(to.x, to.y);
@@ -167,7 +154,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
     function restartGame() {
         endgameModalRef.current?.classList.add("hidden");
         setBoard(initialBoard.clone());
-        socket.emit("game-over", { gameId });
+        socket.emit("game-over", gameId);
     }
 
     function checkForEndGame(newBoard: Board) {
