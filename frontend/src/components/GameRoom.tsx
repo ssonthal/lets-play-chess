@@ -194,32 +194,88 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
                 />
             </div>
             {/* Promotion Modal */}
-            <div className="absolute inset-0 hidden" ref={modalRef}>
-                <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
-                    {["rook", "bishop", "queen", "knight"].map((type, idx) => (
-                        <img
-                            key={idx}
-                            onClick={() =>
-                                promotePawn(PieceType[type.toUpperCase() as keyof typeof PieceType])
-                            }
-                            className="hover:cursor-grab hover:bg-[rgba(255,255,255,0.5)] active:cursor-grabbing h-[_120px] rounded-[_50%] p-[_20px]"
-                            src={`src/assets/pieces/${type}_${setPromotionTeam()}.png`}
-                        />
-                    ))}
+            <div className="absolute inset-0 hidden z-40" ref={modalRef}>
+                {/* Very light backdrop to keep board visible */}
+                <div className="absolute inset-0 bg-[rgba(0,0,0,0.5)]" />
+
+                {/* Modal Container */}
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                    <div className="bg-white bg-opacity-85 backdrop-blur-xs rounded-2xl shadow-xl p-6 border border-white border-opacity-30">
+                        {/* Piece Selection Grid */}
+                        <div className="flex gap-4 justify-center">
+                            {["queen", "rook", "bishop", "knight"].map((type, idx) => (
+                                <div
+                                    key={idx}
+                                    onClick={() =>
+                                        promotePawn(PieceType[type.toUpperCase() as keyof typeof PieceType])
+                                    }
+                                    className="group relative flex flex-col items-center cursor-pointer transition-all duration-200 hover:scale-105"
+                                >
+                                    {/* Piece Container */}
+                                    <div className="w-20 h-20 bg-white bg-opacity-70 rounded-xl shadow-md border border-purple-200 border-opacity-50 group-hover:border-purple-400 group-hover:shadow-lg transition-all duration-200 flex items-center justify-center mb-2">
+                                        <img
+                                            className="w-14 h-14 transition-transform duration-200 group-hover:scale-110"
+                                            src={`/assets/pieces/${type}_${setPromotionTeam()}.png`}
+                                            alt={type}
+                                        />
+                                    </div>
+
+                                    {/* Piece Name */}
+                                    <span className="text-sm font-medium text-gray-700 capitalize group-hover:text-purple-600 transition-colors duration-200">
+                                        {type}
+                                    </span>
+
+                                    {/* Hover Effect Overlay */}
+                                    <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-400 to-blue-400 opacity-0 group-hover:opacity-10 transition-opacity duration-200 pointer-events-none" />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
 
             {/* Endgame Modal */}
             <div className="absolute inset-0 hidden z-50" ref={endgameModalRef}>
-                <div className="h-[300px] w-[800px] bg-[rgba(0,0,0,0.3)] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-around">
-                    <div className="flex flex-col gap-8">
-                        <span className="text-2xl text-white">{endgameMsg}</span>
-                        <button
-                            onClick={restartGame}
-                            className="px-2 py-4 bg-[#b58962] text-2xl text-white rounded transition rounded-lg cursor-pointer"
-                        >
-                            Play Again
-                        </button>
+                {/* Backdrop with blur effect */}
+                <div className="absolute inset-0 bg-[rgba(0,0,0,0.5)]" />
+
+                {/* Modal Container */}
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                    <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden transform transition-all">
+
+                        {/* Header with gradient background */}
+                        <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-8 text-center">
+                            <div className="w-16 h-16 mx-auto mb-4 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2L3.09 8.26L4 21H20L20.91 8.26L12 2Z" />
+                                </svg>
+                            </div>
+                            <h2 className="text-3xl font-bold text-white mb-2">Game Over</h2>
+                            <p className="text-purple-100 text-lg">{endgameMsg}</p>
+                        </div>
+
+                        {/* Body */}
+                        <div className="px-6 py-6">
+                            <div className="text-center mb-6">
+                                <p className="text-gray-600 text-sm">
+                                    {endgameMsg.includes('White') ? '🤍' : endgameMsg.includes('Black') ? '⚫' : '🤝'}
+                                    {' '}Well played! Ready for another game?
+                                </p>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={restartGame}
+                                    className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg"
+                                >
+                                    🎯 Play Again
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Decorative bottom border */}
+                        <div className="h-1 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500"></div>
                     </div>
                 </div>
             </div>
