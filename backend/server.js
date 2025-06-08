@@ -46,10 +46,13 @@ io.on("connection", (socket) => {
     console.log(`🎯 Player joined game: ${gameId}`);
     io.to(game.black).emit("game-created", { gameId, color: "b" });
     io.to(game.white).emit("game-started");
-    io.to(game.black).emit("game-started");
   });
 
-  
+  socket.on("black-ready", (gameId) => {
+    const game = games[gameId];
+    if (!game || game.black !== socket.id) return;
+    io.to(gameId).emit("game-started");
+  })
   socket.on("move", ({ gameId, move }) => {
     const game = games[gameId];
     if (!game) return;
@@ -60,6 +63,14 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("game-over", (gameId) => {
+    console.log("received game over event");
+    const game = games[gameId];
+    if (!game) return;
+    io.to(game.white).emit("game-ended");
+    io.to(game.black).emit("game-ended");
+    games.remove(gameId);
+  });
   socket.on("disconnect", () => {
     console.log(`🔥 Disconnected: ${socket.id}`);
 

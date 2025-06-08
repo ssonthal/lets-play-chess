@@ -40,7 +40,6 @@ export const Moves = ({ movesFromBoard }: { movesFromBoard: Move[] }) => {
     const bottomRef = useRef<HTMLDivElement>(null);
     const moves = formatMoveHistory(movesFromBoard);
     const lastIndex = movesFromBoard.length - 1;
-    console.log(lastIndex, "lastIndex");
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });

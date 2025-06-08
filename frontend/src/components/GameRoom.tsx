@@ -7,16 +7,17 @@ import { PieceType, TeamType } from "../Types";
 import { Socket } from "socket.io-client";
 import { ClockDisplay } from "./ClockDisplay";
 import Moves from "./Moves";
+import { useNavigate } from "react-router-dom";
 
 // 👇 Pass these props from parent
 interface GameRoomProps {
     socket: Socket;
-    gameId: string;
     playerColor: TeamType;
     gameStarted: boolean;
+    gameId: string;
 }
 
-export default function GameRoom({ socket, gameId, playerColor, gameStarted }: GameRoomProps) {
+export default function GameRoom({ socket, playerColor, gameStarted, gameId }: GameRoomProps) {
     const [board, setBoard] = useState<Board>(initialBoard.clone());
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
     const [endgameMsg, setEndgameMsg] = useState("Draw");
@@ -26,6 +27,7 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
     const modalRef = useRef<HTMLDivElement>(null);
     const endgameModalRef = useRef<HTMLDivElement>(null);
     const bottomRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!gameStarted) return;
@@ -71,6 +73,18 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [board.moves.length]);
 
+    useEffect(() => {
+        const handler = () => {
+            console.log("game-ended received");
+            navigate("/");
+        };
+        console.log("reaching here");
+        console.log("socket", socket);
+        socket.on("game-ended", handler);
+        return () => {
+            socket.off("game-ended", handler);
+        };
+    }, []);
 
     useEffect(() => {
         const handler = ({ from, to }: { from: Position, to: Position }) => {
@@ -91,7 +105,7 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
         if (playedPiece.possibleMoves === undefined) return false;
 
         const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
-        console.log("validMove", validMove);
+        console.log(validMove, "validMove");
         if (!validMove) return false;
         const isEnPassant = isEnPassantMove(
             playedPiece.position.x,
@@ -153,6 +167,7 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
     function restartGame() {
         endgameModalRef.current?.classList.add("hidden");
         setBoard(initialBoard.clone());
+        socket.emit("game-over", { gameId });
     }
 
     function checkForEndGame(newBoard: Board) {
@@ -179,10 +194,10 @@ export default function GameRoom({ socket, gameId, playerColor, gameStarted }: G
                 />
 
                 {/* ♟️ Game UI (Board + Moves) */}
-                <main className="flex gap-4">
+                <div className="flex gap-4">
                     <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} />
                     <Moves movesFromBoard={board.moves} />
-                </main>
+                </div>
 
                 {/* ⌛ Player Clock (Bottom) */}
                 <ClockDisplay

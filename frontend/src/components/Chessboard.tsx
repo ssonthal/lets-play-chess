@@ -81,6 +81,7 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
+            element.style.zIndex = "1000"; // Bring it to front
             setActivePiece(element);
         }
     };
@@ -88,7 +89,7 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
     const movePiece = (e: MouseEvent) => {
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
-            const offset = TILE_SIZE / 4; // 25 when TILE_SIZE = 100
+            const offset = TILE_SIZE / 4;
             const grabOffset = TILE_SIZE / 2;
 
             const minX = chessboard.offsetLeft - offset;
@@ -99,7 +100,6 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
             let x = e.clientX - grabOffset;
             let y = e.clientY - grabOffset;
 
-            // Clamp to bounds
             if (x > maxX) x = maxX;
             if (y > maxY) y = maxY;
             if (x < minX) x = minX;
