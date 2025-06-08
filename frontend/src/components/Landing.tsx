@@ -143,7 +143,7 @@ export default function Landing({ socket }: { socket: Socket }) {
                                     type="text"
                                     placeholder="Enter Game ID (e.g. ABC123)"
                                     value={gameId}
-                                    onChange={(e) => setGameId(e.target.value.toUpperCase())}
+                                    onChange={(e) => setGameId(e.target.value)}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") handleJoinGame((e.target as HTMLInputElement).value);
                                     }}

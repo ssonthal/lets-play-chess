@@ -62,26 +62,32 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
 
     const grabPiece = (e: React.MouseEvent) => {
         if (!isGameStarted) return;
+
         const chessboard = chessboardRef.current;
         const element = e.target as HTMLDivElement;
         if (chessboard && element.classList.contains("chess-piece")) {
-            let rawX = Math.floor((e.clientX - chessboard.offsetLeft) / TILE_SIZE);
-            let rawY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - TILE_SIZE * 8) / TILE_SIZE));
+            const rect = chessboard.getBoundingClientRect();
+
+            const rawX = Math.floor((e.clientX - rect.left + 1) / TILE_SIZE);
+            const rawY = Math.floor((e.clientY - rect.top) / TILE_SIZE);
 
             const grabX = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
-            const grabY = pieceColor === TeamType.WHITE ? rawY : 7 - rawY;
+            const grabY = pieceColor === TeamType.WHITE ? 7 - rawY : rawY;
 
-            // not allowing the player to grab opponent's pieces
             const grabPiece = pieces.find(p => p.samePosition(new Position(grabX, grabY)));
             if (!grabPiece || grabPiece.team !== pieceColor) return;
 
             setGrabPosition(new Position(grabX, grabY));
-            let x = e.clientX - TILE_SIZE / 2;
-            let y = e.clientY - TILE_SIZE / 2;
+
+            // ✅ Corrected local coordinates
+            let x = e.clientX - rect.left - TILE_SIZE / 2;
+            let y = e.clientY - rect.top - TILE_SIZE / 2;
+
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
-            element.style.zIndex = "1000"; // Bring it to front
+            element.style.zIndex = "1000";
+
             setActivePiece(element);
         }
     };
@@ -89,16 +95,18 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
     const movePiece = (e: MouseEvent) => {
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
+            const rect = chessboard.getBoundingClientRect();
             const offset = TILE_SIZE / 4;
             const grabOffset = TILE_SIZE / 2;
 
-            const minX = chessboard.offsetLeft - offset;
-            const minY = chessboard.offsetTop - offset;
-            const maxX = chessboard.offsetLeft + chessboard.offsetWidth - (TILE_SIZE - offset);
-            const maxY = chessboard.offsetTop + chessboard.offsetHeight - (TILE_SIZE - offset);
+            const minX = -offset;
+            const minY = -offset;
+            const maxX = (TILE_SIZE * 8) - (TILE_SIZE - offset);
+            const maxY = (TILE_SIZE * 8) - (TILE_SIZE - offset);
 
-            let x = e.clientX - grabOffset;
-            let y = e.clientY - grabOffset;
+            // ✅ FIXED: Convert to local coordinates first
+            let x = e.clientX - rect.left - grabOffset;
+            let y = e.clientY - rect.top - grabOffset;
 
             if (x > maxX) x = maxX;
             if (y > maxY) y = maxY;
@@ -111,16 +119,16 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
         }
     };
 
-
-
     const dropPiece = (e: MouseEvent) => {
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
-            let rawX = Math.floor((e.clientX - chessboard.offsetLeft) / TILE_SIZE);
-            let rawY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 8 * TILE_SIZE) / TILE_SIZE));
+            const rect = chessboard.getBoundingClientRect();
 
-            const x = pieceColor === 'w' ? rawX : 7 - rawX;
-            const y = pieceColor === 'w' ? rawY : 7 - rawY;
+            const rawX = Math.floor((e.clientX - rect.left + 1) / TILE_SIZE);
+            const rawY = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+
+            const x = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
+            const y = pieceColor === TeamType.WHITE ? 7 - rawY : rawY;
 
             const currentPiece = pieces.find(p => p.samePosition(grabPosition));
             if (currentPiece) {
@@ -130,7 +138,6 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
                     activePiece.style.removeProperty("left");
                     activePiece.style.removeProperty("top");
                 }
-
             }
             setActivePiece(null);
         }
@@ -153,18 +160,20 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
 
     const board = generateTiles(pieces, grabPosition, activePiece, pieceColor);
     return (
-        <div
-            onMouseDown={grabPiece}
-            ref={chessboardRef}
-            className="grid"
-            style={{
-                gridTemplateColumns: `repeat(8, ${TILE_SIZE}px)`,
-                gridTemplateRows: `repeat(8, ${TILE_SIZE}px)`,
-                width: `${TILE_SIZE * 8}px`,
-                height: `${TILE_SIZE * 8}px`,
-            }}
-        >
-            {board}
+        <div className="relative">
+            <div
+                onMouseDown={grabPiece}
+                ref={chessboardRef}
+                className="grid"
+                style={{
+                    gridTemplateColumns: `repeat(8, ${TILE_SIZE}px)`,
+                    gridTemplateRows: `repeat(8, ${TILE_SIZE}px)`,
+                    width: `${TILE_SIZE * 8}px`,
+                    height: `${TILE_SIZE * 8}px`,
+                }}
+            >
+                {board}
+            </div>
         </div>
     );
 }
