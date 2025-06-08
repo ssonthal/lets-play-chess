@@ -1,8 +1,9 @@
-import { Undo2, Flag, RotateCcw, Play, Pause } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { Undo2, Flag, RotateCcw, CrossIcon, Cross, X } from "lucide-react";
+import { useRef, useEffect } from "react";
 import { Move } from "../models/Move";
 import { TeamType } from "../Types";
 import "../App.css";
+import { Board } from "../models";
 
 function toAlgebraic(pos: { x: number; y: number }): string {
     const file = String.fromCharCode('a'.charCodeAt(0) + pos.x);
@@ -36,14 +37,18 @@ function formatMoveHistory(moves: Move[]): FormattedMove[] {
     return formatted;
 }
 
-export default function NewMoves({ movesFromBoard }: { movesFromBoard: Move[] }) {
+export default function NewMoves({ board, handleResination }: { board: Board, handleResination: () => void }) {
     const bottomRef = useRef<HTMLDivElement>(null);
-    const moves = formatMoveHistory(movesFromBoard);
-    const lastIndex = movesFromBoard.length - 1;
+    const moves = formatMoveHistory(board.moves);
+    const lastIndex = board.moves.length - 1;
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [movesFromBoard.length]);
+    }, [board.moves.length]);
+
+    function handleDrawOffer() {
+        // show draw modal
+    }
 
     return (
         <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-xl w-80 h-96 shadow-2xl border border-slate-700/50 backdrop-blur-sm flex flex-col">
@@ -101,62 +106,29 @@ export default function NewMoves({ movesFromBoard }: { movesFromBoard: Move[] })
 
             {/* Enhanced Control Bar */}
             <div className="px-4 py-4 border-t border-slate-700/70 bg-slate-800/30 rounded-b-xl">
-                <div className="flex justify-between items-center">
-                    <div className="flex gap-1">
-                        <button
-                            className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 group"
-                            title="Undo Move"
-                        >
-                            <Undo2 size={16} className="text-slate-400 group-hover:text-white transition-colors" />
-                        </button>
-                        <button
-                            className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 group"
-                            title="Reset Game"
-                        >
-                            <RotateCcw size={16} className="text-slate-400 group-hover:text-white transition-colors" />
-                        </button>
-                    </div>
-
-                    <div className="flex gap-1">
-                        {/* <button
-                            onClick={() => setIsPlaying(!isPlaying)}
-                            className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 group"
-                            title={isPlaying ? "Pause" : "Auto-play"}
-                        >
-                            {isPlaying ? (
-                                <Pause size={16} className="text-slate-400 group-hover:text-white transition-colors" />
-                            ) : (
-                                <Play size={16} className="text-slate-400 group-hover:text-white transition-colors" />
-                            )}
-                        </button> */}
-                        <button
-                            className="px-3 py-2 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 text-xs font-medium text-slate-400 hover:text-white"
-                            title="Offer Draw"
-                        >
-                            ½-½
-                        </button>
-                        <button
-                            className="p-2.5 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-colors duration-200 group"
-                            title="Resign"
-                        >
-                            <Flag size={16} className="text-slate-400 group-hover:text-red-400 transition-colors" />
-                        </button>
-                    </div>
-                </div>
-
-                {/* Status Bar */}
-                <div className="mt-3 pt-3 border-t border-slate-700/50">
-                    <div className="flex justify-between items-center text-xs">
-                        <span className="text-slate-400">Move {Math.floor(lastIndex / 2) + 1}</span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${lastIndex % 2 === 0
-                            ? "bg-white/10 text-white"
-                            : "bg-slate-700 text-slate-300"
-                            }`}>
-                            {lastIndex % 2 === 0 ? "White to move" : "Black to move"}
-                        </span>
-                    </div>
+                <div className="flex flex-row justify-around">
+                    <button
+                        className="px-3 py-2 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 text-lg font-medium text-slate-400 hover:text-white"
+                        title="Offer Draw"
+                        onClick={() => handleDrawOffer()}
+                    >
+                        ½-½
+                    </button>
+                    <button
+                        onClick={() => handleResination()}
+                        className="p-2.5 hover:bg-slate-600/20 hover:text-white-400 rounded-lg transition-colors duration-200 group"
+                        title="Resign"
+                    >
+                        <Flag size={24} className="text-slate-400 group-hover:text-slate-400 transition-colors" />
+                    </button>
+                    <button
+                        className="p-2.5 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-colors duration-200 group"
+                        title="Abort"
+                    >
+                        <X size={24} className="text-slate-400 group-hover:text-red-400 transition-colors" />
+                    </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

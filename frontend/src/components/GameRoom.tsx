@@ -84,7 +84,17 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
     return () => {
       socket.off('opponent-move', handler);
     };
-  }, [board, socket]);
+  }, [board]);
+
+  useEffect(() => {
+    socket.on("opponent-resigned", () => {
+      const cloned = board.clone();
+      cloned.winningTeam = playerColor;
+      setBoard(cloned);
+      endgameModalRef.current?.classList.remove("hidden");
+      setEndgameMsg(cloned.winningTeam === TeamType.WHITE ? "Black Resigned. You Won!" : "White Resigned. You Won!");
+    })
+  }, []);
 
   function playMove(playedPiece: Piece, destination: Position, shouldEmit = true): boolean {
     if (playedPiece.possibleMoves === undefined) return false;
@@ -149,6 +159,13 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
     return promotionPawn?.team === TeamType.WHITE ? "w" : "b";
   }
 
+  function handleResination() {
+    const cloned = board.clone();
+    cloned.winningTeam = playerColor === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
+    checkForEndGame(cloned);
+    setBoard(cloned);
+    socket.emit("opponent-resigned", gameId);
+  }
   function restartGame() {
     endgameModalRef.current?.classList.add("hidden");
     setBoard(initialBoard.clone());
@@ -255,7 +272,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
             <div className="px-6 py-6">
               <div className="text-center mb-6">
                 <p className="text-gray-600 text-sm">
-                  {endgameMsg.includes('White') ? '🤍' : endgameMsg.includes('Black') ? '⚫' : '🤝'}
+                  {board.winningTeam === TeamType.WHITE ? '🤍' : board.winningTeam === TeamType.BLACK ? '⚫' : '🤝'}
                   {' '}Well played! Ready for another game?
                 </p>
               </div>
@@ -325,7 +342,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
           {/* ♟️ Game UI (Board + Moves) */}
           <div className="flex gap-4 items-center">
             <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} />
-            <Moves movesFromBoard={board.moves} />
+            <Moves board={board} handleResination={handleResination} />
           </div>
 
           {/* ⌛ Player Clock (Bottom) */}

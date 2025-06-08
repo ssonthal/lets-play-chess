@@ -80,6 +80,16 @@ io.on("connection", (socket) => {
     
     delete games[gameId];
   });
+
+  socket.on("opponent-resigned", (gameId) => {
+    const game = games[gameId];
+    if (!game) return;
+    const opponentId = socket.id === game.white ? game.black : game.white;
+    if (opponentId) {
+      io.to(opponentId).emit("opponent-resigned");
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log(`🔥 Disconnected: ${socket.id}`);
 
