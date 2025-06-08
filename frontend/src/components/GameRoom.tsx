@@ -323,7 +323,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId }: G
           />
 
           {/* ♟️ Game UI (Board + Moves) */}
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-center">
             <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} />
             <Moves movesFromBoard={board.moves} />
           </div>

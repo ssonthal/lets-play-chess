@@ -1,7 +1,7 @@
-import { Undo2, Flag } from "lucide-react";
+import { Undo2, Flag, RotateCcw, Play, Pause } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import { Move } from "../models/Move";
 import { TeamType } from "../Types";
-import { useEffect, useRef } from "react";
 import "../App.css";
 
 function toAlgebraic(pos: { x: number; y: number }): string {
@@ -36,7 +36,7 @@ function formatMoveHistory(moves: Move[]): FormattedMove[] {
     return formatted;
 }
 
-export const Moves = ({ movesFromBoard }: { movesFromBoard: Move[] }) => {
+export default function NewMoves({ movesFromBoard }: { movesFromBoard: Move[] }) {
     const bottomRef = useRef<HTMLDivElement>(null);
     const moves = formatMoveHistory(movesFromBoard);
     const lastIndex = movesFromBoard.length - 1;
@@ -46,34 +46,117 @@ export const Moves = ({ movesFromBoard }: { movesFromBoard: Move[] }) => {
     }, [movesFromBoard.length]);
 
     return (
-        <div className="bg-zinc-900 text-white p-4 rounded-md w-64 shadow-md text-sm font-mono flex flex-col justify-between h-100 mt-[100px]">
-            <div className="flex flex-col overflow-y-auto scrollable p-2 gap-3 text-sm">
-                {moves.map(({ moveNumber, white, black }, i) => {
-                    const whiteIndex = i * 2;
-                    const blackIndex = i * 2 + 1;
-                    return (
-                        <div key={i} className="flex">
-                            <div className="w-6">{moveNumber}</div>
-                            <div className={`w-14 px-1 rounded ${lastIndex === whiteIndex ? "bg-blue-600" : ""}`}>
-                                {white}
-                            </div>
-                            <div className={`w-14 px-1 rounded ${lastIndex === blackIndex ? "bg-blue-600" : ""}`}>
-                                {black}
-                            </div>
-                        </div>
-                    );
-                })}
-                <div ref={bottomRef} />
+        <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-xl w-80 h-96 shadow-2xl border border-slate-700/50 backdrop-blur-sm flex flex-col">
+            {/* Header */}
+            <div className="px-5 py-4 border-b border-slate-700/70 bg-slate-800/50 rounded-t-xl">
+                <div className="flex items-center justify-between">
+                    <h3 className="text-sm font-semibold text-slate-200 tracking-wide">GAME MOVES</h3>
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span className="text-xs text-slate-400">Live</span>
+                    </div>
+                </div>
             </div>
 
-            {/* Control Bar */}
-            <div className="flex justify-between pt-3 mt-3 border-t border-zinc-700">
-                <button className="p-1 hover:bg-zinc-800 rounded"><Undo2 size={16} /></button>
-                <button className="p-1 hover:bg-zinc-800 rounded">½</button>
-                <button className="p-1 hover:bg-zinc-800 rounded"><Flag size={16} /></button>
+            {/* Moves List */}
+            <div className="flex-1 overflow-y-auto px-2 py-3 scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollable">
+                <div className="space-y-1">
+                    {moves.map(({ moveNumber, white, black }, i) => {
+                        const whiteIndex = i * 2;
+                        const blackIndex = i * 2 + 1;
+                        return (
+                            <div key={i} className="group hover:bg-slate-800/30 rounded-lg transition-colors duration-150">
+                                <div className="flex items-center py-2 px-3">
+                                    {/* Move Number */}
+                                    <div className="w-8 text-xs font-medium text-slate-400 select-none">
+                                        {moveNumber}.
+                                    </div>
+
+                                    {/* White Move */}
+                                    <button
+                                        className={`flex-1 text-left px-3 py-1.5 mx-1 rounded-md text-sm font-mono transition-all duration-200 hover:bg-slate-700/50 ${lastIndex === whiteIndex
+                                            ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 ring-1 ring-blue-400/50"
+                                            : "text-slate-200 hover:text-white"
+                                            }`}
+                                    >
+                                        {white}
+                                    </button>
+
+                                    {/* Black Move */}
+                                    <button
+                                        className={`flex-1 text-left px-3 py-1.5 mx-1 rounded-md text-sm font-mono transition-all duration-200 hover:bg-slate-700/50 ${lastIndex === blackIndex
+                                            ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 ring-1 ring-blue-400/50"
+                                            : "text-slate-200 hover:text-white"
+                                            } ${!black ? "opacity-50" : ""}`}
+                                    >
+                                        {black || "..."}
+                                    </button>
+                                </div>
+                            </div>
+                        );
+                    })}
+                    <div ref={bottomRef} />
+                </div>
+            </div>
+
+            {/* Enhanced Control Bar */}
+            <div className="px-4 py-4 border-t border-slate-700/70 bg-slate-800/30 rounded-b-xl">
+                <div className="flex justify-between items-center">
+                    <div className="flex gap-1">
+                        <button
+                            className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 group"
+                            title="Undo Move"
+                        >
+                            <Undo2 size={16} className="text-slate-400 group-hover:text-white transition-colors" />
+                        </button>
+                        <button
+                            className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 group"
+                            title="Reset Game"
+                        >
+                            <RotateCcw size={16} className="text-slate-400 group-hover:text-white transition-colors" />
+                        </button>
+                    </div>
+
+                    <div className="flex gap-1">
+                        {/* <button
+                            onClick={() => setIsPlaying(!isPlaying)}
+                            className="p-2.5 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 group"
+                            title={isPlaying ? "Pause" : "Auto-play"}
+                        >
+                            {isPlaying ? (
+                                <Pause size={16} className="text-slate-400 group-hover:text-white transition-colors" />
+                            ) : (
+                                <Play size={16} className="text-slate-400 group-hover:text-white transition-colors" />
+                            )}
+                        </button> */}
+                        <button
+                            className="px-3 py-2 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 text-xs font-medium text-slate-400 hover:text-white"
+                            title="Offer Draw"
+                        >
+                            ½-½
+                        </button>
+                        <button
+                            className="p-2.5 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-colors duration-200 group"
+                            title="Resign"
+                        >
+                            <Flag size={16} className="text-slate-400 group-hover:text-red-400 transition-colors" />
+                        </button>
+                    </div>
+                </div>
+
+                {/* Status Bar */}
+                <div className="mt-3 pt-3 border-t border-slate-700/50">
+                    <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-400">Move {Math.floor(lastIndex / 2) + 1}</span>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${lastIndex % 2 === 0
+                            ? "bg-white/10 text-white"
+                            : "bg-slate-700 text-slate-300"
+                            }`}>
+                            {lastIndex % 2 === 0 ? "White to move" : "Black to move"}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     );
-};
-
-export default Moves;
+}
