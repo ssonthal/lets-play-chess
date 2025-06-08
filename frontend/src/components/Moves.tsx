@@ -1,4 +1,4 @@
-import { Undo2, Flag, RotateCcw, CrossIcon, Cross, X } from "lucide-react";
+import { Flag, X } from "lucide-react";
 import { useRef, useEffect } from "react";
 import { Move } from "../models/Move";
 import { TeamType } from "../Types";
