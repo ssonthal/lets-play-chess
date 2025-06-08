@@ -1,9 +1,8 @@
 import { Socket } from "socket.io-client";
-import GameRoom from "./GameRoom";
 import { TeamType } from "../Types";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import NewGameRoom from "./NewGameRoom";
+import GameRoom from "./GameRoom";
 
 export default function GameManager({ socket }: { socket: Socket }) {
     const navigate = useNavigate();
@@ -42,9 +41,7 @@ export default function GameManager({ socket }: { socket: Socket }) {
     }
     return (
         <>
-            {/* <div className="grid place-items-center bg-[#202020] h-screen"> */}
-            <NewGameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={gameId} />
-            {/* </div> */}
+            <GameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={gameId} />
         </>
     );
 }
