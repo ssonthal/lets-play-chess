@@ -11,7 +11,7 @@ export class Board {
     pieces: Piece[];
     totalTurns : number;
     winningTeam?: TeamType;
-    statemate : boolean;
+    statemate : boolean;    
     moves: Move[];
     draw: boolean;
     boardHistory: {[key: string]: number};
@@ -45,6 +45,7 @@ export class Board {
         this.checkCurrentTeamMoves();  
 
         const enemyMoves = this.pieces.filter(p => p.team !== this.currentTeam).flatMap(p => p.possibleMoves);
+        
         // remove the possilbe moves for the team that is not playing
         for(const piece of this.pieces) {
             if(piece.team !== this.currentTeam) {
@@ -60,7 +61,7 @@ export class Board {
         this.checkStaleMate(enemyMoves);
     }
     get currentTeam() : TeamType{
-        return this.totalTurns % 2 == 0 ? TeamType.BLACK : TeamType.WHITE;
+        return this.totalTurns % 2 == 0 ? TeamType.WHITE : TeamType.BLACK;
     }
 
     checkCurrentTeamMoves() {

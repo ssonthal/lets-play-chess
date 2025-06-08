@@ -9,6 +9,8 @@ export const HORIZONTAL_AXIS = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
 export const TILE_SIZE = 75;
 
+export const INITIAL_TIME = 5 * 60; // 5 minutes
+
 
 export const initialBoard: Board = new Board([
     new Piece(new Position(0, 7), PieceType.ROOK, TeamType.BLACK),
@@ -43,6 +45,6 @@ export const initialBoard: Board = new Board([
     new Piece(new Position(5, 0), PieceType.BISHOP, TeamType.WHITE),            
     new Piece(new Position(6, 0), PieceType.KNIGHT, TeamType.WHITE),            
     new Piece(new Position(7, 0), PieceType.ROOK, TeamType.WHITE)
-], 1, []);
+], 0, []);
 
 initialBoard.calculateAllMoves();
