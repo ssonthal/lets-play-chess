@@ -23,3 +23,729 @@
 2025-06-10T05:30:36.412799Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/src/Constants.ts")}
 2025-06-10T05:30:36.412823Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
 2025-06-10T05:30:36.412898Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T15:39:32.105241Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:32.106490Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:33.593406Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:33.593421Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:35.293820Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:35.293828Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:37.693950Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:37.693970Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:38.394033Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:38.394054Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:46.193657Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:46.193728Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:48.393220Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:48.393235Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:39:49.093804Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:39:49.093866Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:04.592796Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:04.592817Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:07.992570Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:07.992588Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:12.693001Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:12.693012Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:14.192662Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:14.192689Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:28.091765Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:28.091779Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:32.192306Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:32.192367Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:33.292255Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:33.292289Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:53.798499Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:53.798519Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:57.799378Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:57.799422Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:40:59.099323Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:40:59.099340Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:00.699312Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:00.699325Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:02.000547Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:02.000570Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:03.000497Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:03.000519Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:10.800642Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:10.800663Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:12.301391Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:12.301402Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:13.001225Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:13.001237Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:17.001155Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:17.001167Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:41:56.201306Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:41:56.201334Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:42:10.801240Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:42:10.801259Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:42:15.500522Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:42:15.500554Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:42:30.600433Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:42:30.600443Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:05.399169Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:05.399208Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:21.799044Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:21.799075Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:24.298781Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:24.298795Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:37.697428Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:37.697448Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:38.498415Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:38.498434Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:55.298414Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:55.298433Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:56.597886Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:56.597898Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:58.398575Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:58.398603Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:43:59.097437Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:43:59.097456Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:00.297777Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:00.297801Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:01.697815Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:01.697831Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:03.098035Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:03.098086Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:04.597121Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:04.597138Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:15.496373Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:15.496396Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:29.316458Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:29.316475Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:32.697234Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:32.697290Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:44:42.496771Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:44:42.496791Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:01.895191Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:01.895233Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:02.596194Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:02.596214Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:05.195799Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:05.195834Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:22.395313Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:22.395343Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:23.496547Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:23.496565Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:24.194656Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:24.194674Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:25.395582Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:25.395599Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:37.595492Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:37.595551Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:38.395136Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:38.395152Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:53.495205Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:53.495224Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:56.594252Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:56.594288Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:45:59.593687Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:45:59.593698Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:03.294342Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:03.294350Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:08.494430Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:08.494440Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:09.294199Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:09.294218Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:18.692957Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:18.692992Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:32.693087Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:32.693103Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:38.892715Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:38.892744Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:43.993310Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:43.993330Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:46.493478Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:46.493499Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:50.492471Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:50.492481Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:57.692293Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:57.692314Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:46:59.292564Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:46:59.292584Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:04.792620Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:04.792655Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:09.991945Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:09.991954Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:11.292093Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:11.292105Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:13.292508Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:13.292532Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:18.691725Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:18.691743Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:19.191486Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:19.191510Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:20.091918Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:20.091938Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:24.291567Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:24.291580Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:27.491571Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:27.491582Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:33.890898Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:33.890951Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:47:39.091729Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T15:47:39.091740Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T15:49:16.489818Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T15:49:16.490146Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T15:49:28.387317Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T15:49:28.387326Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T15:49:31.387926Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T15:49:31.387937Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T15:49:32.699309Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T15:49:32.699336Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T15:49:32.754711Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T15:49:34.986790Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T15:49:34.986801Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T15:49:35.787239Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T15:49:35.787250Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:35:57.607876Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/.dockerignore")}
+2025-06-10T16:35:57.609666Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:36:00.100165Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/.dockerignore")}
+2025-06-10T16:36:00.100174Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:36:08.000380Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/.dockerignore")}
+2025-06-10T16:36:08.000421Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:36:10.400101Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/.dockerignore")}
+2025-06-10T16:36:10.400114Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:36:22.217168Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/.dockerignore")}
+2025-06-10T16:36:22.218702Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:31.100181Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/.dockerignore")}
+2025-06-10T16:36:31.100191Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:33.899902Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/.dockerignore")}
+2025-06-10T16:36:33.899914Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:35.199584Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/.dockerignore")}
+2025-06-10T16:36:35.199595Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:37.699850Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/.dockerignore")}
+2025-06-10T16:36:37.699869Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:38.398593Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/.dockerignore")}
+2025-06-10T16:36:38.398607Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:38.398621Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:36:53.600650Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/package.json")}
+2025-06-10T16:36:53.600680Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:36:53.699963Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T16:36:53.699972Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:37:06.299698Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs")}
+2025-06-10T16:37:06.299710Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:37:06.299731Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:37:11.498629Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:37:11.498640Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:37:15.699836Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:37:15.699907Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:37:15.898748Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:37:15.898758Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:37:15.898771Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:38:10.497963Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:38:10.498006Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:38:11.598217Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:38:11.598226Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:38:13.097900Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:38:13.097919Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:38:13.798136Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:38:13.798151Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:38:18.297485Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:38:18.297508Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:38:18.397214Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:38:18.397226Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:38:25.697044Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:38:25.697059Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:38:25.697086Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:38:25.997230Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:38:25.997248Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:38:25.997264Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:38:26.096881Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:38:26.096901Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:38:26.136523Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:38:26.297661Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/libs/redisClient.ts")}
+2025-06-10T16:38:26.297679Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:38:26.320643Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:40:36.094575Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:40:36.094597Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:40:37.895033Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:40:37.895048Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:40:47.594137Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:40:47.594168Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:40:49.794282Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:40:49.794298Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:40:49.994208Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:40:49.994216Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:40:49.994236Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:40:50.494919Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:40:50.494933Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:40:50.494962Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:40:50.694469Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:40:50.694489Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:40:50.694515Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:40:50.794048Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:40:50.794066Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:40:50.843371Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:42:51.996440Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:42:51.996694Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:42:52.592578Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:42:52.592590Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:42:52.617412Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:42:52.891763Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:42:52.891774Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:42:52.891798Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:06.417218Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:06.419939Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:08.589320Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:08.589540Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:08.689370Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:08.689379Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:08.689397Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:08.789900Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:08.789910Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:08.789930Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:08.889662Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:08.889682Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:08.900608Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:08.990066Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:08.990078Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:08.990101Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:09.189081Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:44:09.189093Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:44:09.221275Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:15.589590Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:44:15.589612Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:44:15.689517Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:44:15.689582Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:44:15.989608Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:44:15.989620Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:44:15.989632Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:44:16.089129Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:44:16.089139Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:44:16.136127Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:45:43.368515Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:45:43.373564Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:45:43.629602Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:45:43.629618Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:45:43.629648Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:45:54.598039Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:45:54.598443Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:45:58.900185Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:45:58.901356Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:45:59.887459Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:45:59.887493Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:01.187665Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:01.187684Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:01.287788Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:01.287797Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:01.287820Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:46:02.187425Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:02.187454Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:03.086845Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:03.086857Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:09.188031Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:09.188041Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:10.487492Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:10.487512Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:11.187250Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:11.187260Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:14.287935Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:14.287945Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:16.987094Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:16.987102Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:17.487597Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:17.487605Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:23.887441Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:23.887459Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:25.386591Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:25.386604Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:26.886796Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:26.886813Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:31.186437Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:31.186453Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:33.087405Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:33.087418Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:33.686980Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:33.686989Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:41.086648Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:41.086668Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:43.986780Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:43.986793Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:45.186803Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:45.186823Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:49.986566Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:49.986576Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:57.986882Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:57.986901Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:46:59.586251Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:46:59.586260Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:01.686246Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:01.686261Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:07.285884Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:07.285895Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:09.986029Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:09.986049Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:10.586817Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:10.586828Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:16.986676Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:16.986687Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:24.686528Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:24.686539Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:29.685655Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:29.685666Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:38.085716Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:38.085731Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:41.485361Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:41.485382Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:48.085157Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:48.085167Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:47:55.584869Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:47:55.584881Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:48:03.284983Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:48:03.285002Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:48:04.285384Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:48:04.285396Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:48:29.685000Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:48:29.685010Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:27.988956Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:27.988972Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:28.189385Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:28.189401Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:28.217605Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:49:28.388617Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:28.388626Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:28.388646Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:49:28.589020Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:28.589029Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:28.589048Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:49:28.788304Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:28.788315Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:28.788339Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:49:28.988200Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:28.988211Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:28.988236Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:49:29.287934Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:29.287946Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:29.297564Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:49:29.488813Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:49:29.488824Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:49:29.494400Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:50:23.187490Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:50:23.187510Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:50:23.387614Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:50:23.387632Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:50:23.428830Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:50:23.688017Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:50:23.688029Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:50:23.691668Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:50:23.888033Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:50:23.888042Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:50:23.890685Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:50:24.086970Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:50:24.086981Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:50:24.087001Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:50:42.787808Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:50:42.787839Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:51:02.187314Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:51:02.187362Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:51:04.786797Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:51:04.786810Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:51:05.586685Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:51:05.586701Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:51:06.886761Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:51:06.886770Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:51:07.986517Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:51:07.986531Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:51:13.886923Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:51:13.886950Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:54:01.289207Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:54:01.290147Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:54:01.783630Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:54:01.783638Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:54:01.983241Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:54:01.983257Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:54:01.991089Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:10.986802Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T16:54:10.986873Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:54:11.035800Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:23.182406Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:23.182443Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:23.481864Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:23.481882Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:23.543925Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:23.783004Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:23.783029Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:23.783048Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:23.883527Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:23.883554Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:23.929262Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:24.883175Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:24.883190Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:24.906609Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:25.082402Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:25.082426Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:25.126258Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:32.683137Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:32.683152Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:33.383276Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:33.383287Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:34.783276Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:34.783294Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:36.183418Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:36.183439Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:36.382708Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:36.382720Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:36.382980Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:39.883297Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:39.883314Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:40.881910Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:40.881927Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:41.882008Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:41.882022Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:41.888760Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:42.081328Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:42.081337Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:42.081345Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:42.182090Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:42.182113Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:42.240211Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:42.482590Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:42.482597Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:42.482607Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:42.682837Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:42.682845Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:42.682857Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:49.282854Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:49.282888Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:49.482002Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:49.482045Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:49.550285Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:49.683119Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:49.683157Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:49.733154Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:50.882699Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:50.882714Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:50.885620Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:51.082082Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:51.082091Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:51.093205Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:51.282842Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:51.282860Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:51.282886Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:51.382905Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:51.382928Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:51.428908Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:59.081431Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:59.081443Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:59.081454Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:59.281908Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:59.281936Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:59.308134Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:59.682670Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:59.682683Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:59.682698Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:54:59.982129Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:54:59.982149Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:54:59.994057Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:00.182010Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:00.182020Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:00.182030Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:00.282572Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:00.282601Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:00.349564Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:03.382389Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:03.382402Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:03.385780Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:03.582806Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:03.582825Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:03.607622Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:03.782554Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:03.782571Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:03.791071Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:03.982546Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:03.982560Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:03.982574Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:04.182449Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:04.182464Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:04.185126Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:04.382384Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:04.382418Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:04.426267Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:04.581710Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:04.581748Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:04.650233Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:04.781423Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:04.781452Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:04.824775Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:05.182006Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:05.182034Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:05.217861Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:05.681748Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:05.681759Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:05.681770Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:05.882207Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T16:55:05.882241Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T16:55:05.935736Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T16:55:21.581835Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:55:21.581916Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:55:43.681564Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:55:43.681593Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:55:45.681100Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:55:45.681115Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:55:46.481890Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:55:46.481933Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:55:50.081649Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:55:50.081694Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:05.581049Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:05.581107Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:08.481577Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:08.481621Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:08.681237Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:08.681262Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:08.880611Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:08.880644Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:09.081004Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:09.081048Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:09.280313Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:09.280349Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:12.581364Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:12.581396Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:22.580721Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:22.580739Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:25.380249Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:25.380267Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:27.080398Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:27.080428Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:34.080732Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:34.080795Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:37.280259Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:37.280301Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:38.380290Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:38.380334Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:56:42.280577Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".env")}
+2025-06-10T16:56:42.280594Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:02.200321Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package-lock.json")}
+2025-06-10T16:58:02.201363Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T16:58:37.945364Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:37.948365Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:40.084393Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:40.084411Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:40.578347Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:40.578378Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:41.878931Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:41.878957Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:42.178233Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:42.178252Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:42.490271Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:42.490294Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:42.778300Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:42.778324Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:43.377839Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:43.377857Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:43.480005Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:43.480024Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:43.977037Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:43.977062Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:44.077891Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:44.077907Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:52.486872Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:52.486907Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:58:52.583866Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T16:58:52.583882Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T16:59:08.378021Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/package-lock.json")}
+2025-06-10T16:59:08.378054Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T17:02:15.090638Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".npmrc")}
+2025-06-10T17:02:15.092223Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:02:25.774737Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".npmrc")}
+2025-06-10T17:02:25.774788Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:03:11.349200Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:03:11.360014Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:03:55.428192Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T17:03:55.429841Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:08:24.788529Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T17:08:24.790807Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T17:08:26.774390Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T17:08:26.774417Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T17:08:28.273959Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/backend/Dockerfile")}
+2025-06-10T17:08:28.273988Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("backend"), path: AnchoredSystemPathBuf("apps/backend") }}))
+2025-06-10T17:11:23.272134Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:11:23.272332Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:11:32.289359Z  WARN turborepo_lib::package_changes_watcher: file event lagged
+2025-06-10T17:11:32.289826Z  WARN turborepo_lib::package_changes_watcher: file event lagged
+2025-06-10T17:11:32.298788Z  WARN turborepo_filewatch::package_watcher: lagged behind 42 processing file watching events
+2025-06-10T17:11:32.309428Z  WARN turborepo_filewatch::package_watcher: lagged behind 278 processing file watching events
+2025-06-10T17:11:32.322229Z  WARN turborepo_filewatch::globwatcher: encountered filewatching error, flushing all globs: channel lagged by 269
+2025-06-10T17:11:33.470741Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:11:33.470759Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:22:28.089760Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:22:28.091538Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:24:43.180309Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:24:43.180703Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:25:03.083343Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:25:03.085942Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:29:14.482538Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T17:29:14.483792Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:29:20.774387Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T17:29:20.774399Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:29:24.375536Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T17:29:24.375550Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:29:28.374683Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T17:29:28.374697Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:29:34.875178Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/Dockerfile")}
+2025-06-10T17:29:34.875206Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:29:34.931354Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T17:31:26.481023Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:26.481488Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:30.673880Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:30.673903Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:33.872616Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:33.872635Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:36.373380Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:36.373398Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:37.072959Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:37.072978Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:39.472784Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:39.472796Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:39.672853Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:39.672894Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:39.728511Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T17:31:40.572841Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:40.572855Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:40.575981Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T17:31:40.771931Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/frontend/package.json")}
+2025-06-10T17:31:40.771947Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("letsplaychess"), path: AnchoredSystemPathBuf("apps/frontend") }}))
+2025-06-10T17:31:40.785129Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2025-06-10T17:32:06.572917Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:06.572949Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:15.672624Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:15.672655Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:16.372652Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:16.372678Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:20.073284Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:20.073304Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:22.172432Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:22.172515Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:24.272252Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:24.272285Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:26.573032Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:26.573068Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:26.972771Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:26.972796Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:27.272949Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:27.272987Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:27.472340Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:27.472374Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:27.672655Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docker-compose.yml")}
+2025-06-10T17:32:27.672693Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:32:51.177070Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-06-10T17:32:51.177085Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-06-10T17:32:51.477385Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-06-10T17:32:51.477398Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-06-10T17:32:51.718442Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-06-10T17:32:51.718456Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-06-10T17:32:51.754601Z  WARN turborepo_filewatch::package_watcher: lagged behind 66 processing file watching events
+2025-06-10T17:32:51.760883Z  WARN turborepo_filewatch::package_watcher: lagged behind 77 processing file watching events
+2025-06-10T17:32:51.780771Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("")}
+2025-06-10T17:32:51.780779Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({}))
+2025-06-10T17:32:51.876275Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package-lock.json")}
+2025-06-10T17:32:51.876291Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2025-06-10T17:33:12.120928Z  WARN turborepo_filewatch::package_watcher: lagged behind 161 processing file watching events
+2025-06-10T17:33:12.121103Z  WARN turborepo_filewatch::package_watcher: lagged behind 32 processing file watching events
+2025-06-10T17:33:12.131817Z  WARN turborepo_filewatch::package_watcher: lagged behind 25 processing file watching events
+2025-06-10T17:33:12.140787Z  WARN turborepo_lib::package_changes_watcher: file event lagged
+2025-06-10T17:33:12.141692Z  WARN turborepo_lib::package_changes_watcher: file event lagged
+2025-06-10T17:33:12.143374Z  WARN turborepo_filewatch::package_watcher: lagged behind 108 processing file watching events
+2025-06-10T17:33:12.154226Z  WARN turborepo_filewatch::package_watcher: lagged behind 197 processing file watching events
+2025-06-10T17:33:12.164810Z  WARN turborepo_filewatch::package_watcher: lagged behind 174 processing file watching events
+2025-06-10T17:33:12.185091Z  WARN turborepo_filewatch::package_watcher: lagged behind 278 processing file watching events
+2025-06-10T17:33:12.185098Z  WARN turborepo_filewatch::package_watcher: lagged behind 309 processing file watching events
+2025-06-10T17:33:12.195365Z  WARN turborepo_filewatch::package_watcher: lagged behind 167 processing file watching events
