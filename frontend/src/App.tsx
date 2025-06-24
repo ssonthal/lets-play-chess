@@ -8,7 +8,8 @@ export function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const newSocket = io(backendUrl);
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();
