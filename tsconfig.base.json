@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "ESNext",
+      "moduleResolution": "Node",
+      "baseUrl": ".",
+      "paths": {
+        "@letsplaychess/types": ["packages/types/src"],
+        "@letsplaychess/models": ["packages/models/src"],
+        "@letsplaychess/referee": ["packages/referee/src"]
+      },
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true
+    }
+  }
+  

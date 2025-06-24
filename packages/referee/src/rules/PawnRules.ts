@@ -1,6 +1,5 @@
-import { Piece, Position } from "../../models";
-import { Pawn } from "../../models/Pawn";
-import { TeamType } from "../../Types";
+import { Piece, Position, Pawn} from "@letsplaychess/models";
+import { TeamType } from "@letsplaychess/types";
 import { tileOccupied, tileOccupiedByOpponent } from "./GeneralRules";
 
 export const pawnMove = (initialPosition: Position, finalPosition: Position, boardState: Piece[], team: TeamType): boolean  => {

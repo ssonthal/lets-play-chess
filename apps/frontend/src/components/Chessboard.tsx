@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Tile from "./Tile";
 import { TILE_SIZE } from "../Constants";
 import { Piece, Position } from "@letsplaychess/models";
-import { TeamType } from "@letsplaychess/Types";
+import { TeamType } from "@letsplaychess/types";
 
 
 function generateTiles(

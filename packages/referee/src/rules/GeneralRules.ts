@@ -1,5 +1,5 @@
-import { Piece, Position } from "../../models";
-import { PieceType, TeamType } from "../../Types";
+import { Piece, Position } from "@letsplaychess/models";
+import { PieceType, TeamType } from "@letsplaychess/types";
 import { bishopMove } from "./BishopRules";
 import { kingMove } from "./KingRules";
 import { knightMove } from "./KnightRules";

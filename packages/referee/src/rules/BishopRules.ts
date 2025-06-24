@@ -1,5 +1,5 @@
 import { Piece, Position } from '@letsplaychess/models';
-import { TeamType } from '../../Types';
+import { TeamType } from '@letsplaychess/types';
 import {tileOccupied, tileEmptyOrOccupiedByOpponent} from './GeneralRules';
 export const bishopMove = (initialPosition: Position, finalPosition: Position, boardState: Piece[], team: TeamType): boolean => {
     if(Math.abs(finalPosition.x - initialPosition.x) == Math.abs(finalPosition.y - initialPosition.y)) {

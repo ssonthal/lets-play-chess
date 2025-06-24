@@ -1,5 +1,5 @@
-import { Piece, Position } from "../../models";
-import { TeamType } from "../../Types";
+import { Piece, Position } from "@letsplaychess/models";
+import { TeamType } from "@letsplaychess/types";
 import {tileOccupied, tileEmptyOrOccupiedByOpponent} from "./GeneralRules";
 export const rookMove = (initialPosition: Position, finalPosition: Position, boardState: Piece[], team: TeamType): boolean => {
     if(finalPosition.x == initialPosition.x || finalPosition.y == initialPosition.y) {
