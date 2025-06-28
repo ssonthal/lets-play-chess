@@ -1,5 +1,5 @@
 
-import React, { Ref, useState } from 'react';
+import { Ref, useState } from 'react';
 
 const CreateGameModal = ({ gameCode, onClose, createGameModalRef }: { gameCode: string, onClose: () => {}, createGameModalRef: Ref<HTMLDivElement> }) => {
     const [copied, setCopied] = useState(false);

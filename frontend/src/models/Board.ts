@@ -204,6 +204,7 @@ export class Board {
             playedPiece.team,
             playedPiece.type,
             playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
+            
         return clonedBoard;
     }
     checkForFiftyMoveRule(): void {

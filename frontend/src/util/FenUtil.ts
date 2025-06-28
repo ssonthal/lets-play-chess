@@ -90,6 +90,4 @@ export default class FenUtil {
         fen += Math.floor(board.totalTurns/2) + 1;
         return fen;
     }
-    static fenToBoard(board:Board) {
-    }
 }
