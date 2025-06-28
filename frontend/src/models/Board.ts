@@ -1,6 +1,5 @@
 import {getValidKnightMoves, getValidRookMoves, getValidBishopMoves, getValidPawnMoves, getValidKingMoves, getCastlingMoves} from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
-import { King } from "./King";
 import { Move } from "./Move";
 import { Pawn } from "./Pawn";
 import { Piece } from "./Piece";
@@ -127,17 +126,9 @@ export class Board {
         // castling
         if(playedPiece.isKing && (destination.x === playedPiece.position.x + 2 || destination.x === playedPiece.position.x - 2)) {
             const castlingRookPosition = destination.x > playedPiece.position.x ? new Position(7, playedPiece.position.y) : new Position(0, playedPiece.position.y);
-            const kingSideCastled = destination.x > playedPiece.position.x;
             clonedBoard.pieces = clonedBoard.pieces.map(p => {
                 if (p.samePiecePosition(playedPiece)) {
-                    const newPosition = new Position(destination.x, destination.y);
-                    const updatedPiece = (p as King).clone({
-                        position: newPosition,
-                        hasMoved: true,
-                        kingSideCastled: kingSideCastled,
-                        queenSideCastled: !kingSideCastled
-                    });
-                    return updatedPiece;
+                    p.position = new Position(destination.x, destination.y);
                 }
                 else if (p.samePosition(castlingRookPosition)) {
                     p.position = destination.x > playedPiece.position.x ? new Position(destination.x - 1, destination.y) : new Position(destination.x + 1, destination.y);
@@ -167,8 +158,6 @@ export class Board {
                 }
                 if (p.isPawn) {
                     return (p as Pawn).clone({ enPassant: false });
-                } else if(p.isKing) {
-                    return (p as King).clone();
                 }
                 return p.clone();
             }).filter(p => p !== null);
@@ -189,12 +178,6 @@ export class Board {
                             hasMoved: true
                         });
                     }
-                    if(p.isKing) {
-                        updatedPiece = (p as King).clone({
-                            position: newPosition, 
-                            hasMoved: true
-                        })
-                    }
                     return updatedPiece;
                 }
                 // removing the capture piece
@@ -205,9 +188,6 @@ export class Board {
                     return (p as Pawn).clone({
                         enPassant: false
                     })
-                }
-                else if (p.isKing) {
-                    return(p as King).clone();
                 }
                 return p.clone();
             }).filter(p => p !== null);

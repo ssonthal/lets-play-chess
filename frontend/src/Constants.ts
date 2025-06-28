@@ -1,5 +1,4 @@
 import { Board } from "./models/Board";
-import { King } from "./models/King";
 import {Pawn} from "./models/Pawn";
 import { Piece } from "./models/Piece";
 import { Position } from "./models/Position";
@@ -18,7 +17,7 @@ export const initialBoard: Board = new Board([
     new Piece(new Position(1, 7), PieceType.KNIGHT, TeamType.BLACK),
     new Piece(new Position(2, 7), PieceType.BISHOP, TeamType.BLACK),
     new Piece(new Position(3, 7), PieceType.QUEEN, TeamType.BLACK),
-    new King(new Position(4, 7), TeamType.BLACK),
+    new Piece(new Position(4, 7), PieceType.KING, TeamType.BLACK),
     new Piece(new Position(5, 7), PieceType.BISHOP, TeamType.BLACK),
     new Piece(new Position(6, 7), PieceType.KNIGHT, TeamType.BLACK),
     new Piece(new Position(7, 7), PieceType.ROOK, TeamType.BLACK),
@@ -42,7 +41,7 @@ export const initialBoard: Board = new Board([
     new Piece(new Position(1, 0), PieceType.KNIGHT, TeamType.WHITE),
     new Piece(new Position(2, 0), PieceType.BISHOP, TeamType.WHITE),
     new Piece(new Position(3, 0), PieceType.QUEEN, TeamType.WHITE),            
-    new King(new Position(4, 0), TeamType.WHITE),            
+    new Piece(new Position(4, 0), PieceType.KING, TeamType.WHITE),           
     new Piece(new Position(5, 0), PieceType.BISHOP, TeamType.WHITE),            
     new Piece(new Position(6, 0), PieceType.KNIGHT, TeamType.WHITE),            
     new Piece(new Position(7, 0), PieceType.ROOK, TeamType.WHITE)
