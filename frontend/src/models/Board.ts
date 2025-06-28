@@ -203,8 +203,8 @@ export class Board {
         clonedBoard.moves.push(new Move(
             playedPiece.team,
             playedPiece.type,
-            playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination)))); 
-        
+            playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
+            
         return clonedBoard;
     }
     checkForFiftyMoveRule(): void {
