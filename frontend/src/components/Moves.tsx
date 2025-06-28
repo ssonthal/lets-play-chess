@@ -7,7 +7,7 @@ import { Board } from "../models";
 
 function toAlgebraic(pos: { x: number; y: number }): string {
     const file = String.fromCharCode('a'.charCodeAt(0) + pos.x);
-    const rank = (8 - pos.y).toString(); // Assuming y=0 is top
+    const rank = (pos.y + 1).toString(); // Assuming y=0 is top
     return `${file}${rank}`;
 }
 

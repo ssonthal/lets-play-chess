@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
-
+import { v4 as uuidv4 } from 'uuid';
 export default function Landing({ socket }: { socket: Socket }) {
     const [gameId, setGameId] = useState('');
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -34,10 +34,19 @@ export default function Landing({ socket }: { socket: Socket }) {
         };
     }, []);
 
-    const handleCreateGame = () => {
+    const handlePlayWithFriends = () => {
         socket.emit("create-game");
     };
-
+    const handlePlayWithAI = () => {
+        const gameId = uuidv4();
+        const color = "w";
+        navigate(`/game/${gameId}`, {
+            state: {
+                playerColor: color,
+                ai: true
+            },
+        });
+    }
     const handleJoinGame = (id: string) => {
         socket.emit("join-game", id);
     };
@@ -110,16 +119,28 @@ export default function Landing({ socket }: { socket: Socket }) {
                 {/* Main Action Card */}
                 <div className="bg-black bg-opacity-30 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-gray-700 max-w-md w-full transform hover:scale-105 transition-all duration-300">
                     <div className="space-y-6">
-                        {/* Create Game Button */}
+                        {/* Play With Friends Button*/}
                         <button
-                            onClick={handleCreateGame}
+                            onClick={handlePlayWithFriends}
                             className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 text-lg shadow-lg hover:shadow-purple-500/25 hover:shadow-2xl transform hover:-translate-y-1 active:scale-95"
                         >
                             <span className="flex items-center justify-center">
                                 <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                 </svg>
-                                Create New Game
+                                Play With Friends
+                            </span>
+                        </button>
+                        {/* Play with AI */}
+                        <button
+                            onClick={handlePlayWithAI}
+                            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 text-lg shadow-lg hover:shadow-purple-500/25 hover:shadow-2xl transform hover:-translate-y-1 active:scale-95"
+                        >
+                            <span className="flex items-center justify-center">
+                                <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                </svg>
+                                Play With AI
                             </span>
                         </button>
 
