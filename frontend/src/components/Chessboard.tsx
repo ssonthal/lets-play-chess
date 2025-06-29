@@ -110,16 +110,16 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    const grabPiece = (e: React.MouseEvent) => {
+    // Unified grab function for both mouse and touch
+    const grabPiece = (clientX: number, clientY: number, element: HTMLDivElement) => {
         if (!isGameStarted) return;
 
         const chessboard = chessboardRef.current;
-        const element = e.target as HTMLDivElement;
         if (chessboard && element.classList.contains("chess-piece")) {
             const rect = chessboard.getBoundingClientRect();
 
-            const rawX = Math.floor((e.clientX - rect.left + 1) / tileSize);
-            const rawY = Math.floor((e.clientY - rect.top) / tileSize);
+            const rawX = Math.floor((clientX - rect.left + 1) / tileSize);
+            const rawY = Math.floor((clientY - rect.top) / tileSize);
 
             const grabX = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
             const grabY = pieceColor === TeamType.WHITE ? 7 - rawY : rawY;
@@ -129,9 +129,9 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
 
             setGrabPosition(new Position(grabX, grabY));
 
-            // ✅ Corrected local coordinates
-            let x = e.clientX - rect.left - tileSize / 2;
-            let y = e.clientY - rect.top - tileSize / 2;
+            // Corrected local coordinates
+            let x = clientX - rect.left - tileSize / 2;
+            let y = clientY - rect.top - tileSize / 2;
 
             element.style.position = "absolute";
             element.style.left = `${x}px`;
@@ -142,7 +142,22 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         }
     };
 
-    const movePiece = (e: MouseEvent) => {
+    // Mouse event handlers
+    const handleMouseDown = (e: React.MouseEvent) => {
+        const element = e.target as HTMLDivElement;
+        grabPiece(e.clientX, e.clientY, element);
+    };
+
+    // Touch event handlers
+    const handleTouchStart = (e: React.TouchEvent) => {
+        e.preventDefault(); // Prevent scrolling while dragging
+        const touch = e.touches[0];
+        const element = e.target as HTMLDivElement;
+        grabPiece(touch.clientX, touch.clientY, element);
+    };
+
+    // Unified move function for both mouse and touch
+    const movePiece = (clientX: number, clientY: number) => {
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
             const rect = chessboard.getBoundingClientRect();
@@ -154,9 +169,9 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
             const maxX = (tileSize * 8) - (tileSize - offset);
             const maxY = (tileSize * 8) - (tileSize - offset);
 
-            // ✅ FIXED: Convert to local coordinates first
-            let x = e.clientX - rect.left - grabOffset;
-            let y = e.clientY - rect.top - grabOffset;
+            // Convert to local coordinates first
+            let x = clientX - rect.left - grabOffset;
+            let y = clientY - rect.top - grabOffset;
 
             if (x > maxX) x = maxX;
             if (y > maxY) y = maxY;
@@ -169,13 +184,24 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         }
     };
 
-    const dropPiece = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
+        movePiece(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+        e.preventDefault(); // Prevent scrolling
+        const touch = e.touches[0];
+        movePiece(touch.clientX, touch.clientY);
+    };
+
+    // Unified drop function for both mouse and touch
+    const dropPiece = (clientX: number, clientY: number) => {
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
             const rect = chessboard.getBoundingClientRect();
 
-            const rawX = Math.floor((e.clientX - rect.left + 1) / tileSize);
-            const rawY = Math.floor((e.clientY - rect.top) / tileSize);
+            const rawX = Math.floor((clientX - rect.left + 1) / tileSize);
+            const rawY = Math.floor((clientY - rect.top) / tileSize);
 
             const x = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
             const y = pieceColor === TeamType.WHITE ? 7 - rawY : rawY;
@@ -193,27 +219,54 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         }
     };
 
+    const handleMouseUp = (e: MouseEvent) => {
+        dropPiece(e.clientX, e.clientY);
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+        e.preventDefault();
+        // Use the last known touch position or changedTouches for the end position
+        const touch = e.changedTouches[0];
+        dropPiece(touch.clientX, touch.clientY);
+    };
+
     useEffect(() => {
         if (activePiece) {
-            document.addEventListener("mousemove", movePiece);
-            document.addEventListener("mouseup", dropPiece);
+            // Mouse events
+            document.addEventListener("mousemove", handleMouseMove);
+            document.addEventListener("mouseup", handleMouseUp);
+
+            // Touch events
+            document.addEventListener("touchmove", handleTouchMove, { passive: false });
+            document.addEventListener("touchend", handleTouchEnd, { passive: false });
         } else {
-            document.removeEventListener("mousemove", movePiece);
-            document.removeEventListener("mouseup", dropPiece);
+            // Remove mouse events
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+
+            // Remove touch events
+            document.removeEventListener("touchmove", handleTouchMove);
+            document.removeEventListener("touchend", handleTouchEnd);
         }
 
         return () => {
-            document.removeEventListener("mousemove", movePiece);
-            document.removeEventListener("mouseup", dropPiece);
+            // Cleanup mouse events
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+
+            // Cleanup touch events
+            document.removeEventListener("touchmove", handleTouchMove);
+            document.removeEventListener("touchend", handleTouchEnd);
         };
-    }, [activePiece, tileSize]); // Add tileSize as dependency
+    }, [activePiece, tileSize]);
 
     const board = generateTiles(pieces, grabPosition, activePiece, pieceColor, tileSize, lastMove);
 
     return (
         <div className="relative flex items-center justify-center min-h-0">
             <div
-                onMouseDown={grabPiece}
+                onMouseDown={handleMouseDown}
+                onTouchStart={handleTouchStart}
                 ref={chessboardRef}
                 className="grid shadow-2xl rounded-lg overflow-hidden border-4 border-slate-700"
                 style={{
@@ -221,6 +274,7 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
                     gridTemplateRows: `repeat(8, ${tileSize}px)`,
                     width: `${tileSize * 8}px`,
                     height: `${tileSize * 8}px`,
+                    touchAction: 'none', // Prevent default touch behaviors
                 }}
             >
                 {board}
