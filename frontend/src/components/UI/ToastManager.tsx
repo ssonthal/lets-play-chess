@@ -19,7 +19,7 @@ interface Toast {
 
 const ToastItem = ({ toast, onRemove }: { toast: Toast, onRemove: (id: number) => void }) => {
     const [isVisible, setIsVisible] = useState(false);
-    const timeoutRef = useRef<NodeJS.Timeout>(null);
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
         // Trigger animation
