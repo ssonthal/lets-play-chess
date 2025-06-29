@@ -17,7 +17,7 @@ export default function Tile({
 }): React.ReactNode {
     // Calculate piece size as a percentage of tile size for better mobile experience
     // Use smaller percentage on smaller screens
-    const pieceScale = tileSize < 60 ? 0.7 : 0.8; // 70% on mobile, 80% on desktop
+    const pieceScale = tileSize < 60 ? 0.8 : 1; // 80% on mobile, 80% on desktop
     const pieceSize = tileSize * pieceScale;
 
     const pieceStyle = {
