@@ -8,6 +8,9 @@ import { ClockDisplay } from "./ClockDisplay";
 import Moves from "./Moves";
 import { Chessboard } from "./Chessboard";
 import FenUtil from "../util/FenUtil";
+import { PromotionModal } from "./UI/PromotionModal";
+import { EndgameModal } from "./UI/EndgameModalRef";
+import { GameRoomBackground } from "./UI/GameRoomBackground";
 
 
 interface AIGameRoomProps {
@@ -18,22 +21,22 @@ interface AIGameRoomProps {
 }
 function getAIDelayByLevel(level: number): number {
     switch (level) {
-        case 1: return 800;
-        case 2: return 1300;
-        case 3: return 3000;
+        case 1: return 2000;
+        case 2: return 2300;
+        case 3: return 3300;
         case 4: return 5000;
         case 5: return 8000;
-        default: return 800;
+        default: return 2000;
     }
 }
 function getDepthByLevel(level: number): number {
     switch (level) {
-        case 1: return 3;
-        case 2: return 5;
-        case 3: return 8;
+        case 1: return 1;
+        case 2: return 3;
+        case 3: return 6;
         case 4: return 12;
         case 5: return 16;
-        default: return 3;
+        default: return 1;
     }
 }
 
@@ -44,7 +47,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     const [whiteTime, setWhiteTime] = useState<number>(gameTime);
     const [blackTime, setBlackTime] = useState<number>(gameTime);
     const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
-    const modalRef = useRef<HTMLDivElement>(null);
+    const promotionModalRef = useRef<HTMLDivElement>(null);
     const endgameModalRef = useRef<HTMLDivElement>(null);
     const bottomRef = useRef<HTMLDivElement>(null);
     const stockfishRef = useRef<Worker | null>(null);
@@ -215,7 +218,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
             // ♟️ Handle promotion UI
             const promotionRow = playedPiece.team === TeamType.WHITE ? 7 : 0;
             if (destination.y === promotionRow && playedPiece.type === PieceType.PAWN) {
-                modalRef.current?.classList.remove("hidden");
+                promotionModalRef.current?.classList.remove("hidden");
                 setPromotionPawn(newBoard.pieces.find(p => p.samePosition(destination)));
             }
             sendCommand("position fen " + FenUtil.boardToFen(newBoard));
@@ -238,7 +241,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         updatedBoard.calculateAllMoves();
         setBoard(updatedBoard);
         checkForEndGame(updatedBoard);
-        modalRef.current?.classList.add("hidden");
+        promotionModalRef.current?.classList.add("hidden");
     }
 
     function setPromotionTeam(): string {
@@ -274,83 +277,9 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     {
         return !isReady ? <div></div> :
             <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-                {/* Enhanced Animated Background */}
-                <div className="absolute inset-0">
-                    <div className="absolute inset-0 opacity-20">
-                        <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-                        <div className="absolute top-40 right-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-2000"></div>
-                        <div className="absolute bottom-20 left-40 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-4000"></div>
-                    </div>
-                </div>
-                {/* Promotion Modal - Responsive */}
-                <div className="absolute inset-0 hidden z-40" ref={modalRef}>
-                    <div className="absolute inset-0 bg-[rgba(0,0,0,0.5)]" />
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                        <div className="bg-white bg-opacity-85 backdrop-blur-xs rounded-2xl shadow-xl p-4 sm:p-6 border border-white border-opacity-30 w-full max-w-sm sm:max-w-md">
-                            <div className="grid grid-cols-2 sm:flex gap-3 sm:gap-4 justify-center">
-                                {["queen", "rook", "bishop", "knight"].map((type, idx) => (
-                                    <div
-                                        key={idx}
-                                        onClick={() =>
-                                            promotePawn(PieceType[type.toUpperCase() as keyof typeof PieceType])
-                                        }
-                                        className="group relative flex flex-col items-center cursor-pointer transition-all duration-200 hover:scale-105"
-                                    >
-                                        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white bg-opacity-70 rounded-xl shadow-md border border-purple-200 border-opacity-50 group-hover:border-purple-400 group-hover:shadow-lg transition-all duration-200 flex items-center justify-center mb-2">
-                                            <img
-                                                className="w-10 h-10 sm:w-14 sm:h-14 transition-transform duration-200 group-hover:scale-110"
-                                                src={`/assets/pieces/${type}_${setPromotionTeam()}.png`}
-                                                alt={type}
-                                            />
-                                        </div>
-                                        <span className="text-xs sm:text-sm font-medium text-gray-700 capitalize group-hover:text-purple-600 transition-colors duration-200">
-                                            {type}
-                                        </span>
-                                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-purple-400 to-blue-400 opacity-0 group-hover:opacity-10 transition-opacity duration-200 pointer-events-none" />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Endgame Modal - Responsive */}
-                <div className="absolute inset-0 hidden z-50" ref={endgameModalRef}>
-                    <div className="absolute inset-0 bg-[rgba(0,0,0,0.5)]" />
-                    <div className="absolute inset-0 flex items-center justify-center p-4">
-                        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden transform transition-all">
-                            <div className="bg-gradient-to-r from-purple-600 to-blue-600 px-6 py-6 sm:py-8 text-center">
-                                <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-4 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
-                                    <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 2L3.09 8.26L4 21H20L20.91 8.26L12 2Z" />
-                                    </svg>
-                                </div>
-                                <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Game Over</h2>
-                                <p className="text-purple-100 text-base sm:text-lg">{endgameMsg}</p>
-                            </div>
-
-                            <div className="px-6 py-6">
-                                <div className="text-center mb-6">
-                                    <p className="text-gray-600 text-sm">
-                                        {board.winningTeam === TeamType.WHITE ? '🤍' : board.winningTeam === TeamType.BLACK ? '⚫' : '🤝'}
-                                        {' '}Well played! Ready for another game?
-                                    </p>
-                                </div>
-
-                                <div className="flex gap-3">
-                                    <button
-                                        onClick={restartGame}
-                                        className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg text-sm sm:text-base"
-                                    >
-                                        🎯 Play Again
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div className="h-1 bg-gradient-to-r from-purple-400 via-purple-500 to-blue-500"></div>
-                        </div>
-                    </div>
-                </div>
+                <GameRoomBackground />
+                <PromotionModal promotionModalRef={promotionModalRef} promotePawn={promotePawn} setPromotionTeam={setPromotionTeam} />
+                <EndgameModal endgameModalRef={endgameModalRef} board={board} endgameMsg={endgameMsg} restartGame={restartGame} />
 
                 {/* Main Game Container - Responsive */}
                 <div className="flex flex-col p-2 sm:p-4">

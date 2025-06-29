@@ -136,7 +136,6 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
             element.style.position = "absolute";
             element.style.left = `${x}px`;
             element.style.top = `${y}px`;
-            element.style.zIndex = "1000";
 
             setActivePiece(element);
         }
