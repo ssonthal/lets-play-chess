@@ -1,32 +1,32 @@
 import React from "react";
-import { TILE_SIZE } from "../Constants";
 
 export default function Tile({
     image,
     number,
     highlight,
     isLastMove,
-    isLastMoveFrom
+    isLastMoveFrom,
+    tileSize
 }: {
     image: string | undefined;
     number: number;
     highlight: boolean;
     isLastMove?: boolean;
     isLastMoveFrom?: boolean;
+    tileSize: number;
 }): React.ReactNode {
-    const tileStyle = `w-[${TILE_SIZE}px] h-[${TILE_SIZE}px] grid place-items-center`;
     const pieceStyle = {
-        width: `${TILE_SIZE}px`,
-        height: `${TILE_SIZE}px`,
+        width: `${tileSize}px`,
+        height: `${tileSize}px`,
         backgroundImage: `url(${image})`,
     };
     const highlightDotStyle = {
-        width: `${TILE_SIZE / 4}px`,
-        height: `${TILE_SIZE / 4}px`,
+        width: `${tileSize / 4}px`,
+        height: `${tileSize / 4}px`,
     };
     const highlightBorderStyle = {
-        width: `${TILE_SIZE}px`,
-        height: `${TILE_SIZE}px`,
+        width: `${tileSize}px`,
+        height: `${tileSize}px`,
     };
 
     // Determine base tile color - add last move highlighting
@@ -44,8 +44,14 @@ export default function Tile({
         }
     }
 
-    return number % 2 === 0 ? (
-        <div className={`${tileStyle} ${baseTileColor}`}>
+    return (
+        <div
+            className={`grid place-items-center ${baseTileColor}`}
+            style={{
+                width: `${tileSize}px`,
+                height: `${tileSize}px`,
+            }}
+        >
             {!highlight && image && (
                 <div
                     className="chess-piece bg-no-repeat bg-center hover:cursor-grab active:cursor-grabbing"
@@ -61,34 +67,7 @@ export default function Tile({
             {highlight && image && (
                 <div>
                     <div
-                        className="absolute border-5 border-[rgba(0,0,0,0.4)] border-solid rounded-full"
-                        style={highlightBorderStyle}
-                    ></div>
-                    <div
-                        className="chess-piece bg-no-repeat bg-center hover:cursor-grab active:cursor-grabbing"
-                        style={pieceStyle}
-                    ></div>
-                </div>
-            )}
-        </div>
-    ) : (
-        <div className={`${tileStyle} ${baseTileColor}`}>
-            {!highlight && image && (
-                <div
-                    className="chess-piece bg-no-repeat bg-center hover:cursor-grab active:cursor-grabbing"
-                    style={pieceStyle}
-                ></div>
-            )}
-            {highlight && !image && (
-                <div
-                    className="absolute bg-[rgba(0,0,0,0.4)] rounded-full"
-                    style={highlightDotStyle}
-                ></div>
-            )}
-            {highlight && image && (
-                <div>
-                    <div
-                        className="absolute border-5 border-[rgba(0,0,0,0.4)] border-solid rounded-full"
+                        className="absolute border-4 border-[rgba(0,0,0,0.4)] border-solid rounded-full"
                         style={highlightBorderStyle}
                     ></div>
                     <div
