@@ -4,11 +4,15 @@ import { TILE_SIZE } from "../Constants";
 export default function Tile({
     image,
     number,
-    highlight
+    highlight,
+    isLastMove,
+    isLastMoveFrom
 }: {
     image: string | undefined;
     number: number;
     highlight: boolean;
+    isLastMove?: boolean;
+    isLastMoveFrom?: boolean;
 }): React.ReactNode {
     const tileStyle = `w-[${TILE_SIZE}px] h-[${TILE_SIZE}px] grid place-items-center`;
     const pieceStyle = {
@@ -25,8 +29,23 @@ export default function Tile({
         height: `${TILE_SIZE}px`,
     };
 
+    // Determine base tile color - add last move highlighting
+    const isLightTile = number % 2 === 0;
+    let baseTileColor = isLightTile ? 'bg-[#b58962]' : 'bg-[#ebecd0]';
+
+    // Override with last move colors if applicable
+    if (isLastMove) {
+        if (isLastMoveFrom) {
+            // Source square highlighting
+            baseTileColor = isLightTile ? 'bg-[#f7dc6f]' : 'bg-[#f4d03f]'; // Yellow tones
+        } else {
+            // Destination square highlighting  
+            baseTileColor = isLightTile ? 'bg-[#82e0aa]' : 'bg-[#58d68d]'; // Green tones
+        }
+    }
+
     return number % 2 === 0 ? (
-        <div className={`${tileStyle} bg-[#b58962]`}>
+        <div className={`${tileStyle} ${baseTileColor}`}>
             {!highlight && image && (
                 <div
                     className="chess-piece bg-no-repeat bg-center hover:cursor-grab active:cursor-grabbing"
@@ -53,7 +72,7 @@ export default function Tile({
             )}
         </div>
     ) : (
-        <div className={`${tileStyle} bg-[#ebecd0]`}>
+        <div className={`${tileStyle} ${baseTileColor}`}>
             {!highlight && image && (
                 <div
                     className="chess-piece bg-no-repeat bg-center hover:cursor-grab active:cursor-grabbing"

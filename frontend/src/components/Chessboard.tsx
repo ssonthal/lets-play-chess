@@ -9,7 +9,8 @@ function generateTiles(
     pieces: Piece[],
     grabPosition: Position,
     activePiece: HTMLDivElement | null,
-    playerColor: TeamType
+    playerColor: TeamType,
+    lastMove?: { from: Position, to: Position }
 ) {
     const isWhite = playerColor === TeamType.WHITE;
     const tiles = [];
@@ -29,6 +30,11 @@ function generateTiles(
                 ? currentPiece.possibleMoves.some(p => p.equals(pos))
                 : false;
 
+            // Check if this position is part of the last move
+            const isLastMoveFrom = lastMove && lastMove.from.equals(pos);
+            const isLastMoveTo = lastMove && lastMove.to.equals(pos);
+            const isLastMove = isLastMoveFrom || isLastMoveTo;
+
             // Number can be used for alternating tile color (optional)
             const number = x + y;
 
@@ -38,6 +44,8 @@ function generateTiles(
                     image={image}
                     number={number}
                     highlight={highlight}
+                    isLastMove={isLastMove}
+                    isLastMoveFrom={isLastMoveFrom}
                 />
             );
         }
@@ -52,10 +60,11 @@ interface Props {
     playMove: (piece: Piece, destination: Position) => boolean
     pieceColor: TeamType
     pieces: Piece[],
-    isGameStarted: boolean
+    isGameStarted: boolean,
+    lastMove?: { from: Position, to: Position }
 }
 
-export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Props) {
+export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMove }: Props) {
     const [grabPosition, setGrabPosition] = useState<Position>(new Position(-1, -1));
     const [activePiece, setActivePiece] = useState<HTMLDivElement | null>(null);
     const chessboardRef = useRef<HTMLDivElement>(null);
@@ -158,7 +167,7 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted }: Prop
         };
     }, [activePiece]);
 
-    const board = generateTiles(pieces, grabPosition, activePiece, pieceColor);
+    const board = generateTiles(pieces, grabPosition, activePiece, pieceColor, lastMove);
     return (
         <div className="relative">
             <div

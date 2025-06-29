@@ -50,7 +50,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     const stockfishRef = useRef<Worker | null>(null);
     const [isReady, setIsReady] = useState(false);
     const [pendingAIMove, setPendingAIMove] = useState<{ from: Position, to: Position } | null>(null);
-
+    const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
     useEffect(() => {
         try {
             const wasmSupported = typeof WebAssembly === 'object' &&
@@ -185,6 +185,9 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     // Auto-scroll on move
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (board.moves.length > 0) {
+            setLastMove({ from: board.moves[board.moves.length - 1].fromPosition, to: board.moves[board.moves.length - 1].toPosition });
+        }
     }, [board.moves.length]);
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
@@ -252,6 +255,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         endgameModalRef.current?.classList.add("hidden");
         setWhiteTime(gameTime);
         setBlackTime(gameTime);
+        setLastMove(undefined);
         setBoard(initialBoard.clone());
     }
 
@@ -424,7 +428,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
 
                         {/* ♟️ Game UI (Board + Moves) */}
                         <div className="flex gap-4 items-center">
-                            <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} />
+                            <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} lastMove={lastMove} />
                             <Moves board={board} handleResination={handleResination} />
                         </div>
 
