@@ -20,15 +20,23 @@ const games = {}; // gameId => { white: socket.id, black: socket.id }
 io.on("connection", (socket) => {
   console.log(`⚡ New connection: ${socket.id}`);
 
-  socket.on("create-game", () => {
-    const gameId = uuidv4();
-    games[gameId] = { white: socket.id, black: null };
+  socket.on("create-game", ({gameId, color, time}) => {
+    if (games[gameId]) {
+      socket.emit("error", "Game ID already exists.");
+      return;
+    }
+    if(color === "b") {
+      games[gameId] = {white: null, black: socket.id};
+    } else {
+      games[gameId] = { white: socket.id, black: null };
+    }
+    games[gameId].time = time;
     socket.join(gameId);
     console.log(`🎯 Game created: ${gameId}`);
-    socket.emit("game-created", { gameId, color: "w" });
   });
 
   socket.on("join-game", (gameId) => {
+    
     const game = games[gameId];
 
     if (!game) {
@@ -36,24 +44,27 @@ io.on("connection", (socket) => {
       return;
     }
 
-    if (game.black) {
+    if (game.black && game.white) {
       socket.emit("error", "Game already has two players.");
       return;
     }
-
-    game.black = socket.id;
+    if(game.white === socket.id || game.black === socket.id) {
+      socket.emit("error", "You are already in this game.");
+      return;
+    }
+    let color = 'w';
+    if(game.white) {
+      game.black = socket.id;
+      color = 'b';
+    } else {
+      game.white = socket.id;
+    }
     socket.join(gameId);
     console.log(`🎯 Player joined game: ${gameId}`);
-    io.to(game.black).emit("game-created", { gameId, color: "b" });
-    io.to(game.white).emit("game-started");
+    io.to(game.white).emit("game-created", { gameId, color: 'w', time: game.time});
+    io.to(game.black).emit("game-created", { gameId, color: 'b', time: game.time});
   });
 
-  socket.on("black-ready", (gameId) => {
-    const game = games[gameId];
-    if (!game || game.black !== socket.id) return;
-    io.to(gameId).emit("game-started");
-  })
-  
   socket.on("move", ({ gameId, move }) => {
     const game = games[gameId];
     if (!game) return;

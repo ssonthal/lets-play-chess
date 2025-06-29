@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Users, Zap, Crown, Shield } from "lucide-react";
-import { INITIAL_TIME, initialBoard } from "../Constants";
+import { initialBoard } from "../Constants";
 import { PieceType, TeamType } from "../Types";
 import { Board, Piece, Position } from "../models";
 import { isEnPassantMove } from "../referee/rules";
@@ -13,20 +13,36 @@ import FenUtil from "../util/FenUtil";
 interface AIGameRoomProps {
     playerColor: TeamType;
     gameStarted: boolean;
+    gameTime: number;
+    aiLevel: number;
 }
-function getAIDelayByLevel(level: 1 | 2 | 3): number {
+function getAIDelayByLevel(level: number): number {
     switch (level) {
-        case 1: return 2000;
-        case 2: return 5000;
-        case 3: return 5000;
+        case 1: return 800;
+        case 2: return 1300;
+        case 3: return 3000;
+        case 4: return 5000;
+        case 5: return 8000;
+        default: return 800;
     }
 }
-export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) {
+function getDepthByLevel(level: number): number {
+    switch (level) {
+        case 1: return 3;
+        case 2: return 5;
+        case 3: return 8;
+        case 4: return 12;
+        case 5: return 16;
+        default: return 3;
+    }
+}
+
+export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }: AIGameRoomProps) {
     const [board, setBoard] = useState<Board>(initialBoard.clone());
     const [promotionPawn, setPromotionPawn] = useState<Piece>();
     const [endgameMsg, setEndgameMsg] = useState("Draw");
-    const [whiteTime, setWhiteTime] = useState<number>(INITIAL_TIME);
-    const [blackTime, setBlackTime] = useState<number>(INITIAL_TIME);
+    const [whiteTime, setWhiteTime] = useState<number>(gameTime);
+    const [blackTime, setBlackTime] = useState<number>(gameTime);
     const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
     const modalRef = useRef<HTMLDivElement>(null);
     const endgameModalRef = useRef<HTMLDivElement>(null);
@@ -61,7 +77,7 @@ export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) 
 
                     const from = FenUtil.algebraicToPosition(move.substring(0, 2));
                     const to = FenUtil.algebraicToPosition(move.substring(2, 5));
-                    const uiDelay = getAIDelayByLevel(1); // e.g. 700ms
+                    const uiDelay = getAIDelayByLevel(1);
                     const aiTeam = playerColor === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
                     const reaminingTime = aiTeam === TeamType.WHITE ? whiteTime : blackTime;
                     setTimeout(() => {
@@ -101,6 +117,7 @@ export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) 
     };
     useEffect(() => {
         if (!gameStarted) return;
+
         // Stop the clock if game ends
         if (board.draw || board.winningTeam !== undefined || board.statemate) {
             if (intervalId) clearInterval(intervalId);
@@ -146,6 +163,7 @@ export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) 
             }
         }
     }, [board, pendingAIMove]);
+
     useEffect(() => {
 
         if (whiteTime === 0 || blackTime === 0) {
@@ -156,6 +174,14 @@ export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) 
         }
     }, [whiteTime, blackTime]);
 
+    useEffect(() => {
+        if (board.totalTurns == 0 && board.currentTeam === TeamType.WHITE && playerColor !== TeamType.WHITE && stockfishRef.current) {
+            setTimeout(() => {
+                sendCommand("position fen " + FenUtil.boardToFen(board));
+                sendCommand(`go depth ${getDepthByLevel(aiLevel)}`);
+            }, 2000)
+        }
+    });
     // Auto-scroll on move
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -190,7 +216,7 @@ export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) 
                 setPromotionPawn(newBoard.pieces.find(p => p.samePosition(destination)));
             }
             sendCommand("position fen " + FenUtil.boardToFen(newBoard));
-            sendCommand("go depth 12");
+            sendCommand(`go depth ${getDepthByLevel(aiLevel)}`);
             return true;
         }
         return false;
@@ -224,6 +250,8 @@ export default function GameRoom({ playerColor, gameStarted }: AIGameRoomProps) 
     }
     function restartGame() {
         endgameModalRef.current?.classList.add("hidden");
+        setWhiteTime(gameTime);
+        setBlackTime(gameTime);
         setBoard(initialBoard.clone());
     }
 

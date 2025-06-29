@@ -4,7 +4,7 @@ import { TILE_SIZE } from "../Constants";
 export default function Tile({
     image,
     number,
-    highlight,
+    highlight
 }: {
     image: string | undefined;
     number: number;

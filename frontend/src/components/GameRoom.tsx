@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Users, Zap, Crown, Shield } from "lucide-react";
-import { INITIAL_TIME, initialBoard } from "../Constants";
+import { initialBoard } from "../Constants";
 import { PieceType, TeamType } from "../Types";
 import { Socket } from "socket.io-client";
 import { Board, Piece, Position } from "../models";
@@ -14,14 +14,15 @@ interface GameRoomProps {
   playerColor: TeamType;
   gameStarted: boolean;
   gameId: string;
+  gameTime: number;
 }
 
-export default function GameRoom({ socket, playerColor, gameStarted, gameId }: GameRoomProps) {
+export default function GameRoom({ socket, playerColor, gameStarted, gameId, gameTime }: GameRoomProps) {
   const [board, setBoard] = useState<Board>(initialBoard.clone());
   const [promotionPawn, setPromotionPawn] = useState<Piece>();
   const [endgameMsg, setEndgameMsg] = useState("Draw");
-  const [whiteTime, setWhiteTime] = useState<number>(INITIAL_TIME);
-  const [blackTime, setBlackTime] = useState<number>(INITIAL_TIME);
+  const [whiteTime, setWhiteTime] = useState<number>(gameTime);
+  const [blackTime, setBlackTime] = useState<number>(gameTime);
   const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const endgameModalRef = useRef<HTMLDivElement>(null);

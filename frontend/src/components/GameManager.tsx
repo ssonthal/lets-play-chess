@@ -10,7 +10,9 @@ export default function GameManager({ socket }: { socket: Socket }) {
     const { gameId } = useParams<{ gameId: string }>();
     const location = useLocation();
     const [playerColor, setPlayerColor] = useState<TeamType | null>(null);
-    const [gameStarted, setGameStarted] = useState<boolean>(false);
+    const [gameTime, setGametime] = useState<number>(300);
+    const [level, setGameLevel] = useState<number>(1);
+    const [gameStarted, setGameStarted] = useState<boolean>(true);
     const [vsAi, setVsAi] = useState<boolean>(false);
     useEffect(() => {
         const color: TeamType =
@@ -20,9 +22,17 @@ export default function GameManager({ socket }: { socket: Socket }) {
 
         setPlayerColor(color);
         const isAi: boolean = location?.state?.ai;
+        const time: number = location?.state?.time;
+        const level: number = location?.state?.level;
+
+        if (time) {
+            setGametime(time);
+        }
+        if (level) {
+            setGameLevel(level);
+        }
         if (isAi) {
             setVsAi(true);
-            setGameStarted(true);
         }
     }, [gameId, location]);
 
@@ -32,12 +42,7 @@ export default function GameManager({ socket }: { socket: Socket }) {
             setPlayerColor(null);
             navigate("/");
         });
-        socket.on("game-started", () => {
-            setGameStarted(true);
-        })
-        socket.emit("black-ready", gameId);
         return () => {
-            socket.off("game-started");
             socket.off("game-ended");
         };
     }, []);
@@ -49,13 +54,13 @@ export default function GameManager({ socket }: { socket: Socket }) {
     if (vsAi) {
         return (
             <>
-                <AIGameRoom playerColor={playerColor} gameStarted={gameStarted} />
+                <AIGameRoom playerColor={playerColor} gameStarted={gameStarted} gameTime={gameTime} aiLevel={level} />
             </>
         )
     }
     return (
         <>
-            <GameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={gameId} />
+            <GameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={gameId} gameTime={gameTime} />
         </>
     );
 }
