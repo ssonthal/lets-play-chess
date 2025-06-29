@@ -1,15 +1,46 @@
 import React, { useEffect, useRef, useState } from "react";
 import Tile from "./Tile";
-import { TILE_SIZE } from "../Constants";
 import { Piece, Position } from "../models";
 import { TeamType } from "../Types";
 
+// Enhanced responsive tile size calculation for larger boards
+const getResponsiveTileSize = () => {
+    if (typeof window === 'undefined') return 80; // Default for SSR
+
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+
+    // Calculate maximum possible tile size based on viewport dimensions
+    // More generous space allocation - reduced UI element estimates
+    const maxWidthTileSize = Math.floor((screenWidth - 32) / 8); // Reduced padding
+    const maxHeightTileSize = Math.floor((screenHeight - 200) / 8); // Much more generous height
+
+    // Use the smaller of the two to ensure board fits in viewport
+    const viewportConstrainedSize = Math.min(maxWidthTileSize, maxHeightTileSize);
+
+    // Increased device-specific constraints for larger boards
+    let deviceMaxSize;
+    if (screenWidth < 400) deviceMaxSize = 42;       // Increased from 35
+    else if (screenWidth < 480) deviceMaxSize = 50;  // Increased from 40
+    else if (screenWidth < 640) deviceMaxSize = 60;  // Increased from 45
+    else if (screenWidth < 768) deviceMaxSize = 70;  // Increased from 50
+    else if (screenWidth < 1024) deviceMaxSize = 85; // Increased from 60
+    else if (screenWidth < 1280) deviceMaxSize = 95; // New breakpoint
+    else if (screenWidth < 1440) deviceMaxSize = 105; // New breakpoint
+    else if (screenWidth < 1920) deviceMaxSize = 115; // New breakpoint
+    else deviceMaxSize = 125; // Much larger for big screens (was 75)
+
+    // Return the smaller of viewport-constrained size and device max size
+    // Increased minimum size for better usability
+    return Math.max(35, Math.min(viewportConstrainedSize, deviceMaxSize));
+};
 
 function generateTiles(
     pieces: Piece[],
     grabPosition: Position,
     activePiece: HTMLDivElement | null,
     playerColor: TeamType,
+    tileSize: number,
     lastMove?: { from: Position, to: Position }
 ) {
     const isWhite = playerColor === TeamType.WHITE;
@@ -46,6 +77,7 @@ function generateTiles(
                     highlight={highlight}
                     isLastMove={isLastMove}
                     isLastMoveFrom={isLastMoveFrom}
+                    tileSize={tileSize} // Pass tileSize to Tile component
                 />
             );
         }
@@ -53,8 +85,6 @@ function generateTiles(
 
     return tiles;
 }
-
-
 
 interface Props {
     playMove: (piece: Piece, destination: Position) => boolean
@@ -67,7 +97,18 @@ interface Props {
 export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMove }: Props) {
     const [grabPosition, setGrabPosition] = useState<Position>(new Position(-1, -1));
     const [activePiece, setActivePiece] = useState<HTMLDivElement | null>(null);
+    const [tileSize, setTileSize] = useState<number>(getResponsiveTileSize());
     const chessboardRef = useRef<HTMLDivElement>(null);
+
+    // Handle window resize
+    useEffect(() => {
+        const handleResize = () => {
+            setTileSize(getResponsiveTileSize());
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const grabPiece = (e: React.MouseEvent) => {
         if (!isGameStarted) return;
@@ -77,8 +118,8 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         if (chessboard && element.classList.contains("chess-piece")) {
             const rect = chessboard.getBoundingClientRect();
 
-            const rawX = Math.floor((e.clientX - rect.left + 1) / TILE_SIZE);
-            const rawY = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+            const rawX = Math.floor((e.clientX - rect.left + 1) / tileSize);
+            const rawY = Math.floor((e.clientY - rect.top) / tileSize);
 
             const grabX = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
             const grabY = pieceColor === TeamType.WHITE ? 7 - rawY : rawY;
@@ -89,8 +130,8 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
             setGrabPosition(new Position(grabX, grabY));
 
             // ✅ Corrected local coordinates
-            let x = e.clientX - rect.left - TILE_SIZE / 2;
-            let y = e.clientY - rect.top - TILE_SIZE / 2;
+            let x = e.clientX - rect.left - tileSize / 2;
+            let y = e.clientY - rect.top - tileSize / 2;
 
             element.style.position = "absolute";
             element.style.left = `${x}px`;
@@ -105,13 +146,13 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         const chessboard = chessboardRef.current;
         if (activePiece && chessboard) {
             const rect = chessboard.getBoundingClientRect();
-            const offset = TILE_SIZE / 4;
-            const grabOffset = TILE_SIZE / 2;
+            const offset = tileSize / 4;
+            const grabOffset = tileSize / 2;
 
             const minX = -offset;
             const minY = -offset;
-            const maxX = (TILE_SIZE * 8) - (TILE_SIZE - offset);
-            const maxY = (TILE_SIZE * 8) - (TILE_SIZE - offset);
+            const maxX = (tileSize * 8) - (tileSize - offset);
+            const maxY = (tileSize * 8) - (tileSize - offset);
 
             // ✅ FIXED: Convert to local coordinates first
             let x = e.clientX - rect.left - grabOffset;
@@ -133,8 +174,8 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
         if (activePiece && chessboard) {
             const rect = chessboard.getBoundingClientRect();
 
-            const rawX = Math.floor((e.clientX - rect.left + 1) / TILE_SIZE);
-            const rawY = Math.floor((e.clientY - rect.top) / TILE_SIZE);
+            const rawX = Math.floor((e.clientX - rect.left + 1) / tileSize);
+            const rawY = Math.floor((e.clientY - rect.top) / tileSize);
 
             const x = pieceColor === TeamType.WHITE ? rawX : 7 - rawX;
             const y = pieceColor === TeamType.WHITE ? 7 - rawY : rawY;
@@ -165,20 +206,21 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
             document.removeEventListener("mousemove", movePiece);
             document.removeEventListener("mouseup", dropPiece);
         };
-    }, [activePiece]);
+    }, [activePiece, tileSize]); // Add tileSize as dependency
 
-    const board = generateTiles(pieces, grabPosition, activePiece, pieceColor, lastMove);
+    const board = generateTiles(pieces, grabPosition, activePiece, pieceColor, tileSize, lastMove);
+
     return (
-        <div className="relative">
+        <div className="relative flex items-center justify-center min-h-0">
             <div
                 onMouseDown={grabPiece}
                 ref={chessboardRef}
-                className="grid"
+                className="grid shadow-2xl rounded-lg overflow-hidden border-4 border-slate-700"
                 style={{
-                    gridTemplateColumns: `repeat(8, ${TILE_SIZE}px)`,
-                    gridTemplateRows: `repeat(8, ${TILE_SIZE}px)`,
-                    width: `${TILE_SIZE * 8}px`,
-                    height: `${TILE_SIZE * 8}px`,
+                    gridTemplateColumns: `repeat(8, ${tileSize}px)`,
+                    gridTemplateRows: `repeat(8, ${tileSize}px)`,
+                    width: `${tileSize * 8}px`,
+                    height: `${tileSize * 8}px`,
                 }}
             >
                 {board}
