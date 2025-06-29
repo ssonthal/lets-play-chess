@@ -15,18 +15,26 @@ export default function Tile({
     isLastMoveFrom?: boolean;
     tileSize: number;
 }): React.ReactNode {
+    // Calculate piece size as a percentage of tile size for better mobile experience
+    // Use smaller percentage on smaller screens
+    const pieceScale = tileSize < 60 ? 0.7 : 0.8; // 70% on mobile, 80% on desktop
+    const pieceSize = tileSize * pieceScale;
+
     const pieceStyle = {
-        width: `${tileSize}px`,
-        height: `${tileSize}px`,
+        width: `${pieceSize}px`,
+        height: `${pieceSize}px`,
         backgroundImage: `url(${image})`,
+        backgroundSize: 'contain', // Ensure piece fits within bounds
     };
+
     const highlightDotStyle = {
         width: `${tileSize / 4}px`,
         height: `${tileSize / 4}px`,
     };
+
     const highlightBorderStyle = {
-        width: `${tileSize}px`,
-        height: `${tileSize}px`,
+        width: `${pieceSize}px`,
+        height: `${pieceSize}px`,
     };
 
     // Determine base tile color - add last move highlighting
@@ -65,7 +73,7 @@ export default function Tile({
                 ></div>
             )}
             {highlight && image && (
-                <div>
+                <div className="relative grid place-items-center">
                     <div
                         className="absolute border-4 border-[rgba(0,0,0,0.4)] border-solid rounded-full"
                         style={highlightBorderStyle}
