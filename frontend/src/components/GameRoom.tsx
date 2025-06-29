@@ -27,6 +27,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
   const modalRef = useRef<HTMLDivElement>(null);
   const endgameModalRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
 
   useEffect(() => {
     if (!gameStarted) return;
@@ -69,6 +70,9 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
   }, [whiteTime, blackTime]);
   // Auto-scroll on move
   useEffect(() => {
+    if (board.moves.length > 0) {
+      setLastMove({ from: board.moves[board.moves.length - 1].fromPosition, to: board.moves[board.moves.length - 1].toPosition });
+    }
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [board.moves.length]);
 
@@ -342,7 +346,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
 
           {/* ♟️ Game UI (Board + Moves) */}
           <div className="flex gap-4 items-center">
-            <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} />
+            <Chessboard playMove={playMove} pieces={board.pieces} pieceColor={playerColor} isGameStarted={gameStarted} lastMove={lastMove} />
             <Moves board={board} handleResination={handleResination} />
           </div>
 
