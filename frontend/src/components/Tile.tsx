@@ -17,7 +17,7 @@ export default function Tile({
 }): React.ReactNode {
     // Calculate piece size as a percentage of tile size for better mobile experience
     // Use smaller percentage on smaller screens
-    const pieceScale = tileSize < 60 ? 0.8 : 1; // 80% on mobile, 80% on desktop
+    const pieceScale = 0.9;
     const pieceSize = tileSize * pieceScale;
 
     const pieceStyle = {
@@ -68,14 +68,14 @@ export default function Tile({
             )}
             {highlight && !image && (
                 <div
-                    className="absolute bg-[rgba(0,0,0,0.4)] rounded-full"
+                    className="bg-[rgba(0,0,0,0.4)] rounded-full"
                     style={highlightDotStyle}
                 ></div>
             )}
             {highlight && image && (
-                <div className="relative grid place-items-center">
+                <div className="relative">
                     <div
-                        className="absolute border-4 border-[rgba(0,0,0,0.4)] border-solid rounded-full"
+                        className="absolute inset-0 border-4 border-[rgba(0,0,0,0.4)] border-solid rounded-full"
                         style={highlightBorderStyle}
                     ></div>
                     <div
