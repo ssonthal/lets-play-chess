@@ -263,9 +263,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [x] **Real-time Multiplayer**: Game state synchronization with Redis
 - [x] **Time Controls**: Chess timer implementation
 - [x] **Game Persistence**: Resume games after disconnection
-
+- [x] **AI Opponent**: Computer opponent with different difficulty levels
+- [ ] 
 ### Planned Features
-- [ ] **AI Opponent**: Computer opponent with different difficulty levels
 - [ ] **Tournament System**: Organize and manage chess tournaments
 - [ ] **Player Ratings**: ELO-based player ratings and leaderboards
 - [ ] **Game Analysis**: Post-game analysis with chess engine
