@@ -5,11 +5,12 @@ A modern, full-stack chess application that allows players to enjoy chess games 
 ## 🎯 Features
 
 ### Core Gameplay
-- **Real-time Multiplayer**: Play chess with friends in real-time using WebSocket connections
-- **Game Rooms**: Create or join game rooms with unique room codes
-- **AI Opponent**: Play against computer with different difficulty levels ✅
-- **Move Validation**: Comprehensive client and server-side move validation
-- **Game History**: Track and review move history with full game notation
+- **Real-time Multiplayer**: Play chess with friends using unique game IDs
+- **Game State Persistence**: Games are saved in Redis and can be resumed
+- **Time Controls**: Built-in chess timer with time tracking for both players
+- **Move Validation**: Server-side move validation and game state management
+- **Game History**: Complete move history stored in algebraic notation
+- **Reconnection Support**: Players can reconnect to existing games
 
 ### Chess Rules Engine
 Complete implementation of chess rules including:
@@ -51,50 +52,48 @@ Complete implementation of chess rules including:
 
 ### Client → Server Events
 ```typescript
-// Room Management
-'create-room'     // Create a new game room
-'join-room'       // Join an existing room with room code
-'leave-room'      // Leave current room
+// Game Management
+'create-game'              // Create a new game
+// Parameters: { userId, gameId, color, time }
+
+'join-game'               // Join an existing game
+// Parameters: { userId, gameId }
+
+'check-for-existing-game' // Check if player has an existing game
+// Parameters: { userId, gameId }
 
 // Game Actions
-'make-move'       // Send a chess move
-'resign'          // Resign from current game
-'offer-draw'      // Offer a draw to opponent
-'accept-draw'     // Accept opponent's draw offer
-'decline-draw'    // Decline opponent's draw offer
-'request-rematch' // Request a rematch after game ends
+'move'                    // Send a chess move with game state
+// Parameters: { userId, gameId, move, whiteTime, blackTime, currentTurn, isDraw, isStalemate, winningTeam }
 
-// Player Status
-'player-ready'    // Signal player is ready to start
+'game-over'               // Notify game has ended
+// Parameters: { userId, gameId }
+
+'opponent-resigned'       // Notify opponent has resigned
+// Parameters: { userId, gameId }
 ```
 
 ### Server → Client Events
 ```typescript
-// Room Updates
-'room-created'    // Room successfully created with room code
-'room-joined'     // Successfully joined room
-'room-full'       // Room is full, cannot join
-'room-not-found'  // Room code doesn't exist
-'player-joined'   // Another player joined the room
-'player-left'     // Player left the room
+// Game Creation & Management
+'game-created'            // Game successfully created or joined
+// Data: { gameId, color, time }
+
+'game-exists'             // Existing game found for player
+// Data: { game object with current state }
+
+'error'                   // Error occurred (invalid game ID, unauthorized, etc.)
+// Data: error message string
 
 // Game State Updates
-'game-started'    // Game has begun
-'move-made'       // Valid move was executed
-'invalid-move'    // Move was rejected with reason
-'game-over'       // Game ended (checkmate/stalemate/draw/resign)
-'check'           // Player is in check
-'checkmate'       // Game ended in checkmate
-'stalemate'       // Game ended in stalemate
+'opponent-move'           // Opponent made a move
+// Data: move object { from, to }
 
-// Real-time Updates
-'board-updated'   // Board state synchronized
-'turn-changed'    // Player turn switched
-'draw-offered'    // Draw offer received
-'draw-accepted'   // Draw offer accepted
-'draw-declined'   // Draw offer declined
-'rematch-offered' // Rematch offer received
-'game-reset'      // New game started (rematch)
+'game-ended'              // Game has ended
+// Data: none
+
+'opponent-resigned'       // Opponent has resigned
+// Data: none
 ```
 
 ## 🚀 Getting Started
@@ -131,11 +130,16 @@ Make sure you have the following installed:
    Create a `.env` file in the backend directory:
    ```env
    PORT=3000
+   REDIS_URL=redis://localhost:6379
    NODE_ENV=development
-   CORS_ORIGIN=http://localhost:5173
    ```
 
-4. **Start the development servers**
+4. **Start Redis server** (required for game state storage)
+   ```bash
+   redis-server
+   ```
+
+5. **Start the development servers**
    
    Backend (from backend directory):
    ```bash
@@ -154,10 +158,11 @@ Make sure you have the following installed:
 ## 🎮 How to Play
 
 ### Starting a Game
-1. **Create Room**: Click "Create Room" to start a new game
-2. **Share Code**: Share the generated room code with your friend
-3. **Join Room**: Enter a room code to join an existing game
-4. **AI Game**: Choose "Play vs AI" for single-player mode
+1. **Create Game**: Click "Create Game" and choose your color (white/black)
+2. **Set Time Control**: Select time limit for the game
+3. **Share Game ID**: Share the generated game ID with your friend
+4. **Join Game**: Enter a game ID to join an existing game
+5. **Resume Game**: Reconnect to your existing game if disconnected
 
 ### Making Moves
 - Click on a piece to select it
@@ -168,8 +173,9 @@ Make sure you have the following installed:
 
 ### Game Controls
 - **Resign**: Give up the current game
-- **Offer Draw**: Propose a draw to your opponent
-- **Rematch**: Start a new game with the same opponent
+- **Timer**: Each player has a countdown timer
+- **Reconnect**: Resume your game after disconnection
+- **Game Status**: View current turn, draw status, and game outcome
 
 ## 📁 Project Structure
 
@@ -188,14 +194,9 @@ lets-play-chess-2/
 │   ├── public/             # Static assets
 │   └── package.json
 ├── backend/                # Node.js backend application
-│   ├── src/
-│   │   ├── routes/         # API routes
-│   │   ├── socket/         # Socket.io event handlers
-│   │   ├── game/           # Chess game logic
-│   │   ├── ai/             # AI opponent logic
-│   │   └── utils/          # Server utilities
-│   ├── server.js           # Main server file
-│   └── package.json
+│   ├── server.js           # Main server file with Socket.io events
+│   ├── redisClient.js      # Redis database operations
+│   └── package.json        # Backend dependencies
 └── README.md
 ```
 
@@ -214,11 +215,11 @@ lets-play-chess-2/
 1. Set up environment variables on your hosting platform:
    ```env
    PORT=3000
+   REDIS_URL=your-redis-connection-string
    NODE_ENV=production
-   CORS_ORIGIN=https://your-frontend-domain.com
    ```
 2. Deploy the backend directory
-3. Ensure proper CORS configuration for production
+3. Ensure Redis database is configured for production
 
 ## 🧪 Testing
 
@@ -259,9 +260,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🔮 Future Enhancements
 
 ### Completed Features
-- [x] **AI Opponent**: Computer opponent with different difficulty levels
+- [x] **Real-time Multiplayer**: Game state synchronization with Redis
+- [x] **Time Controls**: Chess timer implementation
+- [x] **Game Persistence**: Resume games after disconnection
 
 ### Planned Features
+- [ ] **AI Opponent**: Computer opponent with different difficulty levels
 - [ ] **Tournament System**: Organize and manage chess tournaments
 - [ ] **Player Ratings**: ELO-based player ratings and leaderboards
 - [ ] **Game Analysis**: Post-game analysis with chess engine
@@ -278,9 +282,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🐛 Known Issues
 
-- Mobile responsiveness could be improved for smaller screens
-- Occasional WebSocket reconnection issues on slow networks
-- Room codes expire after extended inactivity
+- Player disconnection handling could be improved
+- Time synchronization may drift on slow connections
+- Need better error handling for Redis connection issues
+- Game cleanup for abandoned games not implemented
 
 ## 📞 Support
 
