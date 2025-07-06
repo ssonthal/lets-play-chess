@@ -50,24 +50,24 @@ Make sure you have the following installed:
    
    For the backend:
    ```bash
-   cd server
+   cd backend
    npm install
    ```
    
    For the frontend:
    ```bash
-   cd client
+   cd frontend
    npm install
    ```
 
 3. **Start the development servers**
    
-   Backend (from server directory):
+   Backend (from backend directory):
    ```bash
    node server.js
    ```
    
-   Frontend (from client directory):
+   Frontend (from frontend directory):
    ```bash
    npm run dev
    ```
@@ -89,7 +89,7 @@ Make sure you have the following installed:
 
 ### Backend (Render)
 1. Set up environment variables on your hosting platform
-2. Deploy the server directory
+2. Deploy the backend directory
 3. Ensure MongoDB connection is configured for production
 
 
