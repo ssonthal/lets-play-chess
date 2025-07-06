@@ -477,17 +477,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
                                     {/* Moves Panel */}
                                     <div className="block sm:hidden">
                                         {/* Mobile: Compact moves display */}
-                                        <div className="bg-slate-800 bg-opacity-60 backdrop-blur-sm rounded-lg p-3 border border-slate-600 max-w-sm mx-auto">
-                                            <div className="flex items-center justify-between mb-2">
-                                                <span className="text-gray-300 text-sm font-medium">Moves: {board.moves.length}</span>
-                                                <button
-                                                    onClick={handleResination}
-                                                    className="bg-red-600 hover:bg-red-700 text-white text-xs px-2 py-1 rounded transition-colors"
-                                                >
-                                                    Resign
-                                                </button>
-                                            </div>
-                                        </div>
+                                        <Moves board={board} handleResination={handleResination} handleDrawOffer={handleDrawOffer} />
                                     </div>
                                     <div className="hidden sm:block">
                                         {/* Desktop: Full moves panel */}
