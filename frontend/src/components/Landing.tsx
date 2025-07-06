@@ -7,7 +7,7 @@ import { ToastManager } from './UI/ToastManager';
 import StartNewGame from './UI/StartNewGameModal';
 import { GameCodeModal } from './UI/GameCodeModal';
 
-export default function Landing({ socket }: { socket: Socket }) {
+export default function Landing({ socket, userId }: { socket: Socket, userId: string }) {
     const [gameId, setGameId] = useState('');
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const startNewGameModalRef = useRef<HTMLDivElement>(null);
@@ -34,7 +34,6 @@ export default function Landing({ socket }: { socket: Socket }) {
 
     useEffect(() => {
         socket.on("game-created", ({ gameId, color, time }) => {
-            console.log("game created event received...");
             navigate(`/game/${gameId}`, {
                 state: {
                     playerColor: color,
@@ -62,7 +61,7 @@ export default function Landing({ socket }: { socket: Socket }) {
             startNewGameModalRef.current?.classList.add("hidden");
             gameCodeModalRef.current?.classList.remove("hidden");
             const gameId = uuidv4().slice(0, 7).toUpperCase();
-            socket.emit("create-game", { gameId: gameId, color: selectedTeam, time: selectedTime });
+            socket.emit("create-game", { userId: userId, gameId: gameId, color: selectedTeam, time: selectedTime });
             setGameId(gameId);
         }
     });
@@ -76,7 +75,7 @@ export default function Landing({ socket }: { socket: Socket }) {
         startNewGameModalRef.current?.classList.remove("hidden");
     }
     const handleJoinGame = (id: string) => {
-        socket.emit("join-game", id);
+        socket.emit("join-game", { userId: userId, gameId: id });
     };
     return (
         <div>

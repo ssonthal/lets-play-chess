@@ -11,41 +11,41 @@ import { Chessboard } from "./Chessboard";
 import { GameRoomBackground } from "./UI/GameRoomBackground";
 import { PromotionModal } from "./UI/PromotionModal";
 import { EndgameModal } from "./UI/EndgameModalRef";
+import FenUtil from "../util/FenUtil";
+import { useParams } from "react-router-dom";
 
 interface GameRoomProps {
+  userId: string;
   socket: Socket;
   playerColor: TeamType;
   gameStarted: boolean;
-  gameId: string;
   gameTime: number;
 }
 
-export default function GameRoom({ socket, playerColor, gameStarted, gameId, gameTime }: GameRoomProps) {
-  const [board, setBoard] = useState<Board>(initialBoard.clone());
-  const [promotionPawn, setPromotionPawn] = useState<Piece>();
-  const [endgameMsg, setEndgameMsg] = useState("Draw");
-  const [whiteTime, setWhiteTime] = useState<number>(gameTime);
-  const [blackTime, setBlackTime] = useState<number>(gameTime);
-  const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
-  const promotionModalRef = useRef<HTMLDivElement>(null);
-  const endgameModalRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
+interface UseChessClockProps {
+  board: any; // use your proper Board type if available
+  setWhiteTime: React.Dispatch<React.SetStateAction<number>>;
+  setBlackTime: React.Dispatch<React.SetStateAction<number>>;
+}
 
+export function useChessClock({
+  board,
+  setWhiteTime,
+  setBlackTime
+}: UseChessClockProps) {
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => {
-    if (!gameStarted) return;
-    // Stop the clock if game ends
-    if (board.draw || board.winningTeam !== undefined || board.statemate) {
-      if (intervalId) clearInterval(intervalId);
-      setIntervalId(null);
+    if (board.draw || board.stalemate || board.winner !== undefined) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      intervalRef.current = null;
       return;
     }
-    // Clear any existing interval before starting a new one
-    if (intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(null);
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
     }
-    // Set ticking for the current team
+
     const id = setInterval(() => {
       if (board.currentTeam === TeamType.WHITE) {
         setWhiteTime((prev) => Math.max(prev - 1, 0));
@@ -53,14 +53,34 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
         setBlackTime((prev) => Math.max(prev - 1, 0));
       }
     }, 1000);
-    setIntervalId(id);
 
-    // Cleanup on dependency change
+    intervalRef.current = id;
+
     return () => {
       clearInterval(id);
-      setIntervalId(null);
+      intervalRef.current = null;
     };
-  }, [board.currentTeam, board.draw, board.winningTeam, board.statemate, gameStarted]);
+  }, [board.currentTeam]);
+}
+
+
+export default function GameRoom({ userId, socket, playerColor, gameStarted, gameTime }: GameRoomProps) {
+  const [board, setBoard] = useState<Board>(initialBoard.clone());
+  const [promotionPawn, setPromotionPawn] = useState<Piece>();
+  const [endgameMsg, setEndgameMsg] = useState("Draw");
+  const { gameId } = useParams<{ gameId: string }>();
+  const [whiteTime, setWhiteTime] = useState<number>(gameTime);
+  const [blackTime, setBlackTime] = useState<number>(gameTime);
+  const promotionModalRef = useRef<HTMLDivElement>(null);
+  const endgameModalRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
+
+  useChessClock({
+    board,
+    setWhiteTime,
+    setBlackTime
+  });
 
   useEffect(() => {
     if (whiteTime === 0 || blackTime === 0) {
@@ -71,6 +91,89 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
     }
   }, [whiteTime, blackTime]);
 
+  useEffect(() => {
+    const handleConnect = () => {
+      const userId = localStorage.getItem("letsplayChessGuestUserId");
+      if (userId) {
+        socket.emit("check-for-existing-game", { userId: userId, gameId: gameId });
+      }
+    }
+    socket.on("connect", handleConnect);
+    if (socket.connected) {
+      handleConnect();
+    }
+    socket.on("game-exists", (game) => {
+      let board = initialBoard.clone();
+      const moves: string[] = [];
+      if (!game.moves) {
+        return;
+      }
+      moves.push(...JSON.parse(game.moves));
+      for (let i = 0; i < moves.length; i++) {
+        const move = moves[i];
+        if (move.length === 4) {
+          const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
+          const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
+          const piece = board.pieces.find(p => p.samePosition(fromPosition));
+          if (!piece) {
+            console.error("error in setting game state based on history");
+            return;
+          }
+          const isEnPassant = isEnPassantMove(
+            fromPosition.x,
+            fromPosition.y,
+            toPosition.x,
+            toPosition.y,
+            piece.team,
+            board.pieces
+          );
+          board = board.playMove(isEnPassant, piece, toPosition);
+        } else if (move.length === 5) {
+          // promotion case
+          const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
+          const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
+          let pieceType: PieceType = PieceType.QUEEN;
+          switch (move[4]) {
+            case 'r':
+              pieceType = PieceType.ROOK;
+              break;
+            case 'n':
+              pieceType = PieceType.KNIGHT;
+              break;
+            case 'b':
+              pieceType = PieceType.BISHOP;
+              break;
+            case 'q':
+              pieceType = PieceType.QUEEN;
+              break;
+
+          }
+          const piece = board.pieces.find(p => p.samePosition(fromPosition));
+          if (!piece) {
+            console.error("error in setting game state based on history");
+            return;
+          }
+          board = board.playMove(false, piece, toPosition);
+          const updatedPieces = board.pieces.map(p =>
+            p.samePosition(toPosition)
+              ? new Piece(toPosition.clone(), pieceType, piece.team, true)
+              : p
+          );
+          board = board.clone(updatedPieces);
+        }
+      }
+      board.calculateAllMoves();
+      setWhiteTime(Number(game.whiteTime));
+      setBlackTime(Number(game.blackTime));
+      board.draw = game.isDraw === "false" ? false : true;
+      board.stalemate = game.isStalemate === "false" ? false : true;
+      setBoard(board);
+    });
+    return () => {
+      socket.off("game-exists");
+      socket.off("connect");
+    }
+  }, [socket, location.pathname]);
   // Auto-scroll on move
   useEffect(() => {
     if (board.moves.length > 0) {
@@ -108,7 +211,6 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
     if (playedPiece.possibleMoves === undefined) return false;
 
     const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
-    console.log(validMove, "validMove");
     if (!validMove) return false;
     const isEnPassant = isEnPassantMove(
       playedPiece.position.x,
@@ -125,7 +227,6 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
       setBoard(newBoard);
       checkForEndGame(newBoard);
 
-      // ♟️ Handle promotion UI
       const promotionRow = playedPiece.team === TeamType.WHITE ? 7 : 0;
       if (destination.y === promotionRow && playedPiece.type === PieceType.PAWN) {
         promotionModalRef.current?.classList.remove("hidden");
@@ -134,11 +235,18 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
 
       if (shouldEmit) {
         socket.emit("move", {
+          userId,
           gameId,
           move: {
             from: playedPiece.position,
             to: destination,
           },
+          whiteTime: whiteTime,
+          blackTime: blackTime,
+          currentTurn: newBoard.currentTeam,
+          isDraw: newBoard.draw,
+          isStalemate: newBoard.stalemate,
+          winningTeam: newBoard.winningTeam ? newBoard.winningTeam : null
         });
       }
 
@@ -172,13 +280,13 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
     cloned.winningTeam = playerColor === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
     checkForEndGame(cloned);
     setBoard(cloned);
-    socket.emit("opponent-resigned", gameId);
+    socket.emit("opponent-resigned", { userId: userId, gameId: gameId });
   }
 
   function restartGame() {
     endgameModalRef.current?.classList.add("hidden");
     setBoard(initialBoard.clone());
-    socket.emit("game-over", gameId);
+    socket.emit("game-over", { userId: userId, gameId: gameId });
   }
 
   function checkForEndGame(newBoard: Board) {
@@ -188,7 +296,7 @@ export default function GameRoom({ socket, playerColor, gameStarted, gameId, gam
     } else if (newBoard.winningTeam !== undefined) {
       endgameModalRef.current?.classList.remove("hidden");
       setEndgameMsg(newBoard.winningTeam === TeamType.WHITE ? "White wins" : "Black wins");
-    } else if (newBoard.winningTeam === undefined && newBoard.statemate) {
+    } else if (newBoard.winningTeam === undefined && newBoard.stalemate) {
       endgameModalRef.current?.classList.remove("hidden");
       setEndgameMsg("Stalemate");
     }

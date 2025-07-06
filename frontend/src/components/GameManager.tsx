@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import GameRoom from "./GameRoom";
 import AIGameRoom from "./AIGameRoom";
 
-export default function GameManager({ socket }: { socket: Socket }) {
+export default function GameManager({ socket, userId }: { socket: Socket, userId: string }) {
     const navigate = useNavigate();
     const { gameId } = useParams<{ gameId: string }>();
     const location = useLocation();
@@ -60,7 +60,7 @@ export default function GameManager({ socket }: { socket: Socket }) {
     }
     return (
         <>
-            <GameRoom socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameId={gameId} gameTime={gameTime} />
+            <GameRoom userId={userId} socket={socket} playerColor={playerColor} gameStarted={gameStarted} gameTime={gameTime} />
         </>
     );
 }

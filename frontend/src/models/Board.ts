@@ -1,5 +1,6 @@
 import {getValidKnightMoves, getValidRookMoves, getValidBishopMoves, getValidPawnMoves, getValidKingMoves, getCastlingMoves} from "../referee/rules";
 import { PieceType, TeamType } from "../Types";
+import FenUtil from "../util/FenUtil";
 import { Move } from "./Move";
 import { Pawn } from "./Pawn";
 import { Piece } from "./Piece";
@@ -11,20 +12,22 @@ export class Board {
     pieces: Piece[];
     totalTurns : number;
     winningTeam?: TeamType;
-    statemate : boolean;    
+    stalemate : boolean;    
     moves: Move[];
     draw: boolean;
     boardHistory: {[key: string]: number};
     turnsWithNoCaptureOrPawnMove : number;
+    advancedMoves: string[] = [];
     
-    constructor(pieces: Piece[], totalTurns: number, moves: Move[], boardHistory: {[key: string]: number} = {}, turnsWithNoCaptureOrPawnMove = 0) {
+    constructor(pieces: Piece[], totalTurns: number, moves: Move[], boardHistory: {[key: string]: number} = {}, turnsWithNoCaptureOrPawnMove = 0, advancedMoves: string[] = []) {
         this.pieces = pieces;
         this.totalTurns = totalTurns;
         this.moves = moves;
-        this.statemate = false;
+        this.stalemate = false;
         this.draw = false;
         this.boardHistory = boardHistory;
         this.turnsWithNoCaptureOrPawnMove = turnsWithNoCaptureOrPawnMove;
+        this.advancedMoves = advancedMoves;
     }
     
     calculateAllMoves() {
@@ -204,7 +207,9 @@ export class Board {
             playedPiece.team,
             playedPiece.type,
             playedPiece.position, destination, this.pieces.find(p => p.samePosition(destination))));
-            
+        const fromAlgebraic = FenUtil.toAlgebraic(playedPiece.position);
+        const toAlegrabaic = FenUtil.toAlgebraic(destination);
+        clonedBoard.advancedMoves.push(`${fromAlgebraic}${toAlegrabaic}`);
         return clonedBoard;
     }
     checkForFiftyMoveRule(): void {
@@ -218,7 +223,7 @@ export class Board {
         const kingPosition = this.pieces.find(p => p.isKing && p.team === this.currentTeam)!.position;
         if(!enemyMoves.some(p => p?.equals(kingPosition))) {
             // stalemate !!
-            this.statemate = true;
+            this.stalemate = true;
         } else {
             // checkmate !!
             this.winningTeam = this.currentTeam === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
@@ -257,6 +262,6 @@ export class Board {
     }
     clone(overrides?: Piece[]): Board {
         const clonedPieces = (overrides ?? this.pieces).map(p => p.clone());
-        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()), this.boardHistory, this.turnsWithNoCaptureOrPawnMove);
+        return new Board(clonedPieces, this.totalTurns, this.moves.map(m => m.clone()), this.boardHistory, this.turnsWithNoCaptureOrPawnMove, this.advancedMoves);
     }
 }

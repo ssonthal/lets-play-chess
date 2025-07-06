@@ -3,7 +3,7 @@ const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
 const { v4: uuidv4 } = require("uuid");
-
+const {createNewGame, getGame, updateGame, checkUser, addUser, getSessionForUser, addMoves, updateSession} = require("./redisClient");
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -14,108 +14,171 @@ const io = new Server(server, {
 
 const PORT = 3000;
 
-// In-memory game store
-const games = {}; // gameId => { white: socket.id, black: socket.id }
+function toAlgebraic(pos) {
+  const file = String.fromCharCode('a'.charCodeAt(0) + pos.x);
+  const rank = (pos.y + 1).toString();
+  return `${file}${rank}`;
+}
 
 io.on("connection", (socket) => {
   console.log(`⚡ New connection: ${socket.id}`);
 
-  socket.on("create-game", ({gameId, color, time}) => {
-    if (games[gameId]) {
+
+  socket.on("create-game", async ({userId, gameId, color, time}) => {
+    const game = await getGame(gameId);
+    if (Object.keys(game).length !== 0) {
       socket.emit("error", "Game ID already exists.");
       return;
     }
-    if(color === "b") {
-      games[gameId] = {white: null, black: socket.id};
+    if(color === 'w') {
+      await createNewGame({gameId: gameId, white: userId, time: time.toString(), whiteTime: time.toString(), blackTime: time.toString()});
+      
     } else {
-      games[gameId] = { white: socket.id, black: null };
+      await createNewGame({gameId: gameId, black: userId, time: time.toString(), whitetime : time.toString(), blackTime: time.toString()});
     }
-    games[gameId].time = time;
     socket.join(gameId);
+    await addUser(userId, gameId, socket.id);
     console.log(`🎯 Game created: ${gameId}`);
   });
 
-  socket.on("join-game", (gameId) => {
-    
-    const game = games[gameId];
-
-    if (!game) {
+  socket.on("join-game", async ({ userId, gameId }) => {
+    const existingGame = await getGame(gameId);
+  
+    if (!existingGame || Object.keys(existingGame).length === 0) {
       socket.emit("error", "Game ID not found.");
       return;
     }
-
-    if (game.black && game.white) {
-      socket.emit("error", "Game already has two players.");
-      return;
-    }
-    if(game.white === socket.id || game.black === socket.id) {
+  
+    if (existingGame.white === userId || existingGame.black === userId) {
       socket.emit("error", "You are already in this game.");
       return;
     }
-    let color = 'w';
-    if(game.white) {
-      game.black = socket.id;
-      color = 'b';
+  
+    if (existingGame.white && existingGame.black) {
+      socket.emit("error", "Game already has two players.");
+      return;
+    }
+    const currentGame = { ...existingGame };
+    let userColor = 'w';
+  
+    if (!currentGame.white) {
+      currentGame.white = userId;
+      userColor = 'w';
     } else {
-      game.white = socket.id;
+      currentGame.black = userId;
+      userColor = 'b';
     }
+
     socket.join(gameId);
-    console.log(`🎯 Player joined game: ${gameId}`);
-    io.to(game.white).emit("game-created", { gameId, color: 'w', time: game.time});
-    io.to(game.black).emit("game-created", { gameId, color: 'b', time: game.time});
-  });
-
-  socket.on("move", ({ gameId, move }) => {
-    const game = games[gameId];
-    if (!game) return;
-
-    const opponentId = socket.id === game.white ? game.black : game.white;
-    if (opponentId) {
-      io.to(opponentId).emit("opponent-move", move);
-    }
-  });
-
-  socket.on("game-over", (gameId) => {
-    console.log("received game over event");
-    const game = games[gameId];
-    if (!game) return;
-
-    if(game.white) {
-      console.log("emitting game ended to white");
-      io.to(game.white).emit("game-ended");
-    }
-    if(game.black) {
-      console.log("emitting game ended to black");
-      io.to(game.black).emit("game-ended");
-    }
-    
-    delete games[gameId];
-  });
-
-  socket.on("opponent-resigned", (gameId) => {
-    const game = games[gameId];
-    if (!game) return;
-    const opponentId = socket.id === game.white ? game.black : game.white;
-    if (opponentId) {
-      io.to(opponentId).emit("opponent-resigned");
-    }
-  });
-
-  socket.on("disconnect", () => {
-    console.log(`🔥 Disconnected: ${socket.id}`);
-
-    // Clean up
-    for (const gameId in games) {
-      const game = games[gameId];
-      if (game.white === socket.id || game.black === socket.id) {
-        io.to(gameId).emit("opponent-disconnected");
-        delete games[gameId];
-        break;
+    console.log(`🎯 Player ${userId} joined game: ${gameId} as ${userColor}`);
+  
+    // Save updated game and player mapping
+    await updateGame(currentGame);
+    await addUser(userId, gameId, socket.id);
+  
+    socket.emit("game-created", {
+      gameId,
+      color: userColor,
+      time: currentGame.time,
+    });
+  
+    const opponentUserId = userColor === 'w' ? currentGame.black : currentGame.white;
+    if (opponentUserId) {
+      const {socketId: opponentSocketId} = await getSessionForUser(opponentUserId);
+      if (opponentSocketId) {
+        io.to(opponentSocketId).emit("game-created", {
+          gameId,
+          color: userColor === 'w' ? 'b' : 'w',
+          time: currentGame.time,
+        });
       }
     }
   });
-});
+  
+  socket.on("move", async ({ userId, gameId, move, whiteTime, blackTime, currentTurn, isDraw, isStalemate, winningTeam}) => {
+    const validUser = await checkUser(userId, gameId);
+    
+    if(!validUser) {
+      socket.emit("error", "You are not authorized to update this game.");
+      return;
+    }
+    const  existingGame = await getGame(gameId);
+    
+    const moves = existingGame.moves ? JSON.parse(existingGame.moves) : [];
+    moves.push(`${toAlgebraic(move.from)}${toAlgebraic(move.to)}`);
 
+    const game = {...existingGame};
+    game.moves = JSON.stringify(moves);
+    game.whiteTime = whiteTime.toString();
+    game.blackTime = blackTime.toString();
+    game.currentTurn = currentTurn;
+    game.isDraw = isDraw.toString();
+    game.isStalemate = isStalemate.toString();
+    game.lastMoveAt = Date.now().toString();
+
+    if(winningTeam != null) {
+      game.winningTeam = winningTeam;
+    }
+    await updateGame(game);
+    
+    if(userId === game.white) {
+      const {socketId: opponentSocketId} = await getSessionForUser(game.black);
+      if(opponentSocketId) {
+        io.to(opponentSocketId).emit("opponent-move", move);
+      }
+    } else if(userId === game.black) {
+      const {socketId: opponentSocketId} = await getSessionForUser(game.white);
+      if(opponentSocketId) {
+        io.to(opponentSocketId).emit("opponent-move", move);
+      }
+    }
+  });
+
+  socket.on("game-over", async ({userId, gameId}) => {
+    const validUser = await checkUser(userId, gameId);
+    if(!validUser) {
+      socket.emit("error", "You are not authorized to update this game.");
+    }
+    const {white, black} = await getGame(gameId);
+    const {socketId: opponentSocketId} = userId === white ? await getSessionForUser(black) : await getSessionForUser(white);
+    if(opponentSocketId) {
+      io.to(opponentSocketId).emit("game-ended");
+    }
+  });
+
+  socket.on("opponent-resigned", async({userId, gameId}) => {
+    const validUser = await checkUser(userId, gameId);
+    if(!validUser) {
+      socket.emit("error", "You are not authorized to update this game.");
+    }
+    const {white, black} = await getGame(gameId);
+    const {socketId: opponentSocketId} = userId === white ? await getSessionForUser(black) : await getSessionForUser(white);
+    if(opponentSocketId) {
+      io.to(opponentSocketId).emit("opponent-resigned");
+    }
+  });
+
+  socket.on("check-for-existing-game", async ({ userId: userId, gameId: gameId}) => {
+    const isValid = await checkUser(userId, gameId);
+    if(isValid) {
+      const game = await getGame(gameId);
+      if(Object.keys(game).length > 0) {
+        socket.join(gameId);
+        await updateSession(userId, socket.id);
+        const now = Date.now();
+        const elapsedMs = now - parseInt(game.lastMoveAt || now.toString(), 10);
+        const elapsedSec = Math.floor(elapsedMs / 1000);
+        if (game.currentTurn === 'w') {
+          game.whiteTime = Math.max(0, parseInt(game.whiteTime) - elapsedSec);
+        } else {
+          game.blackTime = Math.max(0, parseInt(game.blackTime) - elapsedSec);
+        }
+        socket.emit("game-exists", game);
+      }
+    }
+  });
+
+});
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
 });

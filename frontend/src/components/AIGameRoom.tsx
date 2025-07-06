@@ -65,7 +65,6 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
                 ? '/stockfish.wasm.js'
                 : '/stockfish.js';
 
-            console.log('[React] Loading Stockfish from:', stockfishUrl);
             stockfishRef.current = new Worker(stockfishUrl);
 
             // Handle messages from Stockfish
@@ -115,14 +114,13 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         if (!stockfishRef.current) {
             return;
         }
-        console.log('[React] Sending command:', command);
         stockfishRef.current.postMessage(command);
     };
     useEffect(() => {
         if (!gameStarted) return;
 
         // Stop the clock if game ends
-        if (board.draw || board.winningTeam !== undefined || board.statemate) {
+        if (board.draw || board.winningTeam !== undefined || board.stalemate) {
             if (intervalId) clearInterval(intervalId);
             setIntervalId(null);
             return;
@@ -147,7 +145,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
             clearInterval(id);
             setIntervalId(null);
         };
-    }, [board.currentTeam, board.draw, board.winningTeam, board.statemate, gameStarted]);
+    }, [board.currentTeam, board.draw, board.winningTeam, board.stalemate, gameStarted]);
 
     useEffect(() => {
         if (!pendingAIMove) return;
@@ -195,10 +193,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
 
     function playMove(playedPiece: Piece, destination: Position): boolean {
         if (playedPiece.possibleMoves === undefined) return false;
-        console.log(board);
-        console.log(board.currentTeam)
         const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
-        console.log(validMove, "validMove");
         if (!validMove) return false;
         const isEnPassant = isEnPassantMove(
             playedPiece.position.x,
@@ -269,7 +264,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         } else if (newBoard.winningTeam !== undefined) {
             endgameModalRef.current?.classList.remove("hidden");
             setEndgameMsg(newBoard.winningTeam === TeamType.WHITE ? "White wins" : "Black wins");
-        } else if (newBoard.winningTeam === undefined && newBoard.statemate) {
+        } else if (newBoard.winningTeam === undefined && newBoard.stalemate) {
             endgameModalRef.current?.classList.remove("hidden");
             setEndgameMsg("Stalemate");
         }

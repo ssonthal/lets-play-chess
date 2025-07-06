@@ -54,10 +54,10 @@ export default function Tile({
 
     return (
         <div
-            className={`grid place-items-center ${baseTileColor}`}
+            className={`grid place-items-center ${baseTileColor} p-[5%]`}
             style={{
                 width: `${tileSize}px`,
-                height: `${tileSize}px`,
+                height: `${tileSize}px`
             }}
         >
             {!highlight && image && (
