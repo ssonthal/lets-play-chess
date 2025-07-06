@@ -267,7 +267,7 @@ export function Chessboard({ playMove, pieces, pieceColor, isGameStarted, lastMo
                 onMouseDown={handleMouseDown}
                 onTouchStart={handleTouchStart}
                 ref={chessboardRef}
-                className="grid shadow-2xl rounded-lg overflow-hidden border-4 border-slate-700"
+                className="grid shadow-2xl rounded-lg overflow-hidden"
                 style={{
                     gridTemplateColumns: `repeat(8, ${tileSize}px)`,
                     gridTemplateRows: `repeat(8, ${tileSize}px)`,
