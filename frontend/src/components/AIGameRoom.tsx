@@ -366,6 +366,8 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         setBlackTime(gameTime);
         setLastMove(undefined);
         setBoard(initialBoard.clone());
+        localStorage.removeItem("letsplayChessGame");
+        window.location.reload();
     }
 
     function checkForEndGame(newBoard: Board) {
@@ -379,6 +381,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
             endgameModalRef.current?.classList.remove("hidden");
             setEndgameMsg("Stalemate");
         }
+        localStorage.removeItem("letsplayChessGame");
     }
     {
         return !isReady ? <div></div> :
