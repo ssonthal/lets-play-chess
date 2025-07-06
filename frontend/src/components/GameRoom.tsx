@@ -76,7 +76,6 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
   const promotionModalRef = useRef<HTMLDivElement>(null);
   const endgameModalRef = useRef<HTMLDivElement>(null);
   const drawModalRef = useRef<HTMLDivElement>(null);
-  const bottomRef = useRef<HTMLDivElement>(null);
   const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
   const [drawResponse, setDrawResponse] = useState<boolean>(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -106,6 +105,12 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       checkForEndGame(updatedBoard);
     }
   }, [whiteTime, blackTime]);
+
+  useEffect(() => {
+    if (board.moves.length > 0) {
+      setLastMove({ from: board.moves[board.moves.length - 1].fromPosition, to: board.moves[board.moves.length - 1].toPosition });
+    }
+  }, [board.moves.length]);
 
   useEffect(() => {
     if (drawResponse) {
@@ -159,12 +164,12 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
     }
   }, [socket, location.pathname]);
   // Auto-scroll on move
-  useEffect(() => {
-    if (board.moves.length > 0) {
-      setLastMove({ from: board.moves[board.moves.length - 1].fromPosition, to: board.moves[board.moves.length - 1].toPosition });
-    }
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [board.moves.length]);
+  // useEffect(() => {
+  //   if (board.moves.length > 0) {
+  //     setLastMove({ from: board.moves[board.moves.length - 1].fromPosition, to: board.moves[board.moves.length - 1].toPosition });
+  //   }
+  //   bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  // }, [board.moves.length]);
 
   useEffect(() => {
     const handler = ({ from, to, promotionType }: { from: Position, to: Position, promotionType: string }) => {

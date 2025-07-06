@@ -1,5 +1,5 @@
 import { Flag, X } from "lucide-react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Move } from "../models/Move";
 import { TeamType } from "../Types";
 import "../App.css";
@@ -39,12 +39,27 @@ function formatMoveHistory(moves: Move[]): FormattedMove[] {
 
 export default function NewMoves({ board, handleResination, handleDrawOffer }: { board: Board, handleResination: () => void, handleDrawOffer: () => void }) {
     const bottomRef = useRef<HTMLDivElement>(null);
+    const [isDesktop, setIsDesktop] = useState(false);
     const moves = formatMoveHistory(board.moves);
     const lastIndex = board.moves.length - 1;
 
+    // Check if device is desktop
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [board.moves.length]);
+        const checkDevice = () => {
+            setIsDesktop(window.innerWidth >= 768); // Desktop breakpoint
+        };
+
+        checkDevice();
+        window.addEventListener('resize', checkDevice);
+        return () => window.removeEventListener('resize', checkDevice);
+    }, []);
+
+    // Only scroll on desktop
+    useEffect(() => {
+        if (isDesktop && bottomRef.current) {
+            bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [board.moves.length, isDesktop]);
 
     return (
         <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-xl 

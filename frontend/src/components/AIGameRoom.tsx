@@ -51,11 +51,11 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
     const promotionModalRef = useRef<HTMLDivElement>(null);
     const endgameModalRef = useRef<HTMLDivElement>(null);
-    const bottomRef = useRef<HTMLDivElement>(null);
     const stockfishRef = useRef<Worker | null>(null);
     const [isReady, setIsReady] = useState(false);
     const [pendingAIMove, setPendingAIMove] = useState<{ from: Position, to: Position } | null>(null);
     const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
+
     useEffect(() => {
         try {
             const wasmSupported = typeof WebAssembly === 'object' &&
@@ -250,7 +250,6 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     }, [board, pendingAIMove]);
 
     useEffect(() => {
-
         if (whiteTime === 0 || blackTime === 0) {
             const updatedBoard = board.clone();
             updatedBoard.winningTeam = whiteTime === 0 ? TeamType.BLACK : TeamType.WHITE;
@@ -260,16 +259,16 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     }, [whiteTime, blackTime]);
 
     useEffect(() => {
+        // handling the first move from AI after game starts
         if (board.totalTurns == 0 && board.currentTeam === TeamType.WHITE && playerColor !== TeamType.WHITE && stockfishRef.current) {
             setTimeout(() => {
                 sendCommand("position fen " + FenUtil.boardToFen(board));
                 sendCommand(`go depth ${getDepthByLevel(aiLevel)}`);
             }, 2000)
         }
-    });
-    // Auto-scroll on move
+    }, []);
+
     useEffect(() => {
-        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
         if (board.moves.length > 0) {
             setLastMove({ from: board.moves[board.moves.length - 1].fromPosition, to: board.moves[board.moves.length - 1].toPosition });
         }
