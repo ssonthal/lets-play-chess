@@ -1,4 +1,4 @@
-# Let's Play Chess
+# ♚ Let's Play Chess
 
 A modern, full-stack chess application that allows players to enjoy chess games online with real-time multiplayer functionality. Built with React, TypeScript, and Socket.io for seamless real-time gaming experience.
 
