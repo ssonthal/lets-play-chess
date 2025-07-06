@@ -47,12 +47,15 @@ export default function NewMoves({ board, handleResination, handleDrawOffer }: {
     }, [board.moves.length]);
 
     return (
-        <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-xl w-80 h-96 shadow-2xl border border-slate-700/50 backdrop-blur-sm flex flex-col">
+        <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-xl 
+                        w-full sm:w-80 h-64 sm:h-96 
+                        shadow-2xl border border-slate-700/50 backdrop-blur-sm flex flex-col
+                        max-w-full">
             {/* Header */}
-            <div className="px-5 py-4 border-b border-slate-700/70 bg-slate-800/50 rounded-t-xl">
+            <div className="px-4 sm:px-5 py-4 sm:py-4 border-b border-slate-700/70 bg-slate-800/50 rounded-t-xl">
                 <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-slate-200 tracking-wide">GAME MOVES</h3>
-                    <div className="flex items-center gap-2">
+                    <h3 className="text-sm sm:text-sm font-semibold text-slate-200 tracking-wide">GAME MOVES</h3>
+                    <div className="flex items-center gap-1 p-2">
                         <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                         <span className="text-xs text-slate-400">Live</span>
                     </div>
@@ -60,22 +63,22 @@ export default function NewMoves({ board, handleResination, handleDrawOffer }: {
             </div>
 
             {/* Moves List */}
-            <div className="flex-1 overflow-y-auto px-2 py-3 scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollable">
-                <div className="space-y-1">
+            <div className="flex-1 overflow-y-auto px-2 sm:px-2 py-3 sm:py-3 scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollable">
+                <div className="space-y-1 sm:space-y-1">
                     {moves.map(({ moveNumber, white, black }, i) => {
                         const whiteIndex = i * 2;
                         const blackIndex = i * 2 + 1;
                         return (
                             <div key={i} className="group hover:bg-slate-800/30 rounded-lg transition-colors duration-150">
-                                <div className="flex items-center py-2 px-3">
+                                <div className="flex items-center py-2 sm:py-2 px-3 sm:px-3">
                                     {/* Move Number */}
-                                    <div className="w-8 text-xs font-medium text-slate-400 select-none">
+                                    <div className="w-7 sm:w-8 text-xs sm:text-xs font-medium text-slate-400 select-none">
                                         {moveNumber}.
                                     </div>
 
                                     {/* White Move */}
                                     <button
-                                        className={`flex-1 text-left px-3 py-1.5 mx-1 rounded-md text-sm font-mono transition-all duration-200 hover:bg-slate-700/50 ${lastIndex === whiteIndex
+                                        className={`flex-1 text-left px-3 sm:px-3 py-1.5 sm:py-1.5 mx-1 sm:mx-1 rounded-md text-sm sm:text-sm font-mono transition-all duration-200 hover:bg-slate-700/50 ${lastIndex === whiteIndex
                                             ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 ring-1 ring-blue-400/50"
                                             : "text-slate-200 hover:text-white"
                                             }`}
@@ -85,7 +88,7 @@ export default function NewMoves({ board, handleResination, handleDrawOffer }: {
 
                                     {/* Black Move */}
                                     <button
-                                        className={`flex-1 text-left px-3 py-1.5 mx-1 rounded-md text-sm font-mono transition-all duration-200 hover:bg-slate-700/50 ${lastIndex === blackIndex
+                                        className={`flex-1 text-left px-3 sm:px-3 py-1.5 sm:py-1.5 mx-1 sm:mx-1 rounded-md text-sm sm:text-sm font-mono transition-all duration-200 hover:bg-slate-700/50 ${lastIndex === blackIndex
                                             ? "bg-blue-600 text-white shadow-lg shadow-blue-600/25 ring-1 ring-blue-400/50"
                                             : "text-slate-200 hover:text-white"
                                             } ${!black ? "opacity-50" : ""}`}
@@ -101,10 +104,10 @@ export default function NewMoves({ board, handleResination, handleDrawOffer }: {
             </div>
 
             {/* Enhanced Control Bar */}
-            <div className="px-4 py-4 border-t border-slate-700/70 bg-slate-800/30 rounded-b-xl">
+            <div className="px-3 sm:px-4 py-3 sm:py-4 border-t border-slate-700/70 bg-slate-800/30 rounded-b-xl">
                 <div className="flex flex-row justify-around">
                     <button
-                        className="px-3 py-2 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 text-lg font-medium text-slate-400 hover:text-white"
+                        className="px-2 sm:px-3 py-1.5 sm:py-2 hover:bg-slate-700/50 rounded-lg transition-colors duration-200 text-base sm:text-lg font-medium text-slate-400 hover:text-white"
                         title="Offer Draw"
                         onClick={() => handleDrawOffer()}
                     >
@@ -112,16 +115,16 @@ export default function NewMoves({ board, handleResination, handleDrawOffer }: {
                     </button>
                     <button
                         onClick={() => handleResination()}
-                        className="p-2.5 hover:bg-slate-600/20 hover:text-white-400 rounded-lg transition-colors duration-200 group"
+                        className="p-2 sm:p-2.5 hover:bg-slate-600/20 hover:text-white-400 rounded-lg transition-colors duration-200 group"
                         title="Resign"
                     >
-                        <Flag size={24} className="text-slate-400 group-hover:text-slate-400 transition-colors" />
+                        <Flag size={20} className="sm:w-6 sm:h-6 text-slate-400 group-hover:text-slate-400 transition-colors" />
                     </button>
                     <button
-                        className="p-2.5 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-colors duration-200 group"
+                        className="p-2 sm:p-2.5 hover:bg-red-600/20 hover:text-red-400 rounded-lg transition-colors duration-200 group"
                         title="Abort"
                     >
-                        <X size={24} className="text-slate-400 group-hover:text-red-400 transition-colors" />
+                        <X size={20} className="sm:w-6 sm:h-6 text-slate-400 group-hover:text-red-400 transition-colors" />
                     </button>
                 </div>
             </div>
