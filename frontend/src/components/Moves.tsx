@@ -37,7 +37,7 @@ function formatMoveHistory(moves: Move[]): FormattedMove[] {
     return formatted;
 }
 
-export default function NewMoves({ board, handleResination }: { board: Board, handleResination: () => void }) {
+export default function NewMoves({ board, handleResination, handleDrawOffer }: { board: Board, handleResination: () => void, handleDrawOffer: () => void }) {
     const bottomRef = useRef<HTMLDivElement>(null);
     const moves = formatMoveHistory(board.moves);
     const lastIndex = board.moves.length - 1;
@@ -45,10 +45,6 @@ export default function NewMoves({ board, handleResination }: { board: Board, ha
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [board.moves.length]);
-
-    function handleDrawOffer() {
-        // show draw modal
-    }
 
     return (
         <div className="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-xl w-80 h-96 shadow-2xl border border-slate-700/50 backdrop-blur-sm flex flex-col">

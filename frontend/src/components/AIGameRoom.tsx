@@ -11,6 +11,7 @@ import FenUtil from "../util/FenUtil";
 import { PromotionModal } from "./UI/PromotionModal";
 import { EndgameModal } from "./UI/EndgameModalRef";
 import { GameRoomBackground } from "./UI/GameRoomBackground";
+import { useParams } from "react-router-dom";
 
 
 interface AIGameRoomProps {
@@ -46,6 +47,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
     const [endgameMsg, setEndgameMsg] = useState("Draw");
     const [whiteTime, setWhiteTime] = useState<number>(gameTime);
     const [blackTime, setBlackTime] = useState<number>(gameTime);
+    const { gameId } = useParams<{ gameId: string }>();
     const [intervalId, setIntervalId] = useState<ReturnType<typeof setInterval> | null>(null);
     const promotionModalRef = useRef<HTMLDivElement>(null);
     const endgameModalRef = useRef<HTMLDivElement>(null);
@@ -110,6 +112,88 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         };
     }, []);
 
+    useEffect(() => {
+        if (!localStorage.getItem('letsplayChessGame')) {
+            return;
+        }
+        const game: any = JSON.parse(localStorage.getItem('letsplayChessGame')!);
+
+        if (game && game.gameId && game.gameId === gameId) {
+            let board = initialBoard.clone();
+            const moves: string[] = [];
+            if (!game.moves) {
+                return;
+            }
+            moves.push(...game.moves);
+            for (let i = 0; i < moves.length; i++) {
+                const move = moves[i];
+                if (move.length === 4) {
+                    const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
+                    const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
+                    const piece = board.pieces.find(p => p.samePosition(fromPosition));
+                    if (!piece) {
+                        console.error("error in setting game state based on history");
+                        return;
+                    }
+                    const isEnPassant = isEnPassantMove(
+                        fromPosition.x,
+                        fromPosition.y,
+                        toPosition.x,
+                        toPosition.y,
+                        piece.team,
+                        board.pieces
+                    );
+                    board = board.playMove(isEnPassant, piece, toPosition);
+                } else if (move.length === 5) {
+                    // promotion case
+                    const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
+                    const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
+                    let pieceType: PieceType = PieceType.QUEEN;
+                    switch (move[4]) {
+                        case 'r':
+                            pieceType = PieceType.ROOK;
+                            break;
+                        case 'n':
+                            pieceType = PieceType.KNIGHT;
+                            break;
+                        case 'b':
+                            pieceType = PieceType.BISHOP;
+                            break;
+                        case 'q':
+                            pieceType = PieceType.QUEEN;
+                            break;
+
+                    }
+                    const piece = board.pieces.find(p => p.samePosition(fromPosition));
+                    if (!piece) {
+                        console.error("error in setting game state based on history");
+                        return;
+                    }
+                    board = board.playMove(false, piece, toPosition);
+                    const updatedPieces = board.pieces.map(p =>
+                        p.samePosition(toPosition)
+                            ? new Piece(toPosition.clone(), pieceType, piece.team, true)
+                            : p
+                    );
+                    board = board.clone(updatedPieces);
+                }
+            }
+            board.calculateAllMoves();
+            const now = Date.now();
+            const elapsedMs = now - parseInt(game.lastMoveAt || now.toString(), 10);
+            const elapsedSec = Math.floor(elapsedMs / 1000);
+            if (game.currentTurn === 'w') {
+                game.whiteTime = Math.max(0, parseInt(game.whiteTime) - elapsedSec);
+            } else {
+                game.blackTime = Math.max(0, parseInt(game.blackTime) - elapsedSec);
+            }
+            setWhiteTime(Number(game.whiteTime));
+            setBlackTime(Number(game.blackTime));
+            board.draw = game.isDraw === "false" ? false : true;
+            board.stalemate = game.isStalemate === "false" ? false : true;
+            setBoard(board);
+        }
+    }, [location.pathname])
     const sendCommand = (command: string) => {
         if (!stockfishRef.current) {
             return;
@@ -145,7 +229,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
             clearInterval(id);
             setIntervalId(null);
         };
-    }, [board.currentTeam, board.draw, board.winningTeam, board.stalemate, gameStarted]);
+    }, [board.currentTeam]);
 
     useEffect(() => {
         if (!pendingAIMove) return;
@@ -218,6 +302,17 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
             }
             sendCommand("position fen " + FenUtil.boardToFen(newBoard));
             sendCommand(`go depth ${getDepthByLevel(aiLevel)}`);
+            localStorage.setItem("letsplayChessGame", JSON.stringify({
+                gameId: gameId,
+                moves: newBoard.advancedMoves,
+                whiteTime: whiteTime,
+                blackTime: blackTime,
+                currentTurn: newBoard.currentTeam,
+                isDraw: newBoard.draw,
+                isStalemate: newBoard.stalemate,
+                lastMoveAt: Date.now(),
+                winningTeam: newBoard.winningTeam ? newBoard.winningTeam : null
+            }));
             return true;
         }
         return false;
@@ -248,6 +343,9 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
         cloned.winningTeam = playerColor === TeamType.WHITE ? TeamType.BLACK : TeamType.WHITE;
         checkForEndGame(cloned);
         setBoard(cloned);
+    }
+    function handleDrawOffer() {
+        return;
     }
     function restartGame() {
         endgameModalRef.current?.classList.add("hidden");
@@ -379,7 +477,7 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
                                     </div>
                                     <div className="hidden sm:block">
                                         {/* Desktop: Full moves panel */}
-                                        <Moves board={board} handleResination={handleResination} />
+                                        <Moves board={board} handleResination={handleResination} handleDrawOffer={handleDrawOffer} />
                                     </div>
 
                                     {/* Desktop Player Clock - Only visible in horizontal layout */}

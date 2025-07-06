@@ -178,6 +178,40 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("draw-offer-created", async ({ userId: userId, gameId: gameId}) => {
+    const validUser = await checkUser(userId, gameId);
+    if(!validUser) {
+      socket.emit("error", "You are not authorized to update this game.");
+    }
+    const {white, black} = await getGame(gameId);
+    const {socketId: opponentSocketId} = userId === white ? await getSessionForUser(black) : await getSessionForUser(white);
+    if(opponentSocketId) {
+      io.to(opponentSocketId).emit("opponent-offer-draw");
+    }
+  })
+  socket.on("draw-offer-accepted", async ({ userId: userId, gameId: gameId}) => {
+    const validUser = await checkUser(userId, gameId);
+    if(!validUser) {
+      socket.emit("error", "You are not authorized to update this game.");
+    }
+    const {white, black} = await getGame(gameId);
+    const {socketId: opponentSocketId} = userId === white ? await getSessionForUser(black) : await getSessionForUser(white);
+    if(opponentSocketId) {
+      io.to(opponentSocketId).emit("draw-offer-accepted");
+    }
+  })
+  socket.on("draw-offer-rejected", async ({ userId: userId, gameId: gameId}) => {
+    const validUser = await checkUser(userId, gameId);
+    if(!validUser) {
+      socket.emit("error", "You are not authorized to update this game.");
+    }
+    const {white, black} = await getGame(gameId);
+    const {socketId: opponentSocketId} = userId === white ? await getSessionForUser(black) : await getSessionForUser(white);
+    if(opponentSocketId) {
+      io.to(opponentSocketId).emit("draw-offer-rejected");
+    }
+  })
+
 });
 server.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);

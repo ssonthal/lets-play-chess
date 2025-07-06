@@ -2,14 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { X, AlertCircle, CheckCircle, Info, AlertTriangle } from 'lucide-react';
 import { Socket } from 'socket.io-client';
 
-enum ToastType {
+export enum ToastType {
     Success = 'success',
     Warning = 'warning',
     Error = 'error',
     Info = 'info'
 }
 
-interface Toast {
+export interface Toast {
     id: number,
     message: string,
     type: ToastType,
@@ -109,7 +109,7 @@ const ToastItem = ({ toast, onRemove }: { toast: Toast, onRemove: (id: number) =
     );
 };
 
-const ToastContainer = ({ toasts, removeToast }: { toasts: Toast[], removeToast: (id: number) => void }) => {
+export const ToastContainer = ({ toasts, removeToast }: { toasts: Toast[], removeToast: (id: number) => void }) => {
     return (
         <div className="fixed top-4 right-4 z-50 space-y-2">
             {toasts.map((toast) => (

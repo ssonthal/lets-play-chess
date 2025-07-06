@@ -12,7 +12,9 @@ import { GameRoomBackground } from "./UI/GameRoomBackground";
 import { PromotionModal } from "./UI/PromotionModal";
 import { EndgameModal } from "./UI/EndgameModalRef";
 import FenUtil from "../util/FenUtil";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { DrawOfferModal } from "./UI/DrawOfferModal";
+import { Toast, ToastContainer, ToastType } from "./UI/ToastManager";
 
 interface GameRoomProps {
   userId: string;
@@ -73,8 +75,22 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
   const [blackTime, setBlackTime] = useState<number>(gameTime);
   const promotionModalRef = useRef<HTMLDivElement>(null);
   const endgameModalRef = useRef<HTMLDivElement>(null);
+  const drawModalRef = useRef<HTMLDivElement>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const [lastMove, setLastMove] = useState<{ from: Position, to: Position } | undefined>(undefined);
+  const [drawResponse, setDrawResponse] = useState<boolean>(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const navigate = useNavigate();
+
+  const addToast = (message: string, type: ToastType, title: string, duration: number = 5000) => {
+    const id = Date.now() + Math.random();
+    const newToast = { id, message, type, title, duration } as Toast;
+    setToasts(prev => [...prev, newToast]);
+  };
+
+  const removeToast = (id: number) => {
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+  };
 
   useChessClock({
     board,
@@ -90,6 +106,15 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       checkForEndGame(updatedBoard);
     }
   }, [whiteTime, blackTime]);
+
+  useEffect(() => {
+    if (drawResponse) {
+      const updatedBoard = board.clone();
+      updatedBoard.draw = true;
+      setBoard(updatedBoard);
+      checkForEndGame(updatedBoard);
+    }
+  }, [drawResponse])
 
   useEffect(() => {
     const handleConnect = () => {
@@ -204,7 +229,27 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       setBoard(cloned);
       endgameModalRef.current?.classList.remove("hidden");
       setEndgameMsg(cloned.winningTeam === TeamType.WHITE ? "Black Resigned. You Won!" : "White Resigned. You Won!");
-    })
+    });
+    socket.on("opponent-offer-draw", () => {
+      drawModalRef.current?.classList.remove("hidden");
+    });
+    socket.on("draw-offer-accepted", () => {
+      const cloned = board.clone();
+      cloned.draw = true;
+      setBoard(cloned);
+      endgameModalRef.current?.classList.remove("hidden");
+      setEndgameMsg("Draw Offer Accepted. Draw");
+    });
+    socket.on("draw-offer-rejected", () => {
+      console.log("Draw offer rejected");
+      addToast("Draw offer rejected", ToastType.Error, "Error");
+    });
+    return () => {
+      socket.off("opponent-resigned");
+      socket.off("opponent-offer-draw");
+      socket.off("draw-offer-accepted");
+      socket.off("draw-offer-rejected");
+    }
   }, []);
 
   function playMove(playedPiece: Piece, destination: Position, shouldEmit = true): boolean {
@@ -266,6 +311,20 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
 
     const updatedBoard = board.clone(updatedPieces);
     updatedBoard.calculateAllMoves();
+    switch (pieceType) {
+      case PieceType.ROOK:
+        updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'r';
+        break;
+      case PieceType.KNIGHT:
+        updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'n';
+        break;
+      case PieceType.BISHOP:
+        updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'b';
+        break;
+      case PieceType.QUEEN:
+        updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'q';
+        break;
+    }
     setBoard(updatedBoard);
     checkForEndGame(updatedBoard);
     promotionModalRef.current?.classList.add("hidden");
@@ -282,11 +341,14 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
     setBoard(cloned);
     socket.emit("opponent-resigned", { userId: userId, gameId: gameId });
   }
+  function handleDrawOffer() {
+    addToast("Draw offer sent", ToastType.Info, "Info");
+    socket.emit("draw-offer-created", { userId: userId, gameId: gameId });
+  }
 
   function restartGame() {
-    endgameModalRef.current?.classList.add("hidden");
-    setBoard(initialBoard.clone());
-    socket.emit("game-over", { userId: userId, gameId: gameId });
+    navigate("/");
+    socket.emit("game-ended", { userId: userId, gameId: gameId });
   }
 
   function checkForEndGame(newBoard: Board) {
@@ -305,9 +367,10 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <GameRoomBackground />
+      <ToastContainer toasts={toasts} removeToast={removeToast} />
       <PromotionModal promotionModalRef={promotionModalRef} promotePawn={promotePawn} setPromotionTeam={setPromotionTeam} />
       <EndgameModal endgameModalRef={endgameModalRef} board={board} endgameMsg={endgameMsg} restartGame={restartGame} />
-
+      <DrawOfferModal drawOfferModalRef={drawModalRef} setDrawResponse={setDrawResponse} socket={socket} gameId={gameId} userId={userId} />
       {/* Main Game Container - Responsive */}
       <div className="flex flex-col p-2 sm:p-4">
         {/* Enhanced Game Header - Responsive */}
@@ -411,7 +474,7 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
                 </div>
                 <div className="hidden sm:block">
                   {/* Desktop: Full moves panel */}
-                  <Moves board={board} handleResination={handleResination} />
+                  <Moves board={board} handleResination={handleResination} handleDrawOffer={handleDrawOffer} />
                 </div>
 
                 {/* Desktop Player Clock - Only visible in horizontal layout */}
