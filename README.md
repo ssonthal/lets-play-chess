@@ -8,7 +8,6 @@ A modern, full-stack chess application that allows players to enjoy chess games 
 - **Real-time Multiplayer**: Play chess with friends in real-time using WebSocket connections
 - **Game Rooms**: Create or join game rooms with unique room codes
 - **AI Opponent**: Play against computer with different difficulty levels ✅
-- **Spectator Mode**: Watch ongoing games as a spectator
 - **Move Validation**: Comprehensive client and server-side move validation
 - **Game History**: Track and review move history with full game notation
 
