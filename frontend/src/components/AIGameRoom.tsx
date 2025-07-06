@@ -329,6 +329,20 @@ export default function GameRoom({ playerColor, gameStarted, gameTime, aiLevel }
 
         const updatedBoard = board.clone(updatedPieces);
         updatedBoard.calculateAllMoves();
+        switch (pieceType) {
+            case PieceType.ROOK:
+                updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'r';
+                break;
+            case PieceType.KNIGHT:
+                updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'n';
+                break;
+            case PieceType.BISHOP:
+                updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'b';
+                break;
+            case PieceType.QUEEN:
+                updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'q';
+                break;
+        }
         setBoard(updatedBoard);
         checkForEndGame(updatedBoard);
         promotionModalRef.current?.classList.add("hidden");

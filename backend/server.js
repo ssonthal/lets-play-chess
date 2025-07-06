@@ -105,8 +105,12 @@ io.on("connection", (socket) => {
     const  existingGame = await getGame(gameId);
     
     const moves = existingGame.moves ? JSON.parse(existingGame.moves) : [];
-    moves.push(`${toAlgebraic(move.from)}${toAlgebraic(move.to)}`);
-
+    if(move.promotionType && move.promotionType.length > 0) {
+      moves.push(`${toAlgebraic(move.from)}${toAlgebraic(move.to)}${move.promotionType}`);
+    }else {
+      moves.push(`${toAlgebraic(move.from)}${toAlgebraic(move.to)}`);
+    }
+    
     const game = {...existingGame};
     game.moves = JSON.stringify(moves);
     game.whiteTime = whiteTime.toString();

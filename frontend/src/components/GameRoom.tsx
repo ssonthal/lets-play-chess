@@ -68,7 +68,7 @@ export function useChessClock({
 
 export default function GameRoom({ userId, socket, playerColor, gameStarted, gameTime }: GameRoomProps) {
   const [board, setBoard] = useState<Board>(initialBoard.clone());
-  const [promotionPawn, setPromotionPawn] = useState<Piece>();
+  const [pendingPromotion, setPendingPromotion] = useState<{ from: Position, to: Position } | null>(null);
   const [endgameMsg, setEndgameMsg] = useState("Draw");
   const { gameId } = useParams<{ gameId: string }>();
   const [whiteTime, setWhiteTime] = useState<number>(gameTime);
@@ -136,55 +136,13 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       moves.push(...JSON.parse(game.moves));
       for (let i = 0; i < moves.length; i++) {
         const move = moves[i];
+        const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
+        const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
         if (move.length === 4) {
-          const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
-          const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
-          const piece = board.pieces.find(p => p.samePosition(fromPosition));
-          if (!piece) {
-            console.error("error in setting game state based on history");
-            return;
-          }
-          const isEnPassant = isEnPassantMove(
-            fromPosition.x,
-            fromPosition.y,
-            toPosition.x,
-            toPosition.y,
-            piece.team,
-            board.pieces
-          );
-          board = board.playMove(isEnPassant, piece, toPosition);
+          board = handleNormalOpponentMove(board, fromPosition, toPosition);
         } else if (move.length === 5) {
-          // promotion case
-          const fromPosition = FenUtil.algebraicToPosition(move[0] + move[1]);
-          const toPosition = FenUtil.algebraicToPosition(move[2] + move[3]);
-          let pieceType: PieceType = PieceType.QUEEN;
-          switch (move[4]) {
-            case 'r':
-              pieceType = PieceType.ROOK;
-              break;
-            case 'n':
-              pieceType = PieceType.KNIGHT;
-              break;
-            case 'b':
-              pieceType = PieceType.BISHOP;
-              break;
-            case 'q':
-              pieceType = PieceType.QUEEN;
-              break;
-
-          }
-          const piece = board.pieces.find(p => p.samePosition(fromPosition));
-          if (!piece) {
-            console.error("error in setting game state based on history");
-            return;
-          }
-          board = board.playMove(false, piece, toPosition);
-          const updatedPieces = board.pieces.map(p =>
-            p.samePosition(toPosition)
-              ? new Piece(toPosition.clone(), pieceType, piece.team, true)
-              : p
-          );
-          board = board.clone(updatedPieces);
+          // Promotion
+          board = handlePromotionCaseForOpponent(board, fromPosition, toPosition, move[4]);
         }
       }
       board.calculateAllMoves();
@@ -193,6 +151,7 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       board.draw = game.isDraw === "false" ? false : true;
       board.stalemate = game.isStalemate === "false" ? false : true;
       setBoard(board);
+      checkForEndGame(board);
     });
     return () => {
       socket.off("game-exists");
@@ -208,12 +167,21 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
   }, [board.moves.length]);
 
   useEffect(() => {
-    const handler = ({ from, to }: { from: Position, to: Position }) => {
+    const handler = ({ from, to, promotionType }: { from: Position, to: Position, promotionType: string }) => {
       const fromPos = new Position(from.x, from.y);
       const toPos = new Position(to.x, to.y);
       const movingPiece = board.pieces.find(p => p.samePosition(fromPos));
+      let newBoard = board.clone();
       if (movingPiece) {
-        playMove(movingPiece, toPos, false);
+        if (promotionType && promotionType.length > 0) {
+          newBoard = handlePromotionCaseForOpponent(board, fromPos, toPos, promotionType);
+        }
+        else {
+          newBoard = handleNormalOpponentMove(board, fromPos, toPos);
+        }
+        newBoard.calculateAllMoves();
+        setBoard(newBoard);
+        checkForEndGame(newBoard);
       }
     };
     socket.on('opponent-move', handler);
@@ -241,7 +209,6 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       setEndgameMsg("Draw Offer Accepted. Draw");
     });
     socket.on("draw-offer-rejected", () => {
-      console.log("Draw offer rejected");
       addToast("Draw offer rejected", ToastType.Error, "Error");
     });
     return () => {
@@ -252,7 +219,53 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
     }
   }, []);
 
-  function playMove(playedPiece: Piece, destination: Position, shouldEmit = true): boolean {
+  function handleNormalOpponentMove(board: Board, fromPosition: Position, toPosition: Position): Board {
+    const piece = board.pieces.find(p => p.samePosition(fromPosition));
+    if (!piece) {
+      console.error("error in setting game state based on history");
+      return board; // returning existing board
+    }
+    const isEnPassant = isEnPassantMove(
+      fromPosition.x,
+      fromPosition.y,
+      toPosition.x,
+      toPosition.y,
+      piece.team,
+      board.pieces
+    );
+    return board.playMove(isEnPassant, piece, toPosition);
+  }
+  function handlePromotionCaseForOpponent(board: Board, fromPosition: Position, toPosition: Position, pieceTypeInitial: string): Board {
+
+    let pieceType: PieceType = PieceType.QUEEN;
+    switch (pieceTypeInitial) {
+      case 'r':
+        pieceType = PieceType.ROOK;
+        break;
+      case 'n':
+        pieceType = PieceType.KNIGHT;
+        break;
+      case 'b':
+        pieceType = PieceType.BISHOP;
+        break;
+      case 'q':
+        pieceType = PieceType.QUEEN;
+        break;
+    }
+    const piece = board.pieces.find(p => p.samePosition(fromPosition));
+    if (!piece) {
+      console.error("error in setting game state based on history");
+      return board; // returning existing board
+    }
+    board = board.playMove(false, piece, toPosition);
+    const updatedPieces = board.pieces.map(p =>
+      p.samePosition(toPosition)
+        ? new Piece(toPosition.clone(), pieceType, piece.team, true)
+        : p
+    );
+    return board.clone(updatedPieces);
+  }
+  function playMove(playedPiece: Piece, destination: Position): boolean {
     if (playedPiece.possibleMoves === undefined) return false;
 
     const validMove = playedPiece.possibleMoves.some(p => p.equals(destination));
@@ -275,25 +288,23 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
       const promotionRow = playedPiece.team === TeamType.WHITE ? 7 : 0;
       if (destination.y === promotionRow && playedPiece.type === PieceType.PAWN) {
         promotionModalRef.current?.classList.remove("hidden");
-        setPromotionPawn(newBoard.pieces.find(p => p.samePosition(destination)));
+        setPendingPromotion({ from: playedPiece.position, to: destination });
+        return true;
       }
-
-      if (shouldEmit) {
-        socket.emit("move", {
-          userId,
-          gameId,
-          move: {
-            from: playedPiece.position,
-            to: destination,
-          },
-          whiteTime: whiteTime,
-          blackTime: blackTime,
-          currentTurn: newBoard.currentTeam,
-          isDraw: newBoard.draw,
-          isStalemate: newBoard.stalemate,
-          winningTeam: newBoard.winningTeam ? newBoard.winningTeam : null
-        });
-      }
+      socket.emit("move", {
+        userId,
+        gameId,
+        move: {
+          from: playedPiece.position,
+          to: destination,
+        },
+        whiteTime: whiteTime,
+        blackTime: blackTime,
+        currentTurn: newBoard.currentTeam,
+        isDraw: newBoard.draw,
+        isStalemate: newBoard.stalemate,
+        winningTeam: newBoard.winningTeam ? newBoard.winningTeam : null
+      });
 
       return true;
     }
@@ -301,37 +312,61 @@ export default function GameRoom({ userId, socket, playerColor, gameStarted, gam
   }
 
   function promotePawn(pieceType: PieceType) {
-    if (!promotionPawn) return;
+    if (!pendingPromotion) return;
 
     const updatedPieces = board.pieces.map(p =>
-      p.samePiecePosition(promotionPawn)
-        ? new Piece(promotionPawn.position.clone(), pieceType, promotionPawn.team, true)
+      p.samePosition(pendingPromotion.to)
+        ? new Piece(pendingPromotion.to.clone(), pieceType, p.team, true)
         : p
     );
 
     const updatedBoard = board.clone(updatedPieces);
     updatedBoard.calculateAllMoves();
+    let pieceTypeInitial = 'q';
     switch (pieceType) {
       case PieceType.ROOK:
+        pieceTypeInitial = 'r';
         updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'r';
         break;
       case PieceType.KNIGHT:
+        pieceTypeInitial = 'n';
         updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'n';
         break;
       case PieceType.BISHOP:
+        pieceTypeInitial = 'b';
         updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'b';
         break;
       case PieceType.QUEEN:
+        pieceTypeInitial = 'q';
         updatedBoard.advancedMoves[updatedBoard.advancedMoves.length - 1] += 'q';
         break;
     }
     setBoard(updatedBoard);
     checkForEndGame(updatedBoard);
+    socket.emit("move", {
+      userId,
+      gameId,
+      move: {
+        from: pendingPromotion.from,
+        to: pendingPromotion.to,
+        promotionType: pieceTypeInitial,
+      },
+      whiteTime: whiteTime,
+      blackTime: blackTime,
+      currentTurn: updatedBoard.currentTeam,
+      isDraw: updatedBoard.draw,
+      isStalemate: updatedBoard.stalemate,
+      winningTeam: updatedBoard.winningTeam ? updatedBoard.winningTeam : null
+    });
     promotionModalRef.current?.classList.add("hidden");
+    setPendingPromotion(null);
   }
 
   function setPromotionTeam(): string {
-    return promotionPawn?.team === TeamType.WHITE ? "w" : "b";
+    if (!pendingPromotion) return "";
+    const piece = board.pieces.find(p => p.samePosition(pendingPromotion.to));
+    if (!piece) return "";
+    return piece.team === TeamType.WHITE ? "w" : "b";
   }
 
   function handleResination() {
