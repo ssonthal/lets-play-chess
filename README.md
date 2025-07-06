@@ -87,32 +87,15 @@ Make sure you have the following installed:
    ```
 2. Deploy the `build` folder to your hosting service
 
-### Backend (Railway)
+### Backend (Render)
 1. Set up environment variables on your hosting platform
 2. Deploy the server directory
 3. Ensure MongoDB connection is configured for production
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-- Socket.io for real-time communication
-
-## 📸 Demo
-https://github.com/user-attachments/assets/76d37e50-56d5-4976-8ef2-09d84a57fda5
 
 ## 🔮 Future Enhancements
 
-- [ ] AI opponent with different difficulty levels
+- [x] AI opponent with different difficulty levels
 - [ ] Tournament system
 - [ ] Player ratings and leaderboards
 - [ ] Game analysis with chess engine
